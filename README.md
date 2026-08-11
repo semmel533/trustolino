@@ -126,7 +126,7 @@ Trustolino sieht zusätzlich die Möglichkeit vor, ein erweitertes Führungszeug
 
 Dieses soll ein zusätzliches Vertrauenssignal für Eltern darstellen.
 
-Die Hinterlegung ist freiwillig. Die Pre-Release-Konzeption sieht vor, dass die Prüfung über Einsichtnahme erfolgt und keine Kopie des Dokuments dauerhaft gespeichert wird.
+Die Hinterlegung ist freiwillig. Die Prüfung soll über Einsichtnahme erfolgen, ohne dass eine Kopie des Dokuments dauerhaft gespeichert werden muss.
 
 ---
 
@@ -188,7 +188,7 @@ Beispiel:
 15:00 – 15:30
 ```
 
-Dadurch kann das Matching-System später exakt bestimmen, welche Pädagog:innen für einen bestimmten Zeitraum verfügbar sind.
+Dadurch kann das Matching-System exakt bestimmen, welche Pädagog:innen für einen bestimmten Zeitraum verfügbar sind.
 
 ---
 
@@ -358,9 +358,9 @@ Diese Gebühren sind nicht als fester Prozentsatz in der Trustolino-Geschäftslo
 
 Die Stripe-Gebühren werden **vollständig von den Eltern übernommen**.
 
-Der Grund dafür ist, dass die Eltern die Zahlungsmethode auswählen und dadurch bestimmen, welche Zahlungsabwicklung verwendet wird.
+Der Grund dafür ist, dass die Eltern die Zahlungsmethode selbst auswählen und dadurch bestimmen, welche Zahlungsabwicklung verwendet wird.
 
-Der finale Rechnungsbetrag auf Elternseite setzt sich somit grundsätzlich aus folgenden Bestandteilen zusammen:
+Der finale Rechnungsbetrag auf Elternseite setzt sich grundsätzlich aus folgenden Bestandteilen zusammen:
 
 ```text
 Basispreis der Pädagog:in
@@ -442,35 +442,26 @@ Insbesondere soll nicht mit folgenden Ansätzen gearbeitet werden:
 
 ```tsx
 // Nicht erlaubt
-{language === "de" ? "Anmelden" : "Sign up"}
+{
+  language === "de" ? "Anmelden" : "Sign up";
+}
 ```
 
 oder:
 
 ```tsx
 // Nicht erlaubt
-const text = language === "de"
-  ? "Willkommen bei Trustolino"
-  : "Welcome to Trustolino";
+const text =
+  language === "de" ? "Willkommen bei Trustolino" : "Welcome to Trustolino";
 ```
 
 Stattdessen werden ausschließlich Übersetzungsschlüssel verwendet:
 
 ```tsx
-t("auth.signIn")
+t("auth.signIn");
 ```
 
 Die eigentlichen Übersetzungen befinden sich in den jeweiligen Sprachdateien.
-
-Beispielsweise:
-
-```text
-locales/
-├── de/
-│   └── ...
-└── en/
-    └── ...
-```
 
 Damit wird sichergestellt, dass:
 
@@ -496,19 +487,17 @@ Englisch erhält den Präfix:
 /en/
 ```
 
-Dadurch bleiben die deutschen URLs kurz und sauber, während die englischen URLs eindeutig als englische Inhalte erkennbar sind.
-
 ---
 
 ## 11.1 Deutsche Routen
 
-| Route | Inhalt |
-|---|---|
-| `/` | Deutsche Onepager-Landingpage |
-| `/impressum` | Deutsches Impressum |
-| `/datenschutz` | Deutsche Datenschutzerklärung |
-| `/ratgeber` | Deutsche Ratgeberübersicht |
-| `/ratgeber/{artikel}` | Deutscher Ratgeberartikel |
+| Route                 | Inhalt                        |
+| --------------------- | ----------------------------- |
+| `/`                   | Deutsche Onepager-Landingpage |
+| `/impressum`          | Deutsches Impressum           |
+| `/datenschutz`        | Deutsche Datenschutzerklärung |
+| `/ratgeber`           | Deutsche Ratgeberübersicht    |
+| `/ratgeber/{artikel}` | Deutscher Ratgeberartikel     |
 
 Die Startseite `/` ist ein Onepager und enthält die wesentlichen Informationen über Trustolino sowie die jeweiligen Call-to-Actions.
 
@@ -516,15 +505,15 @@ Die Startseite `/` ist ein Onepager und enthält die wesentlichen Informationen 
 
 ## 11.2 Englische Routen
 
-| Route | Inhalt |
-|---|---|
-| `/en/` | Englische Onepager-Landingpage |
-| `/en/legal` | Englisches Impressum / Legal Information |
-| `/en/privacy` | Englische Datenschutzerklärung |
-| `/en/advisor` | Englische Ratgeberübersicht |
-| `/en/advisor/{article}` | Englischer Ratgeberartikel |
+| Route                   | Inhalt                                   |
+| ----------------------- | ---------------------------------------- |
+| `/en/`                  | Englische Onepager-Landingpage           |
+| `/en/legal`             | Englisches Impressum / Legal Information |
+| `/en/privacy`           | Englische Datenschutzerklärung           |
+| `/en/advisor`           | Englische Ratgeberübersicht              |
+| `/en/advisor/{article}` | Englischer Ratgeberartikel               |
 
-Die englische Website besitzt somit eine eigenständige URL-Struktur und soll nicht lediglich die deutschen Seiten über einen Sprachumschalter mit übersetztem Text darstellen.
+Die englische Website besitzt eine eigenständige URL-Struktur und soll nicht lediglich die deutschen Seiten über einen Sprachumschalter mit übersetztem Text darstellen.
 
 ---
 
@@ -647,12 +636,6 @@ Ein einzelner deutscher Artikel ist unter:
 
 erreichbar.
 
-Beispiel:
-
-```text
-/ratgeber/betreuung-bei-adhs
-```
-
 ---
 
 ## Englisch
@@ -673,73 +656,173 @@ Ein einzelner englischer Artikel ist unter:
 
 erreichbar.
 
-Beispiel:
-
-```text
-/en/advisor/childcare-for-adhd
-```
-
-Deutsche und englische Artikel können dabei eigene, für die jeweilige Sprache optimierte Slugs besitzen.
+Deutsche und englische Artikel können eigene, für die jeweilige Sprache optimierte Slugs besitzen.
 
 ---
 
 # 16. SEO & GEO
 
-Sowohl die Pre-Release-Website als auch die spätere allgemeine Website werden von Anfang an **SEO- und GEO-orientiert** aufgebaut.
+Die **öffentliche Domain `trustolino.de`** ist ein zentraler Bestandteil der SEO- und GEO-Strategie.
 
-## Technische SEO-Grundlagen
+Die allgemeine Website und ihr öffentliches Ratgeberportal sollen vollständig für Suchmaschinen und moderne KI-basierte Suchsysteme optimiert werden.
 
-Jede relevante Unterseite soll spezifische Metadaten besitzen:
+Dagegen ist die **Web-App unter `app.trustolino.de` ausdrücklich nicht für Suchmaschinenindexierung vorgesehen**.
 
-- `title`
-- `description`
-- Open Graph
-- Social Preview
-- Canonical URL
-- passende strukturierte Metadaten
-- Favicon / Site Icon
-- robots-Konfiguration
-- Sitemap
-- Sprachinformationen
-- entsprechende `hreflang`-Verknüpfungen zwischen deutschen und englischen Seiten
-
-Dabei sollen Metadaten nicht pauschal für die gesamte Website definiert werden.
-
-Jede Unterseite erhält die für ihren Inhalt passenden Metadaten.
-
-Beispielsweise soll ein Artikel eigene Metadaten besitzen:
+Es handelt sich dabei um eine harte technische Trennung zwischen:
 
 ```text
-/ratgeber/betreuung-bei-adhs
-
-title:
-Betreuung von Kindern mit ADHS – Ratgeber | Trustolino
-
-description:
-Worauf Eltern bei der Betreuung von Kindern mit ADHS achten sollten
-und welche pädagogischen Kompetenzen dabei wichtig sind.
+trustolino.de
+→ öffentlich
+→ SEO/GEO
+→ indexierbar
+→ Marketing
+→ Ratgeber
 ```
 
-Die englische Variante besitzt entsprechend eigene englische Metadaten.
+und:
+
+```text
+app.trustolino.de
+→ Produkt
+→ Login / registrierte Nutzer:innen
+→ nicht indexierbar
+→ kein SEO-/GEO-Traffic
+```
 
 ---
 
-## GEO
+## 16.1 SEO-/GEO-fähige Domain
 
-Die Inhalte sollen zusätzlich so strukturiert werden, dass sie für moderne Suchsysteme und KI-basierte Such- und Antwortsysteme möglichst verständlich und eindeutig sind.
+Die normale Website unter:
 
-Dazu gehören unter anderem:
+```text
+https://trustolino.de
+```
 
-- klare Überschriften
-- direkte Antworten auf konkrete Fragen
-- logisch strukturierte Inhalte
-- semantisch eindeutige Texte
-- FAQ-Inhalte
+soll indexierbar sein.
+
+Dazu gehören insbesondere:
+
+- Landingpage
+- öffentliche Informationsseiten
+- Ratgeberübersicht
+- Ratgeberartikel
+- öffentlich relevante Inhalte
+
+Die Website soll unter anderem folgende SEO-/GEO-Maßnahmen unterstützen:
+
+- spezifische `title`-Metadaten
+- spezifische `description`-Metadaten
+- Open Graph
+- Social Preview
+- Canonical URLs
 - strukturierte Daten
-- thematisch zusammenhängende Ratgeberartikel
+- Sitemap
+- robots-Konfiguration
+- `hreflang`
+- semantisch strukturierte Inhalte
 - interne Verlinkung
-- eindeutige Entitäten und Begriffe
-- sauber gepflegte deutsche und englische Versionen
+- FAQ-Inhalte
+- GEO-optimierte Inhalte
+- optimierte Überschriften
+- klare Entitäten und Begriffe
+
+Jede relevante öffentliche Unterseite erhält individuelle Metadaten.
+
+---
+
+## 16.2 Web-App darf nicht indexiert werden
+
+Die Web-App unter:
+
+```text
+https://app.trustolino.de
+```
+
+soll **nicht in Suchmaschinen indexiert werden**.
+
+Das gilt für:
+
+- Login
+- Registrierung
+- Dashboard
+- Profile
+- Buchungen
+- Chats
+- Kalender
+- Einstellungen
+- Zahlungsbereiche
+- interne Nutzerbereiche
+- sonstige Web-App-Routen
+
+Die Web-App ist kein SEO- oder GEO-Kanal.
+
+### Technische Absicherung
+
+Die Web-App soll deshalb mindestens folgende Maßnahmen verwenden:
+
+```text
+robots.txt
+```
+
+mit einer entsprechenden Blockierung der Indexierung sowie zusätzlich geeignete:
+
+```html
+<meta name="robots" content="noindex, nofollow" />
+```
+
+bzw. entsprechende Next.js-Metadaten.
+
+Beispielsweise soll für die Web-App sinngemäß gelten:
+
+```text
+User-agent: *
+Disallow: /
+```
+
+Zusätzlich soll auf relevanten Web-App-Seiten `noindex` gesetzt werden.
+
+Damit soll verhindert werden, dass die Web-App beispielsweise über Suchmaschinen mit folgenden Inhalten auffindbar wird:
+
+```text
+app.trustolino.de/login
+app.trustolino.de/register
+app.trustolino.de/dashboard
+app.trustolino.de/profile/...
+app.trustolino.de/bookings/...
+```
+
+Die `app.trustolino.de`-Domain soll somit **bewusst außerhalb der öffentlichen SEO-/GEO-Strategie** stehen.
+
+---
+
+## 16.3 Pre-Release SEO
+
+Während der Pre-Release-Phase ist die Pre-Release-Website unter:
+
+```text
+https://trustolino.de
+```
+
+die öffentliche und indexierbare Domain.
+
+Die Pre-Release-Website soll daher ebenfalls SEO- und GEO-optimiert sein.
+
+Besonders wichtig sind:
+
+- Pädagog:innen-Landingpage
+- Wartelisten-CTA
+- Ratgeberportal
+- hochwertige Content-Struktur
+- Open Graph
+- individuelle Metadaten
+- Sitemap
+- strukturierte Daten
+- deutsche und englische Inhalte
+
+Nach dem Launch wird die Pre-Release-Website durch die allgemeine Website ersetzt.
+
+Die Domain `trustolino.de` bleibt dabei weiterhin die **öffentliche SEO-/GEO-Domain**.
 
 ---
 
@@ -834,11 +917,11 @@ Port: 3001
 
 Damit ergibt sich:
 
-| Bereich | Domain | Ordner | Port |
-|---|---|---|---:|
-| Pre-Release | `trustolino.de` | `pre-website/` | `2999` |
-| Website | `trustolino.de` | `website/` | `3000` |
-| Web-App | `app.trustolino.de` | `webapp/` | `3001` |
+| Bereich     | Domain              | Ordner         |   Port | Indexierung |
+| ----------- | ------------------- | -------------- | -----: | ----------- |
+| Pre-Release | `trustolino.de`     | `pre-website/` | `2999` | Ja          |
+| Website     | `trustolino.de`     | `website/`     | `3000` | Ja          |
+| Web-App     | `app.trustolino.de` | `webapp/`      | `3001` | **Nein**    |
 
 Die Domain selbst wird separat verwaltet.
 
@@ -922,6 +1005,8 @@ Architektur:
           │                    │                    │
           ▼                    ▼                    ▼
  trustolino.de          trustolino.de      app.trustolino.de
+   Pre-Release             Website              Web-App
+   indexierbar             indexierbar          NOINDEX
 ```
 
 Die konkrete Infrastruktur kann im Laufe der Entwicklung weiter angepasst werden, die Trennung der drei Anwendungen bleibt jedoch bestehen.
@@ -982,7 +1067,7 @@ website/
     └── ...
 ```
 
-Dadurch sind die Logos beispielsweise unter folgenden URLs öffentlich erreichbar:
+Dadurch sind die Logos beispielsweise unter folgenden URLs erreichbar:
 
 ```text
 https://trustolino.de/logo.svg
@@ -991,7 +1076,7 @@ https://trustolino.de/logo-dark.svg
 
 Die Logos sollen außerhalb der allgemeinen Website **nicht kopiert oder dupliziert** werden.
 
-Wenn die Web-App, Pre-Release-Website oder eine andere externe Stelle das Trustolino-Logo benötigt, wird ausschließlich auf die zentrale Datei der allgemeinen Website referenziert.
+Wenn die Web-App oder eine andere externe Stelle das Trustolino-Logo benötigt, wird ausschließlich auf die zentrale Datei der allgemeinen Website referenziert.
 
 Beispiel:
 
@@ -999,7 +1084,7 @@ Beispiel:
 https://trustolino.de/logo.svg
 ```
 
-statt:
+statt einer eigenen Kopie:
 
 ```text
 webapp/public/logo.svg
@@ -1017,7 +1102,7 @@ Dadurch existiert langfristig eine eindeutige Quelle für die offiziellen Trusto
 
 Während die allgemeine Website noch nicht veröffentlicht wurde, kann die Pre-Release-Website ihre benötigten Branding-Assets lokal innerhalb ihrer eigenen Next.js-App bereitstellen.
 
-Sobald die allgemeine Website veröffentlicht wird, soll diese zentrale Logo-Strategie gelten.
+Sobald die allgemeine Website veröffentlicht wird, gilt die zentrale Logo-Strategie.
 
 ---
 
@@ -1031,6 +1116,8 @@ Zunächst wird ausschließlich die Pädagog:innen-Zielgruppe angesprochen.
 trustolino.de
         ↓
 pre-website/
+        ↓
+Pädagog:innen-Landingpage
         ↓
 Warteliste
 ```
@@ -1103,6 +1190,8 @@ Registrierung
        ↓
 Web-App
 ```
+
+Die Web-App bleibt dabei bewusst von der Suchmaschinenindexierung ausgeschlossen.
 
 Das Content-System soll langfristig eine wichtige Quelle für organische Nutzergewinnung werden.
 
@@ -1209,23 +1298,21 @@ Pädagog:innen wissen, dass sie selbstständig arbeiten und ihre Preise, Zeiten 
 
 Trustolino soll nicht wie eine anonyme Plattform wirken.
 
-Die Pre-Release-Konzeption legt deshalb besonderen Wert auf authentische Gründer:innen-Statements und echte Personen hinter dem Projekt.
-
 ---
 
 # 27. Positionierung
 
 Trustolino unterscheidet sich bewusst von klassischen Betreuungs- und Vermittlungsplattformen.
 
-| Klassische Plattform | Trustolino |
-|---|---|
-| Babysitting / Gelegenheitsbetreuung | Pädagogische Dienstleistung |
-| Keine oder geringe Qualifikationsprüfung | Persönliche Verifizierung |
-| Reine Vermittlung | Vermittlung + Infrastruktur |
-| Verwaltung bleibt bei der Person | Administrative Unterstützung |
-| Kurzfristiger Nebenjob | Berufliche Entwicklung |
-| Kein Kompetenznachweis | Digitales Karriere-Portfolio |
-| Selbstauskunft | Trusted-Educator-Siegel |
+| Klassische Plattform                     | Trustolino                   |
+| ---------------------------------------- | ---------------------------- |
+| Babysitting / Gelegenheitsbetreuung      | Pädagogische Dienstleistung  |
+| Keine oder geringe Qualifikationsprüfung | Persönliche Verifizierung    |
+| Reine Vermittlung                        | Vermittlung + Infrastruktur  |
+| Verwaltung bleibt bei der Person         | Administrative Unterstützung |
+| Kurzfristiger Nebenjob                   | Berufliche Entwicklung       |
+| Kein Kompetenznachweis                   | Digitales Karriere-Portfolio |
+| Selbstauskunft                           | Trusted-Educator-Siegel      |
 
 Diese Positionierung ist ein zentraler Bestandteil der Marke Trustolino.
 
@@ -1261,6 +1348,8 @@ Dabei sollen Inhalte sowohl Eltern als auch Pädagog:innen erreichen.
 
 Jeder relevante Artikel soll grundsätzlich in einer deutschen und einer englischen Version verfügbar sein.
 
+Das Ratgeberportal ist öffentlich und indexierbar und dient ausdrücklich als Bestandteil der organischen Reichweitenstrategie.
+
 ---
 
 # 29. Datenschutz und Sicherheit
@@ -1282,6 +1371,8 @@ Geplante Grundsätze:
 
 Besonders sensible Daten sollen nur dort verfügbar sein, wo sie für den jeweiligen Anwendungsfall tatsächlich benötigt werden.
 
+Die Web-App soll dabei zusätzlich technisch von der öffentlichen SEO-/GEO-Infrastruktur getrennt werden.
+
 ---
 
 # 30. Technische Grundsätze
@@ -1302,6 +1393,30 @@ Die Web-App ist dagegen auf authentifizierte Nutzer:innen und die eigentlichen P
 
 ---
 
+## SEO-/GEO-Trennung
+
+Es gibt eine klare Grenze zwischen öffentlich auffindbaren Inhalten und der eigentlichen Anwendung.
+
+```text
+trustolino.de
+→ öffentlich
+→ indexierbar
+→ SEO/GEO
+→ Ratgeber
+→ Marketing
+
+app.trustolino.de
+→ Anwendung
+→ nicht indexierbar
+→ noindex
+→ kein Ratgeber
+→ kein SEO-Traffic
+```
+
+Diese Trennung ist ausdrücklich gewollt und soll bei zukünftigen technischen Entscheidungen erhalten bleiben.
+
+---
+
 ## Internationalisierung
 
 Alle drei Anwendungen werden von Anfang an vollständig für Deutsch und Englisch vorbereitet.
@@ -1309,12 +1424,12 @@ Alle drei Anwendungen werden von Anfang an vollständig für Deutsch und Englisc
 Dabei gilt:
 
 ```text
-UI / Systemtexte
-        ↓
-      i18n
-        ↓
-  Übersetzungsschlüssel
-        ↓
+UI-Texte
+   ↓
+i18n
+   ↓
+Übersetzungsschlüssel
+   ↓
 ┌───────────────┐
 │               │
 ▼               ▼
@@ -1345,40 +1460,34 @@ Markdown
 
 ---
 
-## Server-seitige und statische Inhalte
-
-Marketingseiten und Ratgeberartikel sollen möglichst suchmaschinenfreundlich ausgeliefert werden.
-
-Die Web-App kann dagegen stärker auf interaktive und authentifizierte Anwendungen ausgerichtet sein.
-
----
-
 # 31. Kurzüberblick der Technologie
 
-| Bereich | Technologie |
-|---|---|
-| Pre-Release Website | Next.js |
-| Allgemeine Website | Next.js |
-| Web-App | Next.js |
-| Styling | Tailwind CSS |
-| UI | shadcn/ui / Base UI |
-| Icons | Phosphor Icons |
-| Internationalisierung | i18n Key-only |
-| Backend / BaaS | Appwrite |
-| Authentication | Appwrite |
-| Datenbank | Appwrite |
-| Realtime | Appwrite |
-| File / Image Storage | Appwrite |
-| Hosting | Appwrite |
-| Payments | Stripe |
-| Ratgeber Content | Markdown |
-| Legal Content | Markdown |
-| Markdown Rendering | React-Markdown bzw. vergleichbar |
-| Typografie | Tailwind Typography |
-| Domain | separat verwaltet |
-| Pre-Release Port | 2999 |
-| Website Port | 3000 |
-| Web-App Port | 3001 |
+| Bereich               | Technologie           |
+| --------------------- | --------------------- |
+| Pre-Release Website   | Next.js               |
+| Allgemeine Website    | Next.js               |
+| Web-App               | Next.js               |
+| Styling               | Tailwind CSS          |
+| UI                    | shadcn/ui / Base UI   |
+| Icons                 | Phosphor Icons        |
+| Internationalisierung | i18n Key-only         |
+| Backend / BaaS        | Appwrite              |
+| Authentication        | Appwrite              |
+| Datenbank             | Appwrite              |
+| Realtime              | Appwrite              |
+| File / Image Storage  | Appwrite              |
+| Hosting               | Appwrite              |
+| Payments              | Stripe                |
+| Ratgeber Content      | Markdown              |
+| Legal Content         | Markdown              |
+| Markdown Rendering    | React Markdown        |
+| Typografie            | Tailwind Typography   |
+| Domain                | separat verwaltet     |
+| Pre-Release Port      | 2999                  |
+| Website Port          | 3000                  |
+| Web-App Port          | 3001                  |
+| Öffentliche Website   | SEO/GEO indexierbar   |
+| Web-App               | **nicht indexierbar** |
 
 ---
 
@@ -1386,7 +1495,7 @@ Die Web-App kann dagegen stärker auf interaktive und authentifizierte Anwendung
 
 ```text
 ┌──────────────────────────────────────────────┐
-│                 Trustolino                   │
+│                 TRUSTOLINO                   │
 └──────────────────────────────────────────────┘
 
              trustolino.de
@@ -1398,6 +1507,13 @@ Die Web-App kann dagegen stärker auf interaktive und authentifizierte Anwendung
           ▼                   ▼
    pre-website/           website/
       :2999                  :3000
+          │                   │
+          └───────┬───────────┘
+                  │
+           SEO / GEO / Content
+                  │
+                  ▼
+          öffentlich indexierbar
 
 
           app.trustolino.de
@@ -1405,6 +1521,9 @@ Die Web-App kann dagegen stärker auf interaktive und authentifizierte Anwendung
                     ▼
                  webapp/
                    :3001
+                    │
+                    ▼
+             nicht indexierbar
 ```
 
 ---
@@ -1457,7 +1576,90 @@ Alle entsprechenden deutschen und englischen Seiten sollen technisch miteinander
 
 ---
 
-# 34. Langfristige Produktvision
+# 34. Indexierungsregeln
+
+Die Indexierungsstrategie ist ein fester Bestandteil der Architektur.
+
+| Domain / Bereich            | Indexierung              | Zweck                                  |
+| --------------------------- | ------------------------ | -------------------------------------- |
+| `trustolino.de`             | **Ja**                   | SEO, GEO, Marketing                    |
+| `trustolino.de/ratgeber`    | **Ja**                   | Content / organischer Traffic          |
+| `trustolino.de/ratgeber/*`  | **Ja**                   | Content / SEO / GEO                    |
+| `trustolino.de/impressum`   | grundsätzlich öffentlich | Rechtliche Information                 |
+| `trustolino.de/datenschutz` | grundsätzlich öffentlich | Rechtliche Information                 |
+| `trustolino.de/en/*`        | **Ja**                   | Englische SEO-/GEO-Inhalte             |
+| `app.trustolino.de`         | **Nein**                 | Web-App                                |
+| `app.trustolino.de/*`       | **Nein**                 | Authentifizierte / produktive Bereiche |
+
+Die öffentliche Website darf niemals versehentlich durch Änderungen an der Web-App-Architektur aus der Indexierung ausgeschlossen werden.
+
+Umgekehrt darf die Web-App nicht versehentlich durch neue öffentliche Routen indexierbar werden.
+
+Die beiden Anwendungen müssen daher jeweils eine eigene, explizite SEO-/Robots-Konfiguration besitzen.
+
+---
+
+# 35. Entwicklungsphasen und Domains
+
+## Pre-Release
+
+```text
+trustolino.de
+       ↓
+pre-website/
+       ↓
+SEO/GEO
+       ↓
+Pädagog:innen gewinnen
+       ↓
+Warteliste
+       ↓
+Ratgeber
+```
+
+## Release
+
+```text
+trustolino.de
+       ↓
+website/
+       ↓
+Eltern + Pädagog:innen
+       ↓
+Ratgeber
+       ↓
+SEO/GEO
+       ↓
+Registrierung
+       ↓
+app.trustolino.de
+```
+
+## Web-App
+
+```text
+app.trustolino.de
+       ↓
+webapp/
+       ↓
+Produkt
+       ↓
+Login
+       ↓
+Dashboard
+       ↓
+Matching
+       ↓
+Buchungen
+       ↓
+Zahlungen
+```
+
+Die Web-App bleibt dabei **nicht indexierbar**.
+
+---
+
+# 36. Langfristige Produktvision
 
 Trustolino soll langfristig nicht nur eine Plattform sein, auf der Eltern kurzfristig Betreuung buchen.
 
@@ -1505,7 +1707,7 @@ Damit verbindet Trustolino **pädagogische Qualität, Vertrauen, Selbstständigk
 
 ---
 
-# 35. Gesamtbild
+# 37. Gesamtbild
 
 Am Ende besteht Trustolino aus drei eng miteinander verbundenen, aber technisch getrennten Bereichen:
 
@@ -1524,10 +1726,14 @@ Am Ende besteht Trustolino aus drei eng miteinander verbundenen, aber technisch 
           │                  │                  │
      Ratgeber            Ratgeber             Auth
           │                  │                  │
-          └─────────────── Traffic ─────────────┘
-                             │
-                             ▼
-                      Trustolino wächst
+          │                  │                  │
+          ▼                  ▼                  ▼
+       SEO/GEO           SEO/GEO           NOINDEX
+          │                  │                  │
+          └───────────────┬──┴──────────────────┘
+                          │
+                          ▼
+                    Trustolino wächst
 ```
 
 Die Pre-Release-Website baut zunächst die erste Community aus Pädagog:innen auf. Nach dem Release wird sie durch die allgemeine Website ersetzt, die beide Zielgruppen anspricht. Das öffentlich zugängliche Ratgeberportal bleibt dabei dauerhaft als Content-, SEO- und GEO-Kanal bestehen.
@@ -1535,6 +1741,10 @@ Die Pre-Release-Website baut zunächst die erste Community aus Pädagog:innen au
 Die Web-App unter `app.trustolino.de` bildet unabhängig davon die eigentliche Produktplattform für Registrierung, Profile, Matching, Kommunikation, Buchungen, Zahlungen und die weiteren Trustolino-Funktionen.
 
 Die gesamte Plattform ist grundsätzlich **zweisprachig auf Deutsch und Englisch** aufgebaut. UI- und Systemtexte werden ausschließlich über eine **i18n-Key-only-Architektur** verwaltet, während redaktionelle Inhalte wie Ratgeber, Impressum und Datenschutz als getrennte deutsche und englische Markdown-Dateien verwaltet und über React Markdown und Tailwind Typography dargestellt werden.
+
+Die öffentliche Domain `trustolino.de` ist der zentrale **SEO- und GEO-Kanal** von Trustolino und soll von Suchmaschinen und modernen Suchsystemen vollständig erschlossen werden.
+
+Die Domain `app.trustolino.de` ist dagegen ausschließlich die Produkt- und Web-App-Domain und wird **bewusst von der Suchmaschinenindexierung ausgeschlossen**. Dies wird sowohl konzeptionell als auch technisch über eine dedizierte Robots-/Noindex-Konfiguration sichergestellt.
 
 Die allgemeine Website bildet nach ihrem Release außerdem die **zentrale Quelle für die offiziellen Trustolino-Logos**. Andere Anwendungen und externe Verwendungen referenzieren diese Assets ausschließlich über die öffentlich verfügbaren URLs der allgemeinen Website, anstatt eigene Kopien der Logos zu enthalten.
 
