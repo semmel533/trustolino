@@ -50,7 +50,7 @@ export default async function AdvisorArticleDE({ params }: { params: Promise<{ s
       let src = props.src;
       if (src && (src.startsWith('./') || src.startsWith('../'))) {
         const cleanSrc = src.replace(/^(\.\/|\.\.\/)+/, '');
-        src = `/api/content-image/de/ratgeber/${slug}/${cleanSrc}?v=1`;
+        src = `/content/de/ratgeber/${slug}/${cleanSrc}?v=1`;
       }
       return <img {...props} src={src} className="rounded-lg shadow-sm" alt={props.alt || ''} />;
     }

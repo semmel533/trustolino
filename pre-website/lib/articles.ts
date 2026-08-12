@@ -14,7 +14,7 @@ export interface ArticleMeta {
     image?: string;
 }
 
-const contentDir = path.join(process.cwd(), 'content');
+const contentDir = path.join(process.cwd(), 'public', 'content');
 
 export function getArticles(locale: 'de' | 'en'): ArticleMeta[] {
     const typeDir = locale === 'de' ? 'ratgeber' : 'advisor';
