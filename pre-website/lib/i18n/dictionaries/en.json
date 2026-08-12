@@ -1,0 +1,225 @@
+{
+  "hero": {
+    "badge": "More than just childcare",
+    "heading": "Become a sought-after childcare professional on Trustolino",
+    "subtext": "Your pedagogical passion deserves recognition and the right platform",
+    "cta": "Pre-register for free"
+  },
+  "value": {
+    "heading": "Your pedagogical passion deserves recognition and the right platform",
+    "text": "Forget classic \"babysitting\" – at Trustolino, you are the pedagogical expert that families truly need. We know that your work requires profound relationship building and genuine professional competence. That's why we created a platform that puts your professionalism front and center. Whether you are a student, in training, or already working: We connect you with families who don't just look for educational quality, but deeply appreciate it. Apply your expertise where it makes the biggest difference and join a community that understands your true value."
+  },
+  "expertise": {
+    "heading": "Expertise that matters: Why we focus on a verified educational background",
+    "cards": [
+      {
+        "title": "Verified & Secure",
+        "text": "Your profile undergoes a manual review by our experts. This builds trust with families and highlights you as a professional."
+      },
+      {
+        "title": "Full Relief",
+        "text": "We automate your administrative tasks. From invoicing to tax preparation, you can focus on your pedagogical work."
+      },
+      {
+        "title": "Digital Career Portfolio",
+        "text": "Every assignment is documented. Your digital proof of competence for your professional career, going far beyond mandatory internships."
+      }
+    ]
+  },
+  "qualitySeal": {
+    "heading": "The Trusted Educator Seal",
+    "text": "Quality is our foundation. That is why there is no automated onboarding at Trustolino. Every registration is personally verified. After successfully verifying your qualifications (enrollment certificate, training contract, or diploma) and completing a 100% profile, you receive the Trusted Educator Seal. This is our promise to parents and a mark of quality for your work."
+  },
+  "whoWeAre": {
+    "heading": "Who we are",
+    "text": "Trustolino was founded by educators for educators. We know the challenges of the industry from our own experience, from our studies to managing facilities. We have created a platform that fairly compensates, appreciates, and uses technology to make professional childcare more efficient. We combine pedagogical expertise with a commitment to excellent service.",
+    "table": {
+      "headers": [
+        "Feature",
+        "Standard Platforms",
+        "Trustolino"
+      ],
+      "rows": [
+        [
+          "Verification",
+          "Algorithm / No checks",
+          "Personal expert review"
+        ],
+        [
+          "Focus",
+          "Mere placement",
+          "Career & portfolio building, security & trust"
+        ],
+        [
+          "Bureaucracy",
+          "You are on your own",
+          "Automated (Taxes & Invoices)"
+        ],
+        [
+          "Mindset",
+          "\"Babysitting\" (Casual job)",
+          "\"Pedagogy\" (Vocation & Career)"
+        ]
+      ]
+    }
+  },
+  "waitlistInfo": {
+    "heading": "Become part of the movement",
+    "text": "Secure your spot in our community. Registration is straightforward: Leave your email address on our waitlist and be there from day one when we go live next month. We will notify you personally as soon as we unlock new profiles.",
+    "cta": "Join the waitlist now",
+    "disclaimer": "Your portfolio is a valuable addition to your education, but does not replace mandatory internships and cannot be credited as academic achievement."
+  },
+  "sealSteps": {
+    "heading": "The Trustolino Seal: Your mark of pedagogical quality",
+    "steps": [
+      {
+        "title": "Step 1: Proof of your educational background",
+        "text": "Upload e.g. your certificate of enrollment, your training contract, or your diploma. Our team personally reviews every registration for an existing educational background."
+      },
+      {
+        "title": "Step 2: Extended certificate of good conduct (optional)",
+        "text": "Security creates trust. Therefore, we offer you the option to deposit an extended certificate of good conduct with us. This is completely voluntary, but a particularly valuable signal to parents that their children are in good hands with you as a verified talent.",
+        "tip": "Pro Tip: Since you are a professional, you know this anyway: Anyone working with children in an educational institution is generally required to provide an extended certificate of good conduct; providers are obligated to do so under § 72a SGB VIII. With us it is voluntary, because we broker care in the context of self-employment. For parents, it is nevertheless one of the most important signals. We support you in applying for the necessary certificate. The check takes place via visual inspection, we do not store a copy in accordance with GDPR.\n\nAfter a successful check, you will receive your seal, which shows parents: A professional is at work here. We refresh this check at regular intervals to keep the quality high for everyone."
+      },
+      {
+        "title": "Step 3: Individual verification by our expert team",
+        "text": "With us, no anonymous algorithm or mere self-disclosure decides: Our team with high pedagogical expertise personally checks every registration. After successful verification and completion of all criteria (video, profile picture, description, details), your profile will be unlocked with the Trusted Educator Seal. To guarantee the high quality and significance of the seal permanently, we refresh this check at regular intervals."
+      }
+    ]
+  },
+  "team": {
+    "heading": "From educators for educators: Our promise.",
+    "intro": "We are a team of educators and committed parents. Exactly this combination makes Trustolino what it is. We combine sound pedagogical expertise with the perspective that we ourselves take as parents. Our founding was the answer to a paradox that we experienced time and again on our own path, from training and studies to managing facilities. We know exactly what challenge our industry has to overcome: While committed talents work in non-specialist side jobs, families are desperately seeking educational quality. We were convinced: That has to change. Out of this conviction, Trustolino was born. As educators, we know what professional care requires; as parents, we know what families are looking for. Our goal is to unite these two worlds. For childcare you can fully trust, and for fair opportunities for all who have found their calling in pedagogy.",
+    "members": [
+      {
+        "name": "Felix",
+        "text": "I am a social worker and have been working with children and young people for many years. Already during my first training as a state-recognized educator with a focus on youth and home education, I had the same problem as so many: I had to work in a non-specialist job and pay a high school fee on the side, and I saw how others took out BAföG and started their careers with a mountain of debt. People who love this work from the bottom of their hearts and still barely made ends meet. In addition to Trustolino, I am still in facility management today and see it every day: prospective professionals who do not know how they will manage without support from home. This is exactly why Trustolino GmbH exists. We know this pain from our own experience and have built what we would have wished for ourselves back then: that pedagogical work is finally paid fairly."
+      },
+      {
+        "name": "Philipp",
+        "text": "As a father of 2 children, I got to know the difficulties of being a parent early on. I was 21 years young when I became a father. And that in Great Britain, unmarried. I came into early contact and exchange with public offices, which I still greatly appreciate today, the hard work of committed people, with only one goal - the well-being of the children. Today I just want to pass on this lesson I experienced, for a stable future for our children. And for this I would like to give something back with Trustolino, an opportunity for educators to have fun at their job again unhindered, because children feel that too. A well-preserved environment for a blossoming future."
+      },
+      {
+        "name": "Jonas",
+        "text": "About 25 years ago, I began my training as an educator. Even then, I realized how little appreciation aspiring pedagogical professionals often receive – even though they take on responsibility every day for the most valuable thing families have: their children. Many years later, as a father, I was looking for a babysitter for my son. But I found no one to whom I wanted to entrust him with a good feeling. From this experience, sitt.app was initially created – and finally Trustolino. For five years, I have been working with full passion on this vision: to offer families a trustworthy point of contact and to give educators fair earning opportunities, valuable practical experience and the recognition they deserve. For me, Trustolino is not just a platform – but a matter of the heart. Thank you for being part of this vision."
+      },
+      {
+        "name": "Jan",
+        "text": "As a father of two small children, I experience myself how difficult it can be to find reliable and trustworthy care that is available at the times when a family really needs it. Because everyday life is not always oriented towards fixed care times: Professional appointments change, care gaps arise due to bottlenecks and illness and sometimes support is needed at short notice. Parents are not looking for just any solution, but a person to whom they can entrust their children with a good feeling. Through my teaching activities at universities and my work as a founder coach, I have been allowed to accompany many young people on their way. I see how much competence, sense of responsibility and commitment especially prospective professionals bring with them – and how often they lack fair and flexible opportunities to use these skills meaningfully. For me, Trustolino therefore combines two needs that immediately belong together: Families need qualified care that is flexibly available and supports them in their everyday lives. Educators deserve fair opportunities and genuine appreciation for their work. We founded Trustolino so that this connection succeeds securely, transparently and reliably: For families, for pedagogical professionals and above all for the children."
+      },
+      {
+        "name": "Selim",
+        "text": "As a computer science student at the Technical University of Mannheim, I am passionate about new technologies and above all about the possibilities of using them to solve real problems in everyday life more simply and accessible. I noticed early on that technology is particularly valuable to me when it can have a concrete positive impact on people's lives. That is exactly why Trustolino is important to me. Caring for children is a task in which trust, security and a good togetherness play a crucial role. With Trustolino, I want to use my technical skills to make access to each other as simple, transparent and secure as possible for parents and educators, and thus create an environment in which everyone involved feels well looked after. I am supported in this by the MARS Center of Entrepreneurship at the Technical University of Mannheim, which enables me to implement my own ideas and take responsibility for a project while still studying."
+      }
+    ]
+  },
+  "mission": {
+    "heading": "Our Mission: Your work, your terms",
+    "text": "We want you to be able to focus on your calling from day one: Professional work with children. No more non-specialist side jobs. Welcome to a platform that actively supports your development and takes away the work that does not belong to your pedagogical focus. Instead, you dedicate yourself to your actual vocation right from the start and do what you consciously decided to do: Professional work with children."
+  },
+  "waitlist2": {
+    "heading": "Become part of the movement: Join in under a minute",
+    "text": "Secure your spot now. Registration is extremely simple: Just your email address is enough to put you on the waitlist. No bureaucratic effort, no form jungle. We will simply notify you as soon as it starts for you.",
+    "cta": "Join the waitlist now"
+  },
+  "freiraum": {
+    "heading": "Independent, but secure: Your freedom, our support",
+    "text": "At Trustolino, you act as an independent service provider. You determine your own prices, freely choose your assignments and work on your own account and responsibility. Trustolino is your placement and infrastructure platform, not your employer. You can optionally use our tools, from payment processing via a certified payment service provider to the preparation of your tax documents."
+  },
+  "faq": {
+    "heading": "Frequently Asked Questions: Everything you need to know about Trustolino",
+    "items": [
+      {
+        "question": "Is Trustolino an employment?",
+        "answer": "No, you work independently. You freely determine your prices, times and assignments and work on a freelance basis."
+      },
+      {
+        "question": "Which qualifications are accepted?",
+        "answer": "Your educational background (e.g. studies, training, degree in a pedagogical field) is at the forefront for Trustolino. It is important to us that you bring professional expertise with you."
+      },
+      {
+        "question": "What does the career portfolio include?",
+        "answer": "It is a systematic proof of your practical experience that makes your expertise tangible for future clients and employers."
+      },
+      {
+        "question": "Is the usage free for me?",
+        "answer": "Yes, we provide the infrastructure for you. You invoice your services and can manage your billing and payouts via the Trustolino platform.\n• Personal support from our support team for all questions."
+      },
+      {
+        "question": "How does the review process work?",
+        "answer": "Every registration is checked manually by our team. This guarantees that all educators in training and practice who carry the \"Trusted Educator\" seal have had their background verified."
+      },
+      {
+        "question": "Is the work a permanent position?",
+        "answer": "No, you act as an independent service provider and enjoy full freedom over your availabilities, your prices and the selection of your assignments."
+      },
+      {
+        "question": "Do I have to commit to fixed working hours or minimum hours?",
+        "answer": "Not at all. You control your availability via the Trustolino app to suit your schedule."
+      },
+      {
+        "question": "What about problems?",
+        "answer": "You are never alone. Our support team moderates conflicts and supports you at any time."
+      },
+      {
+        "question": "How secure is my data?",
+        "answer": "Your data is treated in a GDPR-compliant manner and used, among other things, to verify your educational background by our team of experts. Which data we process for what is stated in our privacy policy."
+      },
+      {
+        "question": "Which documents can I submit to the tax office?",
+        "answer": "As an independent service provider, you use our EÜR (revenue surplus) generator, which creates the necessary tax-relevant documents for you to minimize the effort."
+      },
+      {
+        "question": "What exactly is the career portfolio?",
+        "answer": "It is your digital proof of competence for later applications, which proves what experience you have actually gathered, far beyond mandatory internships."
+      },
+      {
+        "question": "How secure is my personal data?",
+        "answer": "Your data is safe with us. We strictly adhere to the GDPR. Your documents are used, among other things, for verification and are not passed on to unauthorized third parties. Which data we process for what is stated in our privacy policy."
+      }
+    ]
+  },
+  "nav": {
+    "pricing": "Pricing",
+    "features": "Features & Verification",
+    "trustedEducator": "Trusted Educator",
+    "team": "Our Team",
+    "advisor": "Advisor Portal"
+  },
+  "footer": {
+    "tagline": "Trustworthy childcare, organized effortlessly.",
+    "impressum": "Legal Notice",
+    "datenschutz": "Privacy Policy",
+    "ratgeber": "Advisor Portal",
+    "copyright": "© 2025 Trustolino GmbH. All rights reserved."
+  },
+  "advisor": {
+    "allArticles": "Advisor Portal",
+    "readingTime": "Reading time",
+    "minReadingTime": "min. reading time",
+    "backToOverview": "Back to overview",
+    "readMore": "Read more",
+    "category": {
+      "paedagogen": "For Educators",
+      "eltern": "For Parents"
+    }
+  },
+  "meta": {
+    "siteName": "Trustolino",
+    "description": "Trustworthy childcare, organized effortlessly."
+  },
+  "common": {
+    "loading": "Loading..."
+  },
+  "waitlistForm": {
+    "emailPlaceholder": "Your email address",
+    "submitting": "Submitting...",
+    "successTitle": "You're in!",
+    "successText": "We have received your email address and will notify you as soon as we launch.",
+    "errorGeneric": "An error occurred. Please try again.",
+    "errorDuplicate": "This email address is already on the waitlist.",
+    "errorInvalidEmail": "Please enter a valid email address.",
+    "privacyConsent": "By clicking the button, you agree to our {privacy}.",
+    "privacyLink": "Privacy Policy"
+  }
+}

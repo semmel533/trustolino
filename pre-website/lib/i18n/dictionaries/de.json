@@ -1,0 +1,225 @@
+{
+  "hero": {
+    "badge": "Mehr als nur Betreuung",
+    "heading": "Werde zum gefragten Betreuungsprofi auf Trustolino",
+    "subtext": "Deine pädagogische Leidenschaft verdient Anerkennung und die richtige Plattform",
+    "cta": "Kostenlos Vorregistrieren"
+  },
+  "value": {
+    "heading": "Deine pädagogische Leidenschaft verdient Anerkennung und die richtige Plattform",
+    "text": "Vergiss das klassische \"Babysitting\", bei Trustolino bist du der pädagogische Experte, den Familien wirklich brauchen. Wir wissen, dass deine Arbeit fundierte Beziehungsarbeit und echte Fachkompetenz erfordert. Deshalb haben wir eine Plattform geschaffen, die deine Professionalität in den Mittelpunkt stellt. Egal ob du studierst, in der Ausbildung bist oder bereits im Berufsleben stehst: Wir bringen dich mit Familien zusammen, die pädagogische Qualität nicht nur suchen, sondern zutiefst wertschätzen. Setze deine Expertise dort ein, wo sie den größten Unterschied macht, und werde Teil einer Community, die deinen wahren Wert versteht."
+  },
+  "expertise": {
+    "heading": "Expertise, die zählt: Warum wir auf verifizierten pädagogischen Hintergrund setzen",
+    "cards": [
+      {
+        "title": "Verifiziert & Sicher",
+        "text": "Dein Profil durchläuft eine manuelle Prüfung unserer Experten. Das schafft Vertrauen bei Familien und hebt dich als Profi hervor."
+      },
+      {
+        "title": "Volle Entlastung",
+        "text": "Wir automatisieren deine administrative Abwicklung. Von der Rechnungsstellung bis zur EÜR-Vorbereitung, du konzentrierst dich auf deine pädagogische Arbeit."
+      },
+      {
+        "title": "Digitales Karriere-Portfolio",
+        "text": "Jeder Einsatz wird dokumentiert. Dein digitaler Kompetenznachweis für deine berufliche Laufbahn, der weit über Pflichtpraktika hinausgeht."
+      }
+    ]
+  },
+  "qualitySeal": {
+    "heading": "Das Trusted-Educator-Siegel",
+    "text": "Qualität ist unser Fundament. Deshalb gibt es bei Trustolino kein automatisiertes Onboarding. Jede Anmeldung wird persönlich geprüft. Nach erfolgreicher Verifizierung deiner Qualifikationsnachweise (Immatrikulation, Ausbildungsvertrag oder Zeugnis) und 100 % ausgefülltes Profil erhältst du das Trusted-Educator-Siegel. Dies ist unser Versprechen an Eltern und ein Qualitätsmerkmal für deine Arbeit."
+  },
+  "whoWeAre": {
+    "heading": "Wer wir sind",
+    "text": "Trustolino wurde von Pädagogen für Pädagogen gegründet. Wir kennen die Herausforderungen der Branche aus eigener Erfahrung, vom Studium bis zur Einrichtungsleitung. Wir haben eine Plattform geschaffen, die professionelle Betreuung fair entlohnt, wertschätzt und durch Technologie effizienter macht. Wir vereinen pädagogisches Fachwissen mit dem Anspruch an exzellente Dienstleistung.",
+    "table": {
+      "headers": [
+        "Feature",
+        "Standard-Plattformen",
+        "Trustolino"
+      ],
+      "rows": [
+        [
+          "Check-Prozess",
+          "Algorithmus / Keine Prüfung",
+          "Persönliche Experten-Prüfung"
+        ],
+        [
+          "Fokus",
+          "Reine Vermittlung",
+          "Karriere- & Portfolioaufbau, Sicherheit & Vertrauen"
+        ],
+        [
+          "Bürokratie",
+          "Du bist auf dich allein gestellt",
+          "Automatisiert (EÜR & Rechnungen)"
+        ],
+        [
+          "Mindset",
+          "\"Babysitting\" (Gelegenheitsjob)",
+          "\"Pädagogik\" (Berufung & Karriere)"
+        ]
+      ]
+    }
+  },
+  "waitlistInfo": {
+    "heading": "Werde Teil der Bewegung",
+    "text": "Sichere dir deinen Platz in unserer Community. Die Registrierung ist unkompliziert: Hinterlege deine E-Mail-Adresse auf unserer Warteliste und sei ab dem nächsten Monat mit dabei wenn wir Live gehen. Wir benachrichtigen dich persönlich, sobald wir neue Profile freischalten.",
+    "cta": "Jetzt auf die Warteliste setzen",
+    "disclaimer": "Dein Portfolio ist eine wertvolle Ergänzung zu deiner Ausbildung, ersetzt jedoch kein Pflichtpraktikum und ist nicht als Studienleistung anrechenbar."
+  },
+  "sealSteps": {
+    "heading": "Das Trustolino-Siegel: Dein Zeichen für pädagogische Qualität",
+    "steps": [
+      {
+        "title": "Schritt 1: Nachweis deines pädagogischen Hintergrunds",
+        "text": "Lade z.B. deine Immatrikulationsbescheinigung, deinen Ausbildungsvertrag oder dein Abschlusszeugnis hoch. Unser Team prüft jede Anmeldung persönlich auf einen vorhandenen pädagogischen Hintergrund."
+      },
+      {
+        "title": "Schritt 2: Erweitertes Führungszeugnis (optional)",
+        "text": "Sicherheit schafft Vertrauen. Daher bieten wir dir die Möglichkeit, ein erweitertes Führungszeugnis bei uns zu hinterlegen. Dies ist komplett freiwillig, aber ein besonders wertvolles Signal für Eltern, dass ihre Kinder bei dir als geprüftem Talent in guten Händen sind.",
+        "tip": "Profi-Tipp: Da du vom Fach bist, kennst du das ohnehin: Wer in einer pädagogischen Einrichtung mit Kindern arbeitet, muss in aller Regel ein erweitertes Führungszeugnis vorlegen; die Träger sind dazu nach § 72a SGB VIII verpflichtet. Bei uns ist es freiwillig, weil wir Betreuung im Rahmen einer selbstständigen Tätigkeit vermitteln. Für Eltern ist es trotzdem eines der wichtigsten Signale. Wir unterstützen dich bei der Beantragung der notwendigen Bescheinigung. Die Prüfung erfolgt per Einsichtnahme, eine Kopie speichern wir DSGVO-konform nicht.\n\nNach erfolgreicher Prüfung erhältst du dein Siegel (so wie ein blaues Häkchen bei Twitter?), das Eltern zeigt: Hier ist ein Profi am Werk. Wir frischen diese Prüfung in regelmäßigen Abständen auf, um die Qualität für alle hoch zu halten."
+      },
+      {
+        "title": "Schritt 3: Individuelle Überprüfung durch unser Expertenteam",
+        "text": "Bei uns entscheidet kein anonymer Algorithmus und keine bloße Selbstauskunft: Unser Team mit hoher pädagogischer Expertise prüft jede Anmeldung persönlich. Nach erfolgreicher Verifizierung und Vervollständigung aller Kriterien (Video, Profilbild, Beschreibung, Details), wird dein Profil mit dem Trusted-Educator-Siegel freigeschaltet. Um die hohe Qualität und Aussagekraft des Siegels dauerhaft zu garantieren, frischen wir diese Prüfung in regelmäßigen Abständen auf."
+      }
+    ]
+  },
+  "team": {
+    "heading": "Von Pädagog:innen für Pädagog:innen: Unser Versprechen.",
+    "intro": "Wir sind ein Team aus Pädagogen und engagierten Eltern. Genau diese Kombination macht Trustolino aus. Wir verbinden fundiertes pädagogisches Fachwissen mit der Perspektive, die wir selbst als Eltern einnehmen. Unsere Gründung war die Antwort auf ein Paradoxon, das wir auf unserem eigenen Weg, von der Ausbildung über das Studium bis hin zur Leitung von Einrichtungen, immer wieder erlebt haben. Wir wissen genau, welche Herausforderung unsere Branche meistern muss: Während engagierte Talente in fachfremden Nebenjobs arbeiten, suchen Familien händeringend nach pädagogischer Qualität. Wir waren überzeugt: Das muss sich ändern. Aus dieser Überzeugung heraus entstand Trustolino. Als Pädagogen wissen wir, was professionelle Betreuung braucht; als Eltern wissen wir, was Familien suchen. Unser Ziel ist es, diese beiden Welten zu vereinen. Für Betreuung, der man voll vertrauen kann, und für faire Chancen für alle, die ihre Berufung in der Pädagogik gefunden haben.",
+    "members": [
+      {
+        "name": "Felix",
+        "text": "Ich bin Sozialfachwirt und arbeite seit vielen Jahren mit Kindern und Jugendlichen. Schon in meiner ersten Ausbildung zum staatlich anerkannten Erzieher mit Schwerpunkt Jugend- und Heimerziehung hatte ich dasselbe Problem wie so viele: Ich musste fachfremd jobben und nebenbei ein hohes Schulgeld bezahlen, und ich sah, wie andere BAföG aufnahmen und mit einem Berg Schulden in den Beruf starteten. Menschen, die diese Arbeit von Herzen lieben und trotzdem kaum über die Runden kamen. Neben Trustolino bin ich bis heute in der Einrichtungsleitung und sehe es jeden Tag: angehende Fachkräfte, die ohne Rückhalt von zu Hause nicht wissen, wie sie es schaffen sollen. Genau dafür gibt es die Trustolino GmbH. Wir kennen diesen Schmerz aus eigener Erfahrung und haben gebaut, was wir uns damals selbst gewünscht hätten: dass pädagogische Arbeit endlich fair bezahlt wird."
+      },
+      {
+        "name": "Philipp",
+        "text": "Als Vater von 2 Kindern habe ich früh die Schwierigkeiten des Elternseins kennengelernt. Ich war 21 Jahre jung, als ich Vater wurde. Und das in Großbritannien, unverheiratet. Ich kam früh in Berührung und Austausch mit öffentlichen Ämtern, was ich bis heute immer wieder sehr zu schätzen weiß, die Knochenarbeit von engagierten Menschen, mit nur einem Ziel - das Wohlsein der Kinder. Heute möchte ich einfach diese Lektion, die ich erlebt habe, weiterreichen, für eine stabile Zukunft unserer Kinder. Und dafür möchte ich, mit Trustolino, etwas zurückgeben, eine Möglichkeit für Pädagog:innen wieder unverhindert Spass an Ihrem Job zu haben, denn das spüren auch Kinder. Ein wohl erhaltenes Umfeld für eine blühende Zukunft."
+      },
+      {
+        "name": "Jonas",
+        "text": "Vor rund 25 Jahren begann ich meine Ausbildung zum Erzieher. Schon damals wurde mir bewusst, wie wenig Wertschätzung angehende pädagogische Fachkräfte oft erfahren – obwohl sie täglich Verantwortung für das Wertvollste übernehmen, was Familien haben: ihre Kinder. Viele Jahre später suchte ich als Vater einen Babysitter für meinen Sohn. Doch ich fand niemanden, dem ich ihn mit gutem Gefühl anvertrauen wollte. Aus dieser Erfahrung entstand zunächst sitt.app – und schließlich Trustolino. Seit fünf Jahren arbeite ich mit voller Leidenschaft an dieser Vision: Familien eine vertrauensvolle Anlaufstelle zu bieten und Pädagoginnen und Pädagogen faire Verdienstmöglichkeiten, wertvolle Praxiserfahrung und die Anerkennung zu geben, die sie verdienen. Trustolino ist für mich nicht einfach eine Plattform – sondern eine Herzensangelegenheit. Danke, dass ihr Teil dieser Vision seid."
+      },
+      {
+        "name": "Jan",
+        "text": "Als Vater von zwei kleinen Kindern erlebe ich selbst, wie schwierig es sein kann, eine verlässliche und vertrauensvolle Betreuung zu finden, die zu den Zeiten verfügbar ist, in denen eine Familie sie wirklich braucht. Denn der Alltag richtet sich nicht immer nach festen Betreuungszeiten: Berufliche Termine ändern sich, Betreuungslücken entstehen durch Engpässe und Krankheit und manchmal wird kurzfristig Unterstützung benötigt. Dabei suchen Eltern nicht irgendeine Lösung, sondern einen Menschen, dem sie ihre Kinder mit einem guten Gefühl anvertrauen können. Durch meine Lehrtätigkeit an Hochschulen und meine Tätigkeit als Gründercoach habe ich viele junge Menschen auf ihrem Weg begleiten dürfen. Dabei sehe ich, wie viel Kompetenz, Verantwortungsbewusstsein und Engagement gerade angehende Fachkräfte mitbringen – und wie häufig ihnen faire und flexible Möglichkeiten fehlen, diese Fähigkeiten sinnvoll einzusetzen. Trustolino verbindet für mich deshalb zwei Bedürfnisse, die unmittelbar zusammengehören: Familien brauchen qualifizierte Betreuung, die flexibel verfügbar ist und sie in ihrem Alltag unterstützt. Pädagoginnen und Pädagogen verdienen faire Chancen und echte Wertschätzung für ihre Arbeit. Wir haben Trustolino gegründet, damit diese Verbindung sicher, transparent und verlässlich gelingt: Für Familien, für pädagogische Fachkräfte und vor allem für die Kinder."
+      },
+      {
+        "name": "Selim",
+        "text": "Als Informatikstudent an der Technischen Hochschule Mannheim begeistere ich mich für neue Technologien und vor allem für die Möglichkeiten, mit ihnen echte Probleme im Alltag einfacher und zugänglicher zu lösen. Dabei habe ich früh gemerkt, dass Technologie für mich dann besonders wertvoll ist, wenn sie einen konkreten positiven Einfluss auf das Leben von Menschen haben kann. Genau deshalb ist mir Trustolino wichtig. Die Betreuung von Kindern ist eine Aufgabe, bei der Vertrauen, Sicherheit und ein gutes Miteinander eine entscheidende Rolle spielen. Mit Trustolino möchte ich meine technischen Fähigkeiten dafür einsetzen, Eltern und Pädagog den Zugang zueinander so einfach, transparent und sicher wie möglich zu machen und damit ein Umfeld zu schaffen, in dem sich alle Beteiligten gut aufgehoben fühlen. Dabei werde ich vom MARS Center of Entrepreneurship der Technischen Hochschule Mannheim unterstützt, das mir ermöglicht, bereits während meines Studiums eigene Ideen umzusetzen und Verantwortung für ein Projekt zu übernehmen."
+      }
+    ]
+  },
+  "mission": {
+    "heading": "Unsere Mission: Deine Arbeit, deine Bedingungen",
+    "text": "Wir möchten, dass du dich von Tag eins an auf deine Berufung konzentrieren kannst: Die professionelle Arbeit mit Kindern. Schluss mit fachfremden Aushilfsjobs. Willkommen bei einer Plattform, die deine Entwicklung aktiv fördert und dir die Arbeit abnimmt, die nicht zu deinem pädagogischen Fokus gehört. Stattdessen widmest du dich von Anfang an deiner eigentlichen Berufung und tust das, wofür du dich bewusst entschieden hast: Die professionelle Arbeit mit Kindern."
+  },
+  "waitlist2": {
+    "heading": "Werde Teil der Bewegung: In unter einer Minute dabei",
+    "text": "Sichere dir jetzt deinen Platz. Die Registrierung ist denkbar einfach: Nur deine E-Mail-Adresse genügt, um dich auf die Warteliste zu setzen. Kein bürokratischer Aufwand, kein Formular-Dschungel. Wir benachrichtigen dich einfach, sobald es für dich losgeht.",
+    "cta": "Kostenlos Vorregistrieren"
+  },
+  "freiraum": {
+    "heading": "Selbstständig, aber sicher: Dein Freiraum, unsere Unterstützung",
+    "text": "Bei Trustolino agierst du als selbstständige:r Dienstleister:in. Du bestimmst deine Preise selbst, wählst deine Aufträge frei und arbeitest auf eigene Rechnung und Verantwortung. Trustolino ist deine Vermittlungs- und Infrastrukturplattform, nicht dein Arbeitgeber. Optional kannst du unsere Werkzeuge nutzen, von der Zahlungsabwicklung über einen zertifizierten Zahlungsdienstleister bis zur Vorbereitung deiner steuerlichen Unterlagen."
+  },
+  "faq": {
+    "heading": "Häufige Fragen: Alles, was du über Trustolino wissen musst",
+    "items": [
+      {
+        "question": "Ist Trustolino eine Anstellung?",
+        "answer": "Nein, du arbeitest selbstständig. Du bestimmst deine Preise, Zeiten und Aufträge frei und arbeitest freiberuflich."
+      },
+      {
+        "question": "Welche Qualifikationen werden akzeptiert?",
+        "answer": "Dein pädagogischer Hintergrund (z. B. Studium, Ausbildung, Abschluss in einem pädagogischen Bereich) steht für Trustolino im Vordergrund. Für uns ist wichtig, dass du fachliche Expertise mitbringst."
+      },
+      {
+        "question": "Was beinhaltet das Karriere-Portfolio?",
+        "answer": "Es ist ein systematischer Nachweis deiner Praxiserfahrung, der deine Expertise für zukünftige Auftraggeber und Arbeitgeber greifbar macht."
+      },
+      {
+        "question": "Ist die Nutzung für mich kostenlos?",
+        "answer": "Ja, wir bieten dir die Infrastruktur. Du stellst deine Leistungen in Rechnung und kannst deine Abrechnungen und Auszahlungen über die Trustolino-Plattform verwalten.\n• Persönliche Unterstützung durch unser Support-Team bei allen Fragen."
+      },
+      {
+        "question": "Wie läuft die Überprüfung ab?",
+        "answer": "Jede Anmeldung wird von unserem Team manuell geprüft. Das garantiert, dass alle Pädagog:innen in Ausbildung und Praxis, die das \"Trusted Educator\"-Siegel tragen, ihren Hintergrund verifiziert haben."
+      },
+      {
+        "question": "Ist die Arbeit eine feste Anstellung?",
+        "answer": "Nein, du agierst als selbstständige:r Dienstleister:in und genießt volle Freiheit über deine Verfügbarkeiten, deine Preise und die Auswahl deiner Aufträge."
+      },
+      {
+        "question": "Muss ich mich zu festen Arbeitszeiten oder Mindeststunden verpflichten?",
+        "answer": "Keineswegs. Du steuerst deine Verfügbarkeit über die Trustolino-App passend zu deinem Zeitplan."
+      },
+      {
+        "question": "Was bei Problemen?",
+        "answer": "Du bist nie allein. Unser Support-Team moderiert Konflikte und unterstützt dich jederzeit."
+      },
+      {
+        "question": "Wie sicher sind meine Daten?",
+        "answer": "Deine Daten werden DSGVO-konform behandelt und unter anderem zur Verifizierung deines pädagogischen Hintergrunds durch unser Expert:innenteam verwendet. Welche Daten wir wofür verarbeiten, steht in unserer Datenschutzerklärung."
+      },
+      {
+        "question": "Welche Unterlagen kann ich beim Finanzamt einreichen",
+        "answer": "Als selbstständige:r Dienstleister:in nutzt du unseren EÜR-Generator, der dir die notwendigen steuerrelevanten Unterlagen erstellt, um den Aufwand zu minimieren."
+      },
+      {
+        "question": "Was ist das Karriereportfolio genau?",
+        "answer": "Es ist dein digitaler Kompetenznachweis für spätere Bewerbungen, der belegt, welche Erfahrung du tatsächlich gesammelt hast, weit über die Pflichtpraktika hinaus."
+      },
+      {
+        "question": "Wie sicher sind meine persönlichen Daten?",
+        "answer": "Deine Daten sind bei uns sicher. Wir halten uns streng an die DSGVO. Deine Unterlagen werden unter anderem zur Verifizierung verwendet und nicht an unbefugte Dritte weitergegeben. Welche Daten wir wofür verarbeiten, steht in unserer Datenschutzerklärung."
+      }
+    ]
+  },
+  "nav": {
+    "pricing": "Preisstruktur",
+    "features": "Features & Prüfung",
+    "trustedEducator": "Trusted Educator",
+    "team": "Das Team",
+    "advisor": "Ratgeber Portal"
+  },
+  "footer": {
+    "tagline": "Vertrauensvolle Betreuung, kinderleicht organisiert.",
+    "impressum": "Impressum",
+    "datenschutz": "Datenschutz",
+    "ratgeber": "Ratgeber Portal",
+    "copyright": "© 2025 Trustolino GmbH. Alle Rechte vorbehalten."
+  },
+  "advisor": {
+    "allArticles": "Ratgeber Portal",
+    "readingTime": "Lesezeit",
+    "minReadingTime": "min. Lesezeit",
+    "backToOverview": "Zurück zur Übersicht",
+    "readMore": "Weiterlesen",
+    "category": {
+      "paedagogen": "Für Pädagog:innen",
+      "eltern": "Für Eltern"
+    }
+  },
+  "meta": {
+    "siteName": "Trustolino",
+    "description": "Vertrauensvolle Betreuung, kinderleicht organisiert."
+  },
+  "common": {
+    "loading": "Lädt..."
+  },
+  "waitlistForm": {
+    "emailPlaceholder": "Deine E-Mail-Adresse",
+    "submitting": "Wird gesendet...",
+    "successTitle": "Du bist dabei!",
+    "successText": "Wir haben deine E-Mail-Adresse erhalten und benachrichtigen dich, sobald es losgeht.",
+    "errorGeneric": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
+    "errorDuplicate": "Diese E-Mail-Adresse steht bereits auf der Warteliste.",
+    "errorInvalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",
+    "privacyConsent": "Mit Klick auf die Schaltfläche stimmst du unserer {privacy} zu.",
+    "privacyLink": "Datenschutzerklärung"
+  }
+}
