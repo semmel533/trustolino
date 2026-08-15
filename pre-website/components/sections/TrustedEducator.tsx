@@ -2,6 +2,7 @@
 
 import { useDictionary } from "@/lib/i18n/DictionaryContext";
 import { CheckCircle } from "@phosphor-icons/react";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 
 export default function TrustedEducator() {
   const dict = useDictionary();
@@ -41,9 +42,7 @@ export default function TrustedEducator() {
                   <div className="mt-6 rounded-xl bg-gold-50 p-4 border border-gold-200">
                     <div className="flex items-start gap-3">
                       <CheckCircle weight="fill" className="mt-0.5 size-5 shrink-0 text-gold-600" />
-                      <p className="text-xs leading-relaxed text-foreground whitespace-pre-wrap">
-                        {step.tip}
-                      </p>
+                      <ExpandableText text={step.tip} maxLength={150} className="text-xs leading-relaxed text-foreground whitespace-pre-wrap" />
                     </div>
                   </div>
                 )}

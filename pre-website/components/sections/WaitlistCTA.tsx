@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import { useDictionary } from "@/lib/i18n/DictionaryContext";
+import { CheckCircle } from "@phosphor-icons/react";
 
 export default function WaitlistCTA() {
   const dict = useDictionary();
@@ -80,11 +81,12 @@ export default function WaitlistCTA() {
           </p>
 
           {success ? (
-            <div className="mx-auto mt-8 max-w-xl rounded-xl bg-primary/90/50 p-6">
-              <p className="font-heading text-lg font-bold text-accent">
+            <div className="mx-auto mt-8 max-w-xl rounded-xl bg-primary/90/50 p-8 flex flex-col items-center text-center">
+              <CheckCircle weight="fill" className="size-16 text-accent mb-4 drop-shadow-md" />
+              <p className="font-heading text-2xl font-bold text-accent">
                 {wForm.successTitle}
               </p>
-              <p className="mt-2 text-sm text-primary-foreground/80">
+              <p className="mt-3 text-base text-primary-foreground/90">
                 {wForm.successText}
               </p>
             </div>

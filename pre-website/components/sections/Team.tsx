@@ -1,6 +1,7 @@
 "use client";
 
 import { useDictionary } from "@/lib/i18n/DictionaryContext";
+import { ExpandableText } from "@/components/ui/ExpandableText";
 
 export default function Team() {
   const dict = useDictionary();
@@ -29,9 +30,7 @@ export default function Team() {
                   {member.name}
                 </h3>
               </div>
-              <p className="text-sm leading-relaxed text-foreground/80/80">
-                {member.text}
-              </p>
+              <ExpandableText text={member.text} maxLength={200} className="text-sm leading-relaxed text-foreground/80" />
             </div>
           ))}
         </div>
