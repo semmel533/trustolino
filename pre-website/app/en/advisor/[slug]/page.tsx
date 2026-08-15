@@ -80,7 +80,7 @@ export default async function AdvisorArticleEN({ params }: Props) {
         )}
       </header>
 
-      <article className="prose prose-teal prose-lg max-w-none">
+      <article className="prose md:prose-lg prose-teal max-w-none">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={components}
