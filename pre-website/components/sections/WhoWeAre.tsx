@@ -32,7 +32,12 @@ export default function WhoWeAre() {
               {w.table.rows.map((row: string[], i: number) => (
                 <tr key={i} className="transition-colors hover:bg-cream-100">
                   <td className="px-6 py-4 font-semibold text-foreground">{row[0]}</td>
-                  <td className="px-6 py-4 text-foreground/80/70">{row[1]}</td>
+                  <td className="px-6 py-4 text-foreground/80">
+                    <div className="flex items-start gap-2">
+                      <XCircle weight="fill" className="mt-0.5 size-5 shrink-0 text-red-500" />
+                      <span>{row[1]}</span>
+                    </div>
+                  </td>
                   <td className="px-6 py-4 font-medium text-foreground">
                     <div className="flex items-start gap-2">
                       <CheckCircle weight="fill" className="mt-0.5 size-5 shrink-0 text-teal-600" />

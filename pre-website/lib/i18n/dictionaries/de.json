@@ -212,7 +212,7 @@
     "emailPlaceholder": "Deine E-Mail-Adresse",
     "submitting": "Wird gesendet...",
     "successTitle": "Du bist dabei!",
-    "successText": "Wir haben deine E-Mail-Adresse erhalten und benachrichtigen dich, sobald es losgeht.",
+    "successText": "Wir haben deine E-Mail-Adresse erhalten und benachrichtigen dich, sobald wir live sind und du dein Profil fertigstellen kannst.",
     "errorGeneric": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
     "errorDuplicate": "Diese E-Mail-Adresse steht bereits auf der Warteliste.",
     "errorInvalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",

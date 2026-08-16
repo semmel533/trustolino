@@ -212,7 +212,7 @@
     "emailPlaceholder": "Your email address",
     "submitting": "Submitting...",
     "successTitle": "You're in!",
-    "successText": "We have received your email address and will notify you as soon as we launch.",
+    "successText": "We have received your email address and will notify you as soon as we are live and you can complete your profile.",
     "errorGeneric": "An error occurred. Please try again.",
     "errorDuplicate": "This email address is already on the waitlist.",
     "errorInvalidEmail": "Please enter a valid email address.",
