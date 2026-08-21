@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function LegalPage() {
-  const filePath = path.join(process.cwd(), 'content/en/legal/legal.md');
+  const filePath = path.join(process.cwd(), 'public/content/en/legal/legal.md');
 
   let content = '';
   try {

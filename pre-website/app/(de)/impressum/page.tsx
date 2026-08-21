@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ImpressumPage() {
-  const filePath = path.join(process.cwd(), 'content/de/legal/impressum.md');
+  const filePath = path.join(process.cwd(), 'public/content/de/legal/impressum.md');
 
   let content = '';
   try {

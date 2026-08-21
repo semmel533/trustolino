@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function DatenschutzPage() {
-  const filePath = path.join(process.cwd(), 'content/de/privacy/datenschutz.md');
+  const filePath = path.join(process.cwd(), 'public/content/de/privacy/datenschutz.md');
 
   let content = '';
   try {
