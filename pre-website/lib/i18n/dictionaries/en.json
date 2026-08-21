@@ -70,7 +70,7 @@
     "disclaimer": "Your portfolio is a valuable addition to your education, but does not replace mandatory internships and cannot be credited as academic achievement."
   },
   "sealSteps": {
-    "heading": "The Trustolino Seal: Your mark of pedagogical quality",
+    "heading": "The Trusted Educator Seal: Your mark of pedagogical quality",
     "steps": [
       {
         "title": "Step 1: Proof of your educational background",
@@ -209,6 +209,7 @@
     "loading": "Loading..."
   },
   "waitlistForm": {
+    "namePlaceholder": "Your name",
     "emailPlaceholder": "Your email address",
     "submitting": "Submitting...",
     "successTitle": "You're in!",
@@ -216,7 +217,9 @@
     "errorGeneric": "An error occurred. Please try again.",
     "errorDuplicate": "This email address is already on the waitlist.",
     "errorInvalidEmail": "Please enter a valid email address.",
-    "privacyConsent": "By clicking the button, you agree to our {privacy}.",
+    "errorInvalidName": "Please enter your name.",
+    "errorPrivacyRequired": "To sign up, you must agree to the privacy policy.",
+    "privacyCheckbox": "I have read the {privacy} and agree to the processing of my data.",
     "privacyLink": "Privacy Policy"
   }
 }

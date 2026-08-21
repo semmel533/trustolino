@@ -2,40 +2,29 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useDictionary } from "@/lib/i18n/DictionaryContext";
-import { CheckCircle } from "@phosphor-icons/react";
+import { CheckCircle, Check } from "@phosphor-icons/react";
 
 export default function WaitlistSimple() {
   const dict = useDictionary();
   const w = dict.waitlist2;
   const wForm = dict.waitlistForm;
+  const pathname = usePathname();
+  const isEn = pathname?.startsWith("/en");
+  const locale = isEn ? "en" : "de";
+  const privacyHref = isEn ? "/en/privacy" : "/datenschutz";
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [privacyConsent, setPrivacyConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const validateEmail = (email: string) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
-
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      
-      if (!email) {
-        setError(wForm.errorInvalidEmail || wForm.errorGeneric);
-        return;
-      }
-      
-      if (!validateEmail(email)) {
-        setError(wForm.errorInvalidEmail || wForm.errorGeneric);
-        return;
-      }
       
       if (submitting) return;
 
@@ -46,16 +35,29 @@ export default function WaitlistSimple() {
         const res = await fetch("/api/waitlist", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, locale: "de" }),
+          body: JSON.stringify({ 
+            name: name.trim(), 
+            email: email.trim(), 
+            locale, 
+            privacyConsent 
+          }),
         });
 
         if (res.ok) {
           setSuccess(true);
+          setName("");
           setEmail("");
+          setPrivacyConsent(false);
         } else {
           const data = await res.json();
           if (data.error === "duplicate") {
             setError(wForm.errorDuplicate || wForm.errorGeneric);
+          } else if (data.error === "invalid_name") {
+            setError(wForm.errorInvalidName || wForm.errorGeneric);
+          } else if (data.error === "invalid_email") {
+            setError(wForm.errorInvalidEmail || wForm.errorGeneric);
+          } else if (data.error === "privacy_required") {
+            setError(wForm.errorPrivacyRequired || wForm.errorGeneric);
           } else {
             setError(data.error || wForm.errorGeneric);
           }
@@ -66,7 +68,7 @@ export default function WaitlistSimple() {
         setSubmitting(false);
       }
     },
-    [email, submitting, wForm.errorGeneric]
+    [name, email, privacyConsent, submitting, locale, wForm]
   );
 
   return (
@@ -90,39 +92,78 @@ export default function WaitlistSimple() {
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="mx-auto mt-10 max-w-xl">
-            <div className="flex flex-col gap-3 sm:flex-row justify-center">
+          <form onSubmit={handleSubmit} noValidate className="mx-auto mt-10 max-w-xl text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
               <input
                 type="text"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  if (error) setError(null);
+                }}
+                placeholder={wForm.namePlaceholder}
+                className="w-full rounded-xl border border-teal-200 bg-white px-4 py-3.5 text-foreground placeholder:text-foreground/40 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20 text-sm md:text-base"
+              />
+              <input
+                type="text"
+                inputMode="email"
+                autoCapitalize="none"
+                autoCorrect="off"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
                   if (error) setError(null);
                 }}
                 placeholder={wForm.emailPlaceholder}
-                className="w-full sm:w-80 rounded-xl border border-teal-200 bg-white px-4 py-3.5 text-foreground placeholder:text-foreground/40 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
+                className="w-full rounded-xl border border-teal-200 bg-white px-4 py-3.5 text-foreground placeholder:text-foreground/40 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/20 text-sm md:text-base"
               />
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full sm:w-auto whitespace-normal sm:whitespace-nowrap rounded-xl bg-accent px-4 sm:px-8 py-3.5 font-bold text-accent-foreground shadow-lg transition-all duration-300 hover:bg-accent/90 hover:shadow-xl disabled:opacity-50 cursor-pointer"
-              >
-                {submitting ? wForm.submitting : w.cta}
-              </button>
             </div>
+
+            <div
+                onClick={() => {
+                  setPrivacyConsent(!privacyConsent);
+                  if (error) setError(null);
+                }}
+                className="mb-4 flex items-start gap-3 text-left cursor-pointer group select-none"
+              >
+                <div
+                  className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-[8px] border-2 transition-all duration-200 ${
+                    privacyConsent
+                      ? "border-accent bg-accent text-accent-foreground shadow-md scale-105"
+                      : "border-white/40 bg-white/15 group-hover:border-white/80 group-hover:bg-white/25 group-hover:scale-105"
+                  }`}
+                >
+                  {privacyConsent && (
+                    <Check weight="bold" className="size-4 stroke-[3]" />
+                  )}
+                </div>
+                <label className="cursor-pointer text-xs leading-relaxed text-primary-foreground/90">
+                  {wForm.privacyCheckbox.split('{privacy}')[0]}
+                  <Link
+                    href={privacyHref}
+                    onClick={(e) => e.stopPropagation()}
+                    className="underline font-semibold hover:text-accent transition-colors"
+                    target="_blank"
+                  >
+                    {wForm.privacyLink}
+                  </Link>
+                  {wForm.privacyCheckbox.split('{privacy}')[1]}
+                </label>
+              </div>
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="w-full rounded-xl bg-accent px-6 py-3.5 font-bold text-accent-foreground shadow-lg transition-all duration-300 hover:bg-accent/90 hover:shadow-xl disabled:opacity-50 cursor-pointer text-base text-center"
+            >
+              {submitting ? wForm.submitting : w.cta}
+            </button>
+
             {error && (
               <div className="mt-4 rounded-lg bg-red-500/20 border border-red-400 p-3 text-center shadow-md">
                 <p className="text-sm font-medium text-red-100 transition-all duration-300 ease-in-out">{error}</p>
               </div>
             )}
-            
-            <p className="mx-auto mt-6 max-w-xl text-xs text-primary-foreground/70">
-              {wForm.privacyConsent.split('{privacy}')[0]}
-              <Link href="/datenschutz" className="underline hover:text-accent transition-colors cursor-pointer">
-                {wForm.privacyLink}
-              </Link>
-              {wForm.privacyConsent.split('{privacy}')[1]}
-            </p>
           </form>
         )}
       </div>

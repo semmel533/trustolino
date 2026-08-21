@@ -27,7 +27,7 @@
     ]
   },
   "qualitySeal": {
-    "heading": "Das Trusted-Educator-Siegel",
+    "heading": "Das Trusted Educator Siegel",
     "text": "Qualität ist unser Fundament. Deshalb gibt es bei Trustolino kein automatisiertes Onboarding. Jede Anmeldung wird persönlich geprüft. Nach erfolgreicher Verifizierung deiner Qualifikationsnachweise (Immatrikulation, Ausbildungsvertrag oder Zeugnis) und 100 % ausgefülltes Profil erhältst du das Trusted-Educator-Siegel. Dies ist unser Versprechen an Eltern und ein Qualitätsmerkmal für deine Arbeit."
   },
   "whoWeAre": {
@@ -70,7 +70,7 @@
     "disclaimer": "Dein Portfolio ist eine wertvolle Ergänzung zu deiner Ausbildung, ersetzt jedoch kein Pflichtpraktikum und ist nicht als Studienleistung anrechenbar."
   },
   "sealSteps": {
-    "heading": "Das Trustolino-Siegel: Dein Zeichen für pädagogische Qualität",
+    "heading": "Das Trusted Educator Siegel: Dein Zeichen für pädagogische Qualität",
     "steps": [
       {
         "title": "Schritt 1: Nachweis deines pädagogischen Hintergrunds",
@@ -209,6 +209,7 @@
     "loading": "Lädt..."
   },
   "waitlistForm": {
+    "namePlaceholder": "Dein Name",
     "emailPlaceholder": "Deine E-Mail-Adresse",
     "submitting": "Wird gesendet...",
     "successTitle": "Du bist dabei!",
@@ -216,7 +217,9 @@
     "errorGeneric": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
     "errorDuplicate": "Diese E-Mail-Adresse steht bereits auf der Warteliste.",
     "errorInvalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",
-    "privacyConsent": "Mit Klick auf die Schaltfläche stimmst du unserer {privacy} zu.",
+    "errorInvalidName": "Bitte gib deinen Namen ein.",
+    "errorPrivacyRequired": "Um dich einzutragen, musst du der Datenschutzerklärung einwilligen.",
+    "privacyCheckbox": "Ich habe die {privacy} zur Kenntnis genommen und willige in die Verarbeitung meiner Daten ein.",
     "privacyLink": "Datenschutzerklärung"
   }
 }

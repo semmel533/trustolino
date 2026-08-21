@@ -17,6 +17,12 @@
             "rowSecurity": false,
             "columns": [
                 {
+                    "key": "name",
+                    "type": "varchar",
+                    "required": false,
+                    "size": 255
+                },
+                {
                     "key": "email",
                     "type": "varchar",
                     "required": true,
@@ -33,6 +39,12 @@
                     "key": "createdAt",
                     "type": "datetime",
                     "required": false
+                },
+                {
+                    "key": "privacyConsent",
+                    "type": "boolean",
+                    "required": false,
+                    "default": true
                 }
             ],
             "indexes": [
