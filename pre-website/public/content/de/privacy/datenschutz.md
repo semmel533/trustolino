@@ -44,44 +44,42 @@ Unser berechtigtes Interesse liegt in der sicheren, stabilen und funktionsfähig
 
 ---
 
-## 4. Hosting, Infrastruktur und Datenbankdienste (Appwrite Cloud)
+## 4. Backend-Infrastruktur und Datenbankdienste (Convex)
 
-Für den Betrieb unserer Website und die technische Bereitstellung unserer Dienste nutzen wir Appwrite Cloud.
+Für den Betrieb unserer Backend-Funktionen, der Datenbank sowie der automatisierten Datenverarbeitung unserer Website nutzen wir die reaktive Backend-as-a-Service-Plattform Convex.
 
 **Dienstanbieter:**  
-Appwrite Code Ltd.  
-Israel  
-Datenschutzerklärung: [https://appwrite.io/privacy](https://appwrite.io/privacy)
+Convex, Inc.  
+548 Market St #61788  
+San Francisco, CA 94104  
+USA  
+Datenschutzerklärung: [https://www.convex.dev/privacy](https://www.convex.dev/privacy)
 
-**Appwrite übernimmt für uns insbesondere:**
-- Hosting unserer Website
-- DNS-Verwaltung
-- Backend-Infrastruktur
-- Datenbanken
-- Dateispeicherung
-- Authentifizierung
-- Technische Sicherheitsmaßnahmen
-- Schutz vor Missbrauch und Angriffen
+**Convex übernimmt für uns insbesondere:**
+- Backend-Infrastruktur und serverseitige Funktionen
+- Reaktive Datenbankverwaltung
+- Automatisierte scheduled Tasks und Datenbereinigungen (Crons)
+- Technische Sicherheitsmaßnahmen und Ratenbegrenzung
+- Schutz vor Missbrauch und unberechtigten Zugriffen
 - Technische Protokollierung und Fehleranalyse
 
 ### Verarbeitete Daten
 Im Rahmen der Bereitstellung können insbesondere folgende Daten verarbeitet werden:
-- IP-Adresse
+- IP-Adresse (in anonymisierter bzw. gehashter Form zur Ratenbegrenzung)
 - Technische Verbindungsdaten
 - Zugriffsprotokolle
 - Fehler- und Sicherheitsprotokolle
-- Registrierungsdaten
-- Daten aus der Vorregistrierung
+- Registrierungsdaten aus der Vorregistrierung (Name, E-Mail-Adresse, Sprache, Zeitstempel, Bestätigungsstatus)
 
 ### Serverstandort
-Unser Appwrite-Cloud-Projekt wird in der Region Frankfurt (Deutschland, EU) betrieben.
+Unsere Convex-Deployment-Infrastruktur wird in der AWS-Region Frankfurt (eu-west-1, Deutschland, EU) betrieben.
 
-### Auftragsverarbeitung
-Mit Appwrite wurde ein Vertrag zur Auftragsverarbeitung (Data Processing Addendum / DPA gemäß Art. 28 DSGVO) abgeschlossen.
+### Auftragsverarbeitung und Datenübermittlung
+Mit Convex, Inc. wurde eine Vereinbarung zur Auftragsverarbeitung (Data Processing Addendum / DPA gemäß Art. 28 DSGVO) einschließlich der Standardvertragsklauseln (Standard Contractual Clauses / SCC) der Europäischen Kommission abgeschlossen.
 
 ### Rechtsgrundlagen
 - Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung bzw. vorvertragliche Maßnahmen)
-- Art. 6 Abs. 1 lit. f DSGVO (Berechtigtes Interesse an einem sicheren und performanten Betrieb)
+- Art. 6 Abs. 1 lit. f DSGVO (Berechtigtes Interesse an einem sicheren, stabilen und performanten Betrieb)
 
 ---
 
@@ -173,10 +171,12 @@ Hierzu gehören insbesondere:
 Wir speichern personenbezogene Daten nur so lange, wie dies für die jeweiligen Verarbeitungszwecke erforderlich ist oder gesetzliche Aufbewahrungspflichten bestehen.
 
 ### Vorregistrierung
-Daten aus der Warteliste werden gespeichert:
+Bestätigte Daten aus der Warteliste werden gespeichert:
 - Bis die Plattform gestartet wird,
 - Bis ein Nutzerkonto eingerichtet wird oder
 - Bis die betroffene Person ihre Einwilligung widerruft bzw. die Löschung verlangt.
+
+Unbestätigte Vorregistrierungen werden nach Ablauf des 30-minütigen Bestätigungszeitfensters durch automatisierte Prozesse (Convex Crons) vollständig und unwiderruflich aus der Datenbank gelöscht.
 
 ### Technische Logs
 Technische Protokolldaten werden entsprechend der aktuellen Infrastrukturkonfiguration grundsätzlich für maximal 7 Tage gespeichert.

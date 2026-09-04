@@ -200,7 +200,20 @@ export function resolveTargetSelection(cwd = process.cwd(), options = {}) {
 function resolveProject(cwd = process.cwd(), options = {}) {
   const absCwd = path.resolve(cwd);
   const targetDir = resolveTargetDir(absCwd, options);
+  const hasExplicitTarget = hasTargetOption(options) && targetDir !== absCwd;
+  const targetGitRoot = hasExplicitTarget ? findGitBoundaryRoot(targetDir) : null;
   let repoRoot = findMonorepoRoot(targetDir);
+  if (!repoRoot && targetGitRoot) {
+    const cwdGitRoot = findGitBoundaryRoot(absCwd);
+    if (targetGitRoot !== cwdGitRoot) {
+      return {
+        targetDir,
+        projectRoot: nearestTargetContextRoot(targetGitRoot, targetDir) || targetGitRoot,
+        repoRoot: targetGitRoot,
+        isMonorepo: false,
+      };
+    }
+  }
   if (!repoRoot && targetDir !== absCwd) {
     const cwdRepoRoot = findMonorepoRoot(absCwd);
     if (cwdRepoRoot && isPathInside(targetDir, cwdRepoRoot)) {
@@ -208,6 +221,18 @@ function resolveProject(cwd = process.cwd(), options = {}) {
     }
   }
   if (!repoRoot) {
+    const targetIsExternal = hasTargetOption(options)
+      && targetDir !== absCwd
+      && !isPathInside(targetDir, absCwd);
+    if (targetIsExternal) {
+      const targetRepoRoot = targetGitRoot || targetDir;
+      return {
+        targetDir,
+        projectRoot: nearestTargetContextRoot(targetRepoRoot, targetDir) || targetRepoRoot,
+        repoRoot: targetRepoRoot,
+        isMonorepo: false,
+      };
+    }
     return {
       targetDir,
       projectRoot: nearestTargetContextRoot(absCwd, targetDir) || absCwd,
@@ -221,6 +246,18 @@ function resolveProject(cwd = process.cwd(), options = {}) {
     repoRoot,
     isMonorepo: true,
   };
+}
+
+function findGitBoundaryRoot(startDir) {
+  let dir = path.resolve(startDir);
+  const homeDir = path.resolve(os.homedir());
+  while (true) {
+    if (dir === homeDir) return null;
+    if (hasGitBoundary(dir)) return dir;
+    const parent = path.dirname(dir);
+    if (parent === dir) return null;
+    dir = parent;
+  }
 }
 
 function isPathInside(candidate, root) {
@@ -248,10 +285,31 @@ function resolveEnvContextDir(cwd) {
   return path.isAbsolute(trimmed) ? trimmed : path.resolve(cwd, trimmed);
 }
 
+function resolveTargetPath(cwd, targetPath) {
+  const abs = path.isAbsolute(targetPath) ? targetPath : path.resolve(cwd, targetPath);
+  if (fs.existsSync(abs)) return abs;
+  return findUniqueBareTarget(cwd, targetPath) || abs;
+}
+
+function findUniqueBareTarget(cwd, targetPath) {
+  const absCwd = path.resolve(cwd);
+  const abs = path.isAbsolute(targetPath) ? targetPath : path.resolve(absCwd, targetPath);
+  const rel = path.relative(absCwd, abs);
+  if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) return null;
+  const segments = rel.split(path.sep).filter(Boolean);
+  if (segments.length !== 1) return null;
+  const name = segments[0];
+  const repoRoot = findMonorepoRoot(absCwd);
+  if (!repoRoot) return null;
+  const matches = discoverTargetCandidates(repoRoot).filter((candidate) => candidate.name === name);
+  if (matches.length !== 1) return null;
+  return path.resolve(repoRoot, matches[0].path);
+}
+
 function resolveTargetDir(cwd, options = {}) {
   const targetPath = options && typeof options === 'object' ? options.targetPath : null;
   if (!targetPath || !String(targetPath).trim()) return cwd;
-  const abs = path.isAbsolute(targetPath) ? targetPath : path.resolve(cwd, targetPath);
+  const abs = resolveTargetPath(cwd, targetPath);
   try {
     const stat = fs.statSync(abs);
     return stat.isDirectory() ? abs : path.dirname(abs);
@@ -962,13 +1020,45 @@ export function extractPlatform(product) {
  * (this file lives at `<skill>/scripts/context.mjs`). Returns null when the
  * frontmatter is missing or unreadable.
  */
+function parseSkillFrontmatterVersion(content) {
+  const match = String(content).match(/^---[ \t]*\r?\n([\s\S]*?)\r?\n---(?:[ \t]*\r?\n|[ \t]*$)/);
+  if (!match) return null;
+
+  let metadataVersion = null;
+  let topLevelVersion = null;
+  let inMetadata = false;
+  let metadataIndent = null;
+
+  for (const line of match[1].split(/\r?\n/)) {
+    if (!line.trim() || line.trimStart().startsWith('#')) continue;
+    const indentText = line.match(/^[ \t]*/)[0];
+    const indent = indentText.replace(/\t/g, '  ').length;
+
+    if (indent === 0) {
+      inMetadata = /^metadata:\s*(?:#.*)?$/.test(line);
+      metadataIndent = null;
+      const version = line.match(/^version:\s*(.+?)\s*$/);
+      if (version) topLevelVersion = version[1];
+      continue;
+    }
+
+    if (!inMetadata) continue;
+    if (metadataIndent === null) metadataIndent = indent;
+    if (indent !== metadataIndent) continue;
+    const version = line.trim().match(/^version:\s*(.+?)\s*$/);
+    if (version) metadataVersion = version[1];
+  }
+
+  const value = metadataVersion || topLevelVersion;
+  return value ? value.trim().replace(/^(["'])(.*)\1$/, '$2') : null;
+}
+
 function readLocalSkillVersion() {
   try {
     const here = path.dirname(fileURLToPath(import.meta.url));
     const skillMd = path.join(here, '..', 'SKILL.md');
     const content = fs.readFileSync(skillMd, 'utf-8');
-    const match = content.match(/^version:\s*(.+)$/m);
-    return match ? match[1].trim().replace(/^["']|["']$/g, '') : null;
+    return parseSkillFrontmatterVersion(content);
   } catch {
     return null;
   }
@@ -1013,14 +1103,43 @@ async function fetchLatestSkillVersion() {
   }
 }
 
+// Destroy fetch's global undici dispatcher before process.exit(): a live
+// keep-alive socket trips a libuv assertion on Windows/Node 24 after a
+// successful boot (nodejs/node#56645, issue #573).
+async function destroyFetchDispatcher() {
+  const dispatcher = globalThis[Symbol.for('undici.globalDispatcher.1')];
+  if (dispatcher && typeof dispatcher.destroy === 'function') {
+    try { await dispatcher.destroy(); } catch { /* exit regardless */ }
+  }
+}
+
+// Drain the boot payload before process.exit(): a live pipe that has not
+// flushed yet is truncated when Node tears down (issue #573 review). Then
+// close fetch so Windows teardown does not abort on the keep-alive socket.
+async function finishCli(output) {
+  await new Promise((resolve) => {
+    process.stdout.write(output, () => resolve());
+  });
+  await destroyFetchDispatcher();
+  process.exit(0);
+}
+
+// Two instructions used to sit in one directive: ask, and "if they agree, run
+// it". Nothing gated the second on an answer, and the same sentence said to
+// continue without waiting, so a run that could never establish agreement was
+// still spelled out as the next command. The offer stays; the command leaves
+// this turn entirely, because installing over the skill mid-session changes
+// files the session is reading and only takes effect in the next one anyway.
 function buildUpdateDirective(localVersion, latestVersion) {
   return (
     `UPDATE_AVAILABLE: A newer Impeccable skill is available ` +
     `(installed v${localVersion}, latest v${latestVersion}). ` +
-    `Before continuing, ask the user once: "A newer Impeccable (v${latestVersion}) is available. ` +
+    `Mention it once, in this form: "A newer Impeccable (v${latestVersion}) is available. ` +
     `Update now? It runs \`npx impeccable update\`." ` +
-    `If they agree, run \`npx impeccable update\` (the update applies to the next session, not this one). ` +
-    `Either way, continue the current task without waiting, and do not raise this again.`
+    `Do not run \`npx impeccable update\` in this turn, whatever the user answers: it rewrites the skill files ` +
+    `this session is reading, and the update only takes effect in the next session, so there is nothing to gain now. ` +
+    `Run it in a later turn, only after the user has asked for it in their own words. ` +
+    `Continue the current task now without waiting, and do not raise this again.`
   );
 }
 
@@ -1090,13 +1209,19 @@ async function cli() {
     throw err;
   }
   const targetProvided = hasTargetOption(cliOptions);
-  const targetExists = targetProvided ? pathExistsForTarget(process.cwd(), cliOptions.targetPath) : null;
+  const resolvedTargetPath = targetProvided
+    ? resolveTargetPath(process.cwd(), cliOptions.targetPath)
+    : null;
+  const targetExists = targetProvided ? fs.existsSync(resolvedTargetPath) : null;
   const selection = resolveTargetSelection(process.cwd(), cliOptions);
   if (selection) {
     process.stdout.write(buildTargetSelectionDirective(selection) + '\n');
     process.exit(0);
   }
-  const ctx = loadContext(process.cwd(), cliOptions);
+  const ctx = loadContext(
+    process.cwd(),
+    resolvedTargetPath ? { targetPath: resolvedTargetPath } : cliOptions,
+  );
   const updateDirective = await computeUpdateDirective();
 
   if (!ctx.hasProduct) {
@@ -1142,6 +1267,8 @@ async function cli() {
     parts.push(buildResolvedContextDirective(ctx, cliOptions, { targetExists }));
     appendDetectorFallback(parts, ctx);
     appendImageGenDirective(parts);
+    appendBuildPathDirective(parts, ctx);
+    await appendCompRoundOpenDirective(parts, ctx);
     appendAutonomyCounterDirective(parts);
     appendSubagentAuthorizationDirective(parts);
     if (shouldWarnMissingTarget(ctx, targetProvided, targetExists)) {
@@ -1150,8 +1277,7 @@ async function cli() {
     appendImageToolsDirective(parts);
     appendStalenessDirective(parts, ctx, cliOptions);
     if (updateDirective) parts.push(updateDirective);
-    process.stdout.write(parts.join('\n\n---\n\n') + '\n');
-    process.exit(0);
+    await finishCli(parts.join('\n\n---\n\n') + '\n');
   }
   const parts = [`# PRODUCT.md\n\n${ctx.product.trim()}`];
   if (ctx.hasDesign) {
@@ -1161,6 +1287,8 @@ async function cli() {
   parts.push(buildResolvedContextDirective(ctx, cliOptions, { targetExists }));
   appendDetectorFallback(parts, ctx);
   appendImageGenDirective(parts);
+  appendBuildPathDirective(parts, ctx);
+  await appendCompRoundOpenDirective(parts, ctx);
   appendAutonomyCounterDirective(parts);
   appendSubagentAuthorizationDirective(parts);
   if (shouldWarnMissingTarget(ctx, targetProvided, targetExists)) {
@@ -1196,7 +1324,7 @@ async function cli() {
     }
   }
   if (updateDirective) parts.push(updateDirective);
-  process.stdout.write(parts.join('\n\n---\n\n') + '\n');
+  await finishCli(parts.join('\n\n---\n\n') + '\n');
 }
 
 function parseCliOptions(args) {
@@ -1205,11 +1333,6 @@ function parseCliOptions(args) {
 
 function hasTargetOption(options) {
   return !!(options && typeof options.targetPath === 'string' && options.targetPath.trim());
-}
-
-function pathExistsForTarget(cwd, targetPath) {
-  const abs = path.isAbsolute(targetPath) ? targetPath : path.resolve(cwd, targetPath);
-  return fs.existsSync(abs);
 }
 
 const HOOK_MANIFESTS_BY_PROVIDER = Object.freeze({
@@ -1249,6 +1372,39 @@ function hookEnabledAt(root) {
 
 const STOP_REVIEW_PROVIDERS = new Set(['claude-code', 'codex', 'agents', 'grok']);
 
+// Harness project settings are discovered by walking up from the resolved
+// project root. Its hook manifest can live at an enclosing git root, so
+// checking only projectRoot produces a false MANUAL_DETECTOR_REQUIRED
+// directive. Starting from projectRoot also prevents an explicit target from
+// borrowing an unrelated manifest near the caller. The walk itself is the
+// authority: do not append repoRoot afterward, because resolveProject can
+// retain an outer workspace root for a target inside an independent nested
+// Git repository.
+function hookManifestSearchRoots(ctx) {
+  const roots = [];
+  const seen = new Set();
+  const add = (root) => {
+    if (!root) return;
+    const resolved = path.resolve(root);
+    if (seen.has(resolved)) return;
+    seen.add(resolved);
+    roots.push(resolved);
+  };
+
+  let current = path.resolve(ctx.projectRoot || process.cwd());
+  const home = path.resolve(os.homedir());
+  while (true) {
+    if (current === home) break;
+    add(current);
+    if (hasGitBoundary(current)) break;
+    const parent = path.dirname(current);
+    if (parent === current) break;
+    current = parent;
+  }
+
+  return roots;
+}
+
 function automaticHookMode(ctx) {
   if (ctx.platform === 'ios' || ctx.platform === 'android' || ctx.platform === 'adaptive') {
     return 'none';
@@ -1256,8 +1412,10 @@ function automaticHookMode(ctx) {
   const activeRoot = path.resolve(ctx.projectRoot || process.cwd());
   if (!hookEnabledAt(activeRoot)) return 'none';
   const manifests = HOOK_MANIFESTS_BY_PROVIDER[IMPECCABLE_PROVIDER_ID] || [];
-  const roots = [...new Set([process.cwd(), ctx.projectRoot, ctx.repoRoot].filter(Boolean).map((root) => path.resolve(root)))];
-  for (const root of roots) {
+  for (const root of hookManifestSearchRoots(ctx)) {
+    // A manifest can live above the resolved product. Honor the hook lifecycle
+    // config beside that manifest before treating it as active coverage.
+    if (!hookEnabledAt(root)) continue;
     for (const rel of manifests) {
       const raw = readJson(path.join(root, rel));
       if (raw?.hooks && valueHasHookMarker(raw.hooks)) {
@@ -1268,6 +1426,72 @@ function automaticHookMode(ctx) {
   return 'none';
 }
 
+
+// Build-path preference: a workflow setting (comp-led vs code-led), read here
+// so every session starts knowing it without a file hunt. It rides the unified
+// config beside the hook and detector settings, and the gitignored local file
+// wins, because whether a machine has an image tool is a property of that
+// machine, not of the team's committed default. Absence stays silent;
+// new-work's own default applies, and the decision page toggle can flip the
+// value for a single session.
+function readBuildPathAt(root) {
+  let value = null;
+  let source = null;
+  for (const name of ['config.json', 'config.local.json']) {
+    const raw = readJson(path.join(root, '.impeccable', name));
+    if (raw?.buildPath === 'comp' || raw?.buildPath === 'code') {
+      value = raw.buildPath;
+      source = `.impeccable/${name}`;
+    }
+  }
+  return value ? { value, source } : null;
+}
+
+// Roots in precedence order, nearest first: the resolved project decides, and
+// the repo root is the fallback a monorepo commits once for every app in it.
+// `checkBuildPathUnset` reads exactly these two, and the pair has to match:
+// when they disagree the finding goes silent because a value exists while the
+// directive never names it, which is the one combination nobody can debug.
+//
+// The invoking directory is deliberately not in the chain. With `--target`
+// selecting another workspace, cwd is the caller's app, not the target's, and
+// letting it rank above the repo root hands one workspace another's workflow.
+// It stands in only when no project resolved at all.
+// A direction was dealt for a comp-led build and the phase machine never
+// started, or stopped short of the hero gate: the comp round is open. Said
+// here because every model in the corpus ran context.mjs unprompted, and
+// the run that skipped the round did so between the roll and the first
+// write; a boot that names the open round is a boot the write cannot claim
+// it never saw. Reads build-phase's own helper so the two agree.
+async function appendCompRoundOpenDirective(parts, ctx) {
+  try {
+    const { compRoundOpen } = await import('./build-phase.mjs');
+    const roots = [...new Set([ctx?.projectRoot || process.cwd(), ctx?.repoRoot].filter(Boolean).map((r) => path.resolve(r)))];
+    for (const root of roots) {
+      const open = compRoundOpen(root);
+      if (!open) continue;
+      parts.push(`COMP_ROUND_OPEN: ${open.reason}. On a comp-led build no page code is written before build-phase.mjs closes the comps, spec, plates, and hero gates; run \`node ${path.dirname(fileURLToPath(import.meta.url))}/build-phase.mjs status\` and follow its NEXT line. A page written past an open round is what the finish reviewer sends back.`);
+      return;
+    }
+  } catch { /* build-phase absent: nothing to say */ }
+}
+
+function appendBuildPathDirective(parts, ctx) {
+  const roots = [...new Set(
+    [ctx?.projectRoot || process.cwd(), ctx?.repoRoot].filter(Boolean).map((root) => path.resolve(root)),
+  )];
+  for (const root of roots) {
+    const found = readBuildPathAt(root);
+    if (!found) continue;
+    // "Never written back" is scoped by the fact that this directive exists at
+    // all: it is emitted only where a value is already recorded, which is the
+    // case where a flip really is session-only. Saying so inline because the
+    // bare absolute reads as a rule that overrides new-work's one-time offer,
+    // which is exactly how the same wording misfired in serve-question.
+    parts.push(`BUILD_PATH_DEFAULT: ${found.value} (from ${found.source}). Author direction and surface rounds with this as buildPath.value and toggle: true; a flip on the page binds that session only and is never written back, because a default is already recorded here. New-work's one-time offer to record a flipped value applies only where no default exists, which is why you are not seeing this line on those projects.`);
+    return;
+  }
+}
 
 // Image generation availability: harness-native tools always win, but when the
 // environment carries an OpenAI key the API fallback works everywhere. The

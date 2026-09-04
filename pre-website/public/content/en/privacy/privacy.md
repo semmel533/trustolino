@@ -44,44 +44,42 @@ Our legitimate interest lies in the secure, stable, and functional provision of 
 
 ---
 
-## 4. Hosting, Infrastructure, and Database Services (Appwrite Cloud)
+## 4. Backend Infrastructure and Database Services (Convex)
 
-We use Appwrite Cloud to operate our website and provide our services technically.
+To operate our backend functions, database, and automated data workflows on this website, we use the reactive Backend-as-a-Service platform Convex.
 
 **Service Provider:**  
-Appwrite Code Ltd.  
-Israel  
-Privacy Policy: [https://appwrite.io/privacy](https://appwrite.io/privacy)
+Convex, Inc.  
+548 Market St #61788  
+San Francisco, CA 94104  
+USA  
+Privacy Policy: [https://www.convex.dev/privacy](https://www.convex.dev/privacy)
 
-**Appwrite handles in particular on our behalf:**
-- Hosting of our website
-- DNS management
-- Backend infrastructure
-- Databases
-- File storage
-- Authentication
-- Technical security measures
-- Protection against abuse and attacks
+**Convex handles in particular on our behalf:**
+- Backend infrastructure and server functions
+- Reactive database management
+- Automated scheduled tasks and data cleanup (crons)
+- Technical security measures and rate limiting
+- Protection against abuse and unauthorized access
 - Technical logging and error analysis
 
 ### Processed Data
 In the context of service provision, the following data may be processed:
-- IP address
+- IP address (anonymized or hashed for rate limiting)
 - Technical connection data
 - Access logs
 - Error and security logs
-- Registration data
-- Pre-registration data
+- Pre-registration data (name, email address, language preference, timestamp, confirmation status)
 
 ### Server Location
-Our Appwrite Cloud project is hosted in the Frankfurt region (Germany, EU).
+Our Convex deployment infrastructure is hosted in the AWS Frankfurt region (eu-west-1, Germany, EU).
 
-### Data Processing Agreement
-A Data Processing Agreement (DPA pursuant to Art. 28 GDPR) has been concluded with Appwrite.
+### Data Processing Agreement and International Transfers
+A Data Processing Agreement (DPA pursuant to Art. 28 GDPR) incorporating the European Commission's Standard Contractual Clauses (SCCs) has been concluded with Convex, Inc.
 
 ### Legal Bases
 - Art. 6 (1) lit. b GDPR (Performance of a contract or pre-contractual measures)
-- Art. 6 (1) lit. f GDPR (Legitimate interest in secure and efficient operation)
+- Art. 6 (1) lit. f GDPR (Legitimate interest in secure, stable, and efficient operation)
 
 ---
 
@@ -172,11 +170,13 @@ This includes in particular:
 
 We store personal data only as long as necessary for the respective processing purposes or as required by statutory retention periods.
 
-### Pre-Registration
-Waitlist data is stored:
-- Until the platform is launched,
+### Pre-registration
+Confirmed waitlist data is retained:
+- Until the platform launches,
 - Until a user account is created, or
-- Until the data subject revokes their consent or requests deletion.
+- Until the data subject withdraws their consent or requests erasure.
+
+Unconfirmed pre-registrations are automatically and permanently deleted from the database after the 30-minute confirmation window expires via automated background processes (Convex Crons).
 
 ### Technical Logs
 Technical log data is generally stored for a maximum of 7 days in accordance with the current infrastructure configuration.

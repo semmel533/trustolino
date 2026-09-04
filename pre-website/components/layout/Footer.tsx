@@ -8,19 +8,12 @@ interface FooterProps {
 
 export function Footer({ locale, dictionary }: FooterProps) {
   const t = dictionary;
-  const prefix = locale === 'en' ? '/en' : '';
 
-  const links = locale === 'de'
-    ? [
-        { href: '/ratgeber', label: t.footer?.ratgeber || 'Ratgeber Portal' },
-        { href: '/impressum', label: t.footer?.impressum || 'Impressum' },
-        { href: '/datenschutz', label: t.footer?.datenschutz || 'Datenschutz' },
-      ]
-    : [
-        { href: '/en/advisor', label: t.footer?.advisor || t.nav?.advisor || 'Advisor' },
-        { href: '/en/legal', label: t.footer?.legal || 'Legal Notice' },
-        { href: '/en/privacy', label: t.footer?.privacy || 'Privacy Policy' },
-      ];
+  const links = [
+    { href: locale === 'en' ? '/en/advisor' : '/ratgeber', label: t.footer.ratgeber },
+    { href: locale === 'en' ? '/en/legal' : '/impressum', label: t.footer.impressum },
+    { href: locale === 'en' ? '/en/privacy' : '/datenschutz', label: t.footer.datenschutz },
+  ];
 
   return (
     <div className="px-6 lg:px-8 pb-0">
@@ -36,7 +29,7 @@ export function Footer({ locale, dictionary }: FooterProps) {
         </div>
 
         <p className="mb-8 max-w-md text-center text-foreground">
-          {t.footer?.tagline || 'Vertrauensvolle Betreuung, kinderleicht organisiert.'}
+          {t.footer.tagline}
         </p>
 
         <div className="mb-12 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-6">

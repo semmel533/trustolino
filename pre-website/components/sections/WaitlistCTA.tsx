@@ -51,15 +51,19 @@ export default function WaitlistCTA() {
         } else {
           const data = await res.json();
           if (data.error === "duplicate") {
-            setError(wForm.errorDuplicate || wForm.errorGeneric);
+            setError(wForm.errorDuplicate);
           } else if (data.error === "invalid_name") {
-            setError(wForm.errorInvalidName || wForm.errorGeneric);
+            setError(wForm.errorInvalidName);
           } else if (data.error === "invalid_email") {
-            setError(wForm.errorInvalidEmail || wForm.errorGeneric);
+            setError(wForm.errorInvalidEmail);
           } else if (data.error === "privacy_required") {
-            setError(wForm.errorPrivacyRequired || wForm.errorGeneric);
+            setError(wForm.errorPrivacyRequired);
+          } else if (data.error === "rate_limited") {
+            setError(wForm.errorRateLimited);
+          } else if (data.error === "email_delivery_failed") {
+            setError(wForm.errorEmailDelivery);
           } else {
-            setError(data.error || wForm.errorGeneric);
+            setError(wForm.errorGeneric);
           }
         }
       } catch {

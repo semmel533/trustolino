@@ -14,11 +14,9 @@ interface ExpandableTextProps {
 export function ExpandableText({ text, maxLength = 150, className = "" }: ExpandableTextProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   
-  // Just use hardcoded strings if dict doesn't have it, since it's easy enough to add.
-  // Actually we can add it to dict.
   const dict = useDictionary();
-  const readMore = (dict.nav as any)?.readMore || (text.includes("the") ? "Show more" : "Mehr anzeigen");
-  const showLess = (dict.nav as any)?.showLess || (text.includes("the") ? "Show less" : "Weniger anzeigen");
+  const readMore = dict.common.readMore;
+  const showLess = dict.common.showLess;
 
   if (text.length <= maxLength) {
     return <p className={className}>{text}</p>;

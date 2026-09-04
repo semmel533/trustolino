@@ -860,13 +860,13 @@ pre-website/
     ↓
 Next.js
     ↓
-Port 2999
+Port 3000
 ```
 
 Die Pre-Release-Website läuft auf:
 
 ```text
-Port: 2999
+Port: 3000
 ```
 
 Sobald die allgemeine Website veröffentlicht wird, wird die Pre-Release-Website von der Domain entfernt.
@@ -962,51 +962,45 @@ Die drei Anwendungen sollen technologisch möglichst konsistent aufgebaut sein.
 
 # 20. Backend / BaaS
 
-Als Backend-as-a-Service wird **Appwrite** eingesetzt.
+Als Backend-as-a-Service wird **Convex** eingesetzt.
 
-Appwrite übernimmt zentrale Backend-Funktionen des Projekts.
+Convex übernimmt zentrale Backend-Funktionen des Projekts:
 
-Geplante Nutzung:
+- **Reaktive Datenbank**: Vollständig typisierte TypeScript-Datenbank mit Schema-Validierung und Indizes (`convex/schema.ts`).
+- **Serverless Backend-Funktionen**: Transaktionale Mutations, Queries und Node-Actions (`convex/waitlist.ts`).
+- **Scheduled Tasks & Crons**: Zeitgesteuerte Hintergrundprozesse, z. B. automatisches Löschen unbestätigter Vorregistrierungen nach 30 Minuten (`convex/crons.ts`).
+- **Double Opt-In & Sicherheit**: Kryptografisch sichere Tokens, serverseitige Ratenbegrenzung und transaktionale Token-Entwertung.
+- **E-Mail-Infrastruktur**: Automatische Zusendung von Bestätigungs-E-Mails via SMTP (Nodemailer) im Trustolino-Designsystem.
+- **Realtime Sync & Storage**: Skalierbare Echtzeitdaten und Dateispeicherung.
 
-- Hosting
-- Datenbanken
-- Authentication
-- Realtime
-- File Storage
-- Image Storage
-- weitere Backend-Funktionen
-
-Damit soll möglichst viel Infrastruktur zentral über Appwrite abgedeckt werden.
+Damit ist die gesamte Backend-Infrastruktur modern, typsicher und server-first aufgebaut.
 
 ---
 
-# 21. Appwrite Hosting
-
-Alle drei Next.js Anwendungen sollen über Appwrite gehostet werden.
+# 21. Backend- & Anwendungsarchitektur
 
 Architektur:
 
 ```text
-                    ┌─────────────────────┐
-                    │      Appwrite       │
-                    │                     │
-                    │ Hosting             │
-                    │ Auth                │
-                    │ Database            │
-                    │ Realtime             │
-                    │ Storage             │
-                    └──────────┬──────────┘
-                               │
-          ┌────────────────────┼────────────────────┐
-          │                    │                    │
-          ▼                    ▼                    ▼
-   pre-website/           website/              webapp/
-      :2999                  :3000                 :3001
-          │                    │                    │
-          ▼                    ▼                    ▼
- trustolino.de          trustolino.de      app.trustolino.de
-   Pre-Release             Website              Web-App
-   indexierbar             indexierbar          NOINDEX
+                    ┌─────────────────────────┐
+                    │         Convex          │
+                    │                         │
+                    │  Reactive Database      │
+                    │  Type-Safe Functions    │
+                    │  Scheduled Crons        │
+                    │  Realtime Sync & Auth   │
+                    └───────────┬─────────────┘
+                                │
+           ┌────────────────────┼────────────────────┐
+           │                    │                    │
+           ▼                    ▼                    ▼
+    pre-website/           website/              webapp/
+       :3000                  :3000                 :3001
+           │                    │                    │
+           ▼                    ▼                    ▼
+  trustolino.de          trustolino.de      app.trustolino.de
+    Pre-Release             Website              Web-App
+    indexierbar             indexierbar          NOINDEX
 ```
 
 Die konkrete Infrastruktur kann im Laufe der Entwicklung weiter angepasst werden, die Trennung der drei Anwendungen bleibt jedoch bestehen.
@@ -1471,12 +1465,12 @@ Markdown
 | UI                    | shadcn/ui / Base UI   |
 | Icons                 | Phosphor Icons        |
 | Internationalisierung | i18n Key-only         |
-| Backend / BaaS        | Appwrite              |
-| Authentication        | Appwrite              |
-| Datenbank             | Appwrite              |
-| Realtime              | Appwrite              |
-| File / Image Storage  | Appwrite              |
-| Hosting               | Appwrite              |
+| Backend / BaaS        | Convex                |
+| Authentication        | Convex                |
+| Datenbank             | Convex                |
+| Realtime              | Convex                |
+| Scheduled Jobs        | Convex Crons          |
+| E-Mail-Versand        | SMTP (Nodemailer)     |
 | Payments              | Stripe                |
 | Ratgeber Content      | Markdown              |
 | Legal Content         | Markdown              |

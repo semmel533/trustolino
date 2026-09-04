@@ -35,10 +35,10 @@ export function Navbar({ locale }: NavbarProps) {
   }, [isHome, pathname]);
 
   const navLinks = useMemo(() => [
-    { href: '#experience', label: t.nav?.features || 'Features', isAnchor: true },
-    { href: '#trusted-educator', label: t.nav?.trustedEducator || 'Trusted Educator', isAnchor: true },
-    { href: '#team', label: t.nav?.team || 'Team', isAnchor: true },
-    { href: locale === 'de' ? '/ratgeber' : '/en/advisor', label: t.nav?.advisor || 'Ratgeber Portal', isPage: true },
+    { href: '#experience', label: t.nav.features, isAnchor: true },
+    { href: '#trusted-educator', label: t.nav.trustedEducator, isAnchor: true },
+    { href: '#team', label: t.nav.team, isAnchor: true },
+    { href: locale === 'de' ? '/ratgeber' : '/en/advisor', label: t.nav.advisor, isPage: true },
   ], [t, locale]);
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

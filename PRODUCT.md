@@ -24,11 +24,11 @@ Unlike traditional babysitting/caregiving platforms, Trustolino requires verifie
 
 ## Operating Context
 
-- Pre-Release: Waitlist landing page at trustolino.de collecting educator emails via Appwrite
-- Three separate Next.js apps: pre-website (port 2999), website (port 3000), webapp (port 3001)
+- Pre-Release: Waitlist landing page at trustolino.de collecting educator emails via Convex & Double Opt-in SMTP
+- Three separate Next.js apps: pre-website (port 3000), website, webapp
 - trustolino.de = public, SEO/GEO indexed; app.trustolino.de = product, noindex
 - Bilingual: German (default, no prefix) and English (/en/ prefix)
-- Appwrite for BaaS (hosting, auth, database, storage, realtime)
+- Convex for BaaS (reactive database, server functions, scheduled crons, real-time sync, auth)
 - Stripe for marketplace payments
 
 ## Capabilities and Constraints
@@ -60,7 +60,7 @@ Unlike traditional babysitting/caregiving platforms, Trustolino requires verifie
 - 14 advisor article PDFs (German, mix of educator and parent focused)
 - Complete landing page content document (pre-website-content.md)
 - Logo files in SVG and PNG (icon, label, logo variants)
-- Appwrite project configured with credentials
+- Convex backend configured with deployment credentials
 - Founder statements and bios
 
 ## Product Principles

@@ -31,8 +31,9 @@
     "text": "Quality is our foundation. That is why there is no automated onboarding at Trustolino. Every registration is personally verified. After successfully verifying your qualifications (enrollment certificate, training contract, or diploma) and completing a 100% profile, you receive the Trusted Educator Seal. This is our promise to parents and a mark of quality for your work."
   },
   "whoWeAre": {
-    "heading": "Who we are",
-    "text": "Trustolino was founded by educators for educators. We know the challenges of the industry from our own experience, from our studies to managing facilities. We have created a platform that fairly compensates, appreciates, and uses technology to make professional childcare more efficient. We combine pedagogical expertise with a commitment to excellent service.",
+    "heading": "Who we are – and why Trustolino is different",
+    "badge": "Comparison",
+    "text": "Trustolino was founded by educators for educators. We know the challenges of the industry firsthand, from our studies to managing educational facilities. We created a platform that fairly compensates professional childcare, values it, and makes it more efficient through technology. We combine pedagogical expertise with the standard of excellent service.",
     "table": {
       "headers": [
         "Feature",
@@ -206,20 +207,38 @@
     "description": "Trustworthy childcare, organized effortlessly."
   },
   "common": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "readMore": "Show more",
+    "showLess": "Show less"
   },
   "waitlistForm": {
     "namePlaceholder": "Your name",
     "emailPlaceholder": "Your email address",
     "submitting": "Submitting...",
-    "successTitle": "You're in!",
-    "successText": "We have received your email address and will notify you as soon as we are live and you can complete your profile.",
+    "successTitle": "Almost done!",
+    "successText": "We have sent you a confirmation email. Please click the link in the email within 30 minutes to complete your pre-registration.",
     "errorGeneric": "An error occurred. Please try again.",
     "errorDuplicate": "This email address is already on the waitlist.",
     "errorInvalidEmail": "Please enter a valid email address.",
     "errorInvalidName": "Please enter your name.",
     "errorPrivacyRequired": "To sign up, you must agree to the privacy policy.",
+    "errorRateLimited": "Too many requests. Please wait a moment and try again.",
+    "errorEmailDelivery": "Could not deliver the confirmation email. Please verify your email address.",
     "privacyCheckbox": "I have read the {privacy} and agree to the processing of my data.",
     "privacyLink": "Privacy Policy"
+  },
+  "confirmationPage": {
+    "loading": "Verifying confirmation...",
+    "successTitle": "Email address successfully confirmed!",
+    "successText": "Thank you, {name}! You are now officially registered on the Trustolino waitlist. We will notify you as soon as we are live.",
+    "alreadyConfirmedTitle": "Already confirmed!",
+    "alreadyConfirmedText": "Your email address has already been successfully confirmed. You are on the waitlist.",
+    "expiredTitle": "Confirmation link expired",
+    "expiredText": "This confirmation link has expired after 30 minutes. Your information was automatically removed for your security. Please sign up again.",
+    "invalidTitle": "Invalid link",
+    "invalidText": "This confirmation link is invalid or does not exist.",
+    "ctaHome": "Back to homepage",
+    "ctaAdvisor": "To the advisor portal",
+    "ctaReRegister": "Sign up again"
   }
 }
