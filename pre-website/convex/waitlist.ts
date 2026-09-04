@@ -22,7 +22,10 @@ export const register = mutation({
   handler: async (ctx, args) => {
     // 1. Authorization: Only our server route is permitted to call register
     const internalSecret = process.env.CONVEX_INTERNAL_SECRET;
-    if (internalSecret && args.serverSecret !== internalSecret) {
+    if (!internalSecret) {
+      throw new Error("Missing required environment variable: CONVEX_INTERNAL_SECRET");
+    }
+    if (args.serverSecret !== internalSecret) {
       throw new Error("Unauthorized: Invalid internal secret");
     }
 

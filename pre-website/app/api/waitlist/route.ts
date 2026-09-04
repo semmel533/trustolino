@@ -80,12 +80,13 @@ export async function POST(request: Request) {
     }
 
     const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
+    if (!convexUrl) {
+      throw new Error("Missing required environment variable: NEXT_PUBLIC_CONVEX_URL");
+    }
+
     const serverSecret = process.env.CONVEX_INTERNAL_SECRET;
-    if (!convexUrl || !serverSecret) {
-      return NextResponse.json(
-        { error: "Server configuration error" },
-        { status: 500 }
-      );
+    if (!serverSecret) {
+      throw new Error("Missing required environment variable: CONVEX_INTERNAL_SECRET");
     }
 
     const convex = new ConvexHttpClient(convexUrl);

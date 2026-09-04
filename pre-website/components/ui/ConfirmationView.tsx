@@ -42,8 +42,7 @@ export default function ConfirmationView({ locale }: ConfirmationViewProps) {
 
     const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
     if (!convexUrl) {
-      setStatus("invalid");
-      return;
+      throw new Error("Missing required environment variable: NEXT_PUBLIC_CONVEX_URL");
     }
 
     const client = new ConvexHttpClient(convexUrl);

@@ -6,7 +6,10 @@ const dictionaries = {
 };
 
 export async function getDictionary(locale: Locale) {
-  const loader = dictionaries[locale] || dictionaries.de;
+  const loader = dictionaries[locale];
+  if (!loader) {
+    throw new Error(`Unsupported locale dictionary requested: ${locale}`);
+  }
   return loader();
 }
 

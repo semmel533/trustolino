@@ -18,16 +18,31 @@ interface SendConfirmationEmailParams {
 
 function getTransporter() {
   const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
-  const port = Number(process.env.SMTP_PORT) || 465;
-  const secure = process.env.SMTP_SECURE !== "false";
-
-  if (!host || !user || !pass) {
-    throw new Error(
-      "Missing required SMTP configuration (SMTP_HOST, SMTP_USER, SMTP_PASS)"
-    );
+  if (!host) {
+    throw new Error("Missing required environment variable: SMTP_HOST");
   }
+
+  const user = process.env.SMTP_USER;
+  if (!user) {
+    throw new Error("Missing required environment variable: SMTP_USER");
+  }
+
+  const pass = process.env.SMTP_PASS;
+  if (!pass) {
+    throw new Error("Missing required environment variable: SMTP_PASS");
+  }
+
+  const portStr = process.env.SMTP_PORT;
+  if (!portStr) {
+    throw new Error("Missing required environment variable: SMTP_PORT");
+  }
+  const port = Number(portStr);
+  if (isNaN(port)) {
+    throw new Error("Invalid environment variable: SMTP_PORT must be a valid number");
+  }
+
+  // Port 465 is implicit TLS; Port 587 uses STARTTLS
+  const secure = port === 465;
 
   return nodemailer.createTransport({
     host,
@@ -45,19 +60,22 @@ export async function sendConfirmationEmail({
 }: SendConfirmationEmailParams): Promise<{ success: boolean; error?: string }> {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL;
   if (!appUrl) {
-    return { success: false, error: "NEXT_PUBLIC_APP_URL is not configured" };
+    throw new Error("Missing required environment variable: NEXT_PUBLIC_APP_URL");
+  }
+
+  const fromAddress = process.env.EMAIL_FROM;
+  if (!fromAddress) {
+    throw new Error("Missing required environment variable: EMAIL_FROM");
+  }
+
+  const replyTo = process.env.EMAIL_REPLY_TO;
+  if (!replyTo) {
+    throw new Error("Missing required environment variable: EMAIL_REPLY_TO");
   }
 
   const isEn = locale === "en";
-  const fromName = isEn
-    ? process.env.SMTP_FROM_NAME_EN
-    : process.env.SMTP_FROM_NAME_DE;
-  const fromAddress = process.env.SMTP_FROM_EMAIL;
-  const replyTo = process.env.SMTP_REPLY_TO;
-
-  if (!fromName || !fromAddress || !replyTo) {
-    return { success: false, error: "Missing required sender email configuration" };
-  }
+  const fromName = isEn ? "Selim at Trustolino" : "Selim von Trustolino";
+  const from = `"${fromName}" <${fromAddress}>`;
 
   // Prevent SMTP header injection
   if (/[\r\n]/.test(to)) {
@@ -260,7 +278,7 @@ Bitte antworte nicht auf diese E-Mail, da es sich um eine automatisch generierte
   try {
     const transporter = getTransporter();
     await transporter.sendMail({
-      from: `"${fromName}" <${fromAddress}>`,
+      from,
       replyTo,
       to,
       subject,
