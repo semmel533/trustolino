@@ -1,5 +1,14 @@
 import nodemailer from "nodemailer";
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 interface SendConfirmationEmailParams {
   to: string;
   name: string;
@@ -50,9 +59,17 @@ export async function sendConfirmationEmail({
     return { success: false, error: "Missing required sender email configuration" };
   }
 
+  // Prevent SMTP header injection
+  if (/[\r\n]/.test(to)) {
+    return { success: false, error: "Invalid characters in recipient email" };
+  }
+
+  // Sanitize user inputs against HTML injection
+  const safeName = escapeHtml(name.replace(/[\r\n\t]/g, " ").trim());
+
   const confirmUrl = isEn
-    ? `${appUrl}/en/confirm?token=${token}`
-    : `${appUrl}/bestaetigung?token=${token}`;
+    ? `${appUrl}/en/confirm?token=${encodeURIComponent(token)}`
+    : `${appUrl}/bestaetigung?token=${encodeURIComponent(token)}`;
 
   const privacyUrl = isEn
     ? `${appUrl}/en/privacy`
@@ -88,7 +105,7 @@ export async function sendConfirmationEmail({
           <!-- Main Content Body -->
           <tr>
             <td style="padding: 36px 32px 32px 32px;">
-              <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 700; color: #458893;">Hello ${name},</h2>
+              <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 700; color: #458893;">Hello ${safeName},</h2>
               <p style="margin: 0 0 20px 0; font-size: 15px; line-height: 1.6; color: #1d1d1b;">
                 Thank you for your interest in the Trustolino waitlist! We are thrilled to welcome you to our community.
               </p>
@@ -158,7 +175,7 @@ export async function sendConfirmationEmail({
           <!-- Main Content Body -->
           <tr>
             <td style="padding: 36px 32px 32px 32px;">
-              <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 700; color: #458893;">Hallo ${name},</h2>
+              <h2 style="margin: 0 0 16px 0; font-size: 20px; font-weight: 700; color: #458893;">Hallo ${safeName},</h2>
               <p style="margin: 0 0 20px 0; font-size: 15px; line-height: 1.6; color: #1d1d1b;">
                 vielen Dank für dein Interesse an der Trustolino Warteliste! Wir freuen uns sehr, dass du dabei bist.
               </p>
@@ -206,12 +223,14 @@ export async function sendConfirmationEmail({
 </html>
 `;
 
+  const safeTextName = name.replace(/[\r\n\t]/g, " ").trim();
+
   const textContent = isEn
-    ? `Hello ${name},
+    ? `Hello ${safeTextName},
 
 Thank you for your interest in the Trustolino waitlist!
 
-Notice: This confirmation link is valid for 30 minutes. If you did not sign up or let this period expire, simply ignore this message – your information will be automatically and permanently removed from our database after 30 minutes.
+Notice: For security reasons, this confirmation link is valid for 30 minutes. If you did not sign up or let this period expire, simply ignore this message – your information will be automatically and permanently removed from our database after 30 minutes.
 
 Confirm your email address here:
 ${confirmUrl}
@@ -222,7 +241,7 @@ If the button does not work, you can also copy and paste the following link into
 ${confirmUrl}
 
 Please do not reply to this email as it is an automatically generated message.`
-    : `Hallo ${name},
+    : `Hallo ${safeTextName},
 
 vielen Dank für dein Interesse an der Trustolino Warteliste!
 

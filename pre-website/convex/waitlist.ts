@@ -1,25 +1,57 @@
-import { mutation, internalMutation, query } from "./_generated/server";
+import { mutation, internalMutation, internalQuery } from "./_generated/server";
 import { v } from "convex/values";
 
 export const register = mutation({
   args: {
+    serverSecret: v.string(),
     name: v.string(),
     email: v.string(),
     locale: v.union(v.literal("de"), v.literal("en")),
     privacyConsent: v.boolean(),
     confirmationToken: v.string(),
-    tokenExpiresAt: v.number(),
   },
   returns: v.object({
     status: v.union(
       v.literal("registered"),
       v.literal("already_confirmed"),
-      v.literal("pending_resent")
+      v.literal("pending_resent"),
+      v.literal("cooldown")
     ),
     id: v.id("waitlist"),
   }),
   handler: async (ctx, args) => {
+    // 1. Authorization: Only our server route is permitted to call register
+    const internalSecret = process.env.CONVEX_INTERNAL_SECRET;
+    if (internalSecret && args.serverSecret !== internalSecret) {
+      throw new Error("Unauthorized: Invalid internal secret");
+    }
+
+    // 2. Strict server-side input validation
+    const trimmedName = args.name.trim();
+    if (trimmedName.length === 0 || trimmedName.length > 100) {
+      throw new Error("Invalid name: Must be between 1 and 100 characters");
+    }
+
     const normalizedEmail = args.email.trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (
+      normalizedEmail.length === 0 ||
+      normalizedEmail.length > 254 ||
+      !emailRegex.test(normalizedEmail)
+    ) {
+      throw new Error("Invalid email format or length");
+    }
+
+    if (!/^[0-9a-f]{64}$/i.test(args.confirmationToken)) {
+      throw new Error("Invalid token format");
+    }
+
+    if (args.privacyConsent !== true) {
+      throw new Error("Privacy consent is required");
+    }
+
+    // 3. Server-enforced 30-minute validity
+    const tokenExpiresAt = Date.now() + 30 * 60 * 1000;
 
     const existing = await ctx.db
       .query("waitlist")
@@ -31,25 +63,34 @@ export const register = mutation({
         return { status: "already_confirmed" as const, id: existing._id };
       }
 
+      // Email Bombing & Abuse Protection: 2-minute cooldown between confirmation email resends
+      // (If remaining expiration is greater than 28 minutes, a token was just generated)
+      if (
+        existing.status === "pending" &&
+        existing.tokenExpiresAt - Date.now() > 28 * 60 * 1000
+      ) {
+        return { status: "cooldown" as const, id: existing._id };
+      }
+
       await ctx.db.patch(existing._id, {
-        name: args.name.trim(),
+        name: trimmedName,
         locale: args.locale,
-        privacyConsent: args.privacyConsent,
+        privacyConsent: true,
         confirmationToken: args.confirmationToken,
-        tokenExpiresAt: args.tokenExpiresAt,
+        tokenExpiresAt,
       });
 
       return { status: "pending_resent" as const, id: existing._id };
     }
 
     const id = await ctx.db.insert("waitlist", {
-      name: args.name.trim(),
+      name: trimmedName,
       email: normalizedEmail,
       locale: args.locale,
-      privacyConsent: args.privacyConsent,
+      privacyConsent: true,
       status: "pending",
       confirmationToken: args.confirmationToken,
-      tokenExpiresAt: args.tokenExpiresAt,
+      tokenExpiresAt,
     });
 
     return { status: "registered" as const, id };
@@ -72,7 +113,8 @@ export const confirm = mutation({
   }),
   handler: async (ctx, args) => {
     const trimmedToken = args.token.trim();
-    if (!trimmedToken) {
+    // Validate format immediately: must be exact 64-character hex string
+    if (!/^[0-9a-f]{64}$/i.test(trimmedToken)) {
       return { status: "invalid" as const };
     }
 
@@ -156,7 +198,7 @@ export const deleteIfUnconfirmed = internalMutation({
   },
 });
 
-export const getByEmail = query({
+export const getByEmail = internalQuery({
   args: {
     email: v.string(),
   },
