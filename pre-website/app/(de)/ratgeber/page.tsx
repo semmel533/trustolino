@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Ratgeber Kinderbetreuung in Mannheim & Heidelberg | Trustolino',
+    title: 'Trustolino: Ratgeber Kinderbetreuung in Mannheim & Heidelberg',
     description:
       'Hilfreiche Artikel, Tipps und Expertenwissen rund um pädagogische Betreuung für Eltern und Pädagogen.',
     url: 'https://www.trustolino.de/ratgeber',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ratgeber Kinderbetreuung in Mannheim & Heidelberg | Trustolino',
+    title: 'Trustolino: Ratgeber Kinderbetreuung in Mannheim & Heidelberg',
     description:
       'Hilfreiche Artikel, Tipps und Expertenwissen rund um pädagogische Betreuung für Eltern und Pädagogen.',
     images: ['/opengraph-image.png'],
@@ -62,7 +62,7 @@ export default async function AdvisorPageDE() {
         '@type': 'CollectionPage',
         '@id': 'https://www.trustolino.de/ratgeber#collection',
         url: 'https://www.trustolino.de/ratgeber',
-        name: 'Ratgeber Kinderbetreuung | Trustolino',
+        name: 'Trustolino: Ratgeber Kinderbetreuung',
         description:
           'Praxisnahe Tipps und Expertenwissen zu pädagogischer Kinderbetreuung in Mannheim & Heidelberg.',
         inLanguage: 'de-DE',

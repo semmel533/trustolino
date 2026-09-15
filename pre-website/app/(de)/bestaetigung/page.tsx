@@ -3,11 +3,14 @@ import type { Metadata } from "next";
 import ConfirmationView from "@/components/ui/ConfirmationView";
 
 export const metadata: Metadata = {
-  title: "E-Mail bestätigen | Trustolino",
+  title: "E-Mail bestätigen",
   description: "Bestätige deine E-Mail-Adresse für die Trustolino-Warteliste.",
   robots: {
     index: false,
     follow: false,
+  },
+  openGraph: {
+    title: "Trustolino: E-Mail bestätigen",
   },
 };
 

@@ -20,14 +20,16 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const article = getArticleBySlug(slug, 'de');
-  if (!article) return { title: 'Not Found' };
+  if (!article) return { title: { absolute: 'Not Found' } };
 
   const title = article.meta.title;
   const description = article.meta.description || article.meta.title;
   const url = `https://www.trustolino.de/ratgeber/${slug}`;
 
   return {
-    title,
+    title: {
+      absolute: title,
+    },
     description,
     robots: {
       index: true,

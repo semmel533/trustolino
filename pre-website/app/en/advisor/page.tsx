@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Childcare Advisor Mannheim & Heidelberg | Trustolino',
+    title: 'Trustolino: Childcare Advisor Mannheim & Heidelberg',
     description:
       'Helpful articles, tips, and expert knowledge on pedagogical childcare for parents and educators in Mannheim & Heidelberg.',
     url: 'https://www.trustolino.de/en/advisor',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Childcare Advisor Mannheim & Heidelberg | Trustolino',
+    title: 'Trustolino: Childcare Advisor Mannheim & Heidelberg',
     description:
       'Helpful articles, tips, and expert knowledge on pedagogical childcare for parents and educators in Mannheim & Heidelberg.',
     images: ['/opengraph-image.png'],
@@ -62,7 +62,7 @@ export default async function AdvisorPageEN() {
         '@type': 'CollectionPage',
         '@id': 'https://www.trustolino.de/en/advisor#collection',
         url: 'https://www.trustolino.de/en/advisor',
-        name: 'Childcare Advisor | Trustolino',
+        name: 'Trustolino: Childcare Advisor',
         description:
           'Practical advice and insights on pedagogical childcare in Mannheim & Heidelberg.',
         inLanguage: 'en-US',

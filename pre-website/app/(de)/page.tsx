@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Trustolino | Pädagogische Kinderbetreuung in Mannheim & Heidelberg',
+    title: 'Trustolino: Pädagogische Kinderbetreuung in Mannheim & Heidelberg',
     description:
       'Vertrauensvolle Kinderbetreuung durch qualifizierte Pädagogen und Erzieher in Mannheim & Heidelberg.',
     url: 'https://www.trustolino.de',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Trustolino | Pädagogische Kinderbetreuung in Mannheim & Heidelberg',
+    title: 'Trustolino: Pädagogische Kinderbetreuung in Mannheim & Heidelberg',
     description:
       'Vertrauensvolle Kinderbetreuung durch qualifizierte Pädagogen und Erzieher in Mannheim & Heidelberg.',
     images: ['/opengraph-image.png'],

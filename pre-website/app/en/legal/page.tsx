@@ -16,6 +16,9 @@ export const metadata: Metadata = {
       'en': '/en/legal',
     },
   },
+  openGraph: {
+    title: 'Trustolino: Legal',
+  },
 };
 
 export default function LegalPage() {

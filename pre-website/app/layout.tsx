@@ -22,8 +22,8 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.trustolino.de'),
   title: {
-    default: 'Trustolino | Pädagogische Kinderbetreuung in Mannheim & Heidelberg',
-    template: '%s | Trustolino',
+    default: 'Trustolino: Pädagogische Kinderbetreuung in Mannheim & Heidelberg',
+    template: 'Trustolino: %s',
   },
   description:
     'Trustolino ist die Plattform für pädagogisch qualifizierte Kinderbetreuung in Mannheim, Heidelberg und der Rhein-Neckar-Region. Qualifizierte Fachkräfte, verlässliche Betreuung und höchste Qualitätsstandards.',
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     alternateLocale: 'en_US',
     url: 'https://www.trustolino.de',
     siteName: 'Trustolino',
-    title: 'Trustolino | Pädagogische Kinderbetreuung in Mannheim & Heidelberg',
+    title: 'Trustolino: Pädagogische Kinderbetreuung in Mannheim & Heidelberg',
     description:
       'Vertrauensvolle Kinderbetreuung durch qualifizierte Pädagogen in Mannheim, Heidelberg und Umgebung.',
     images: [
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Trustolino | Pädagogische Kinderbetreuung in Mannheim & Heidelberg',
+    title: 'Trustolino: Pädagogische Kinderbetreuung in Mannheim & Heidelberg',
     description:
       'Vertrauensvolle Kinderbetreuung durch qualifizierte Pädagogen in Mannheim, Heidelberg und Umgebung.',
     images: ['/opengraph-image.png'],

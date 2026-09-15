@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Trustolino | Pedagogical Childcare in Mannheim & Heidelberg',
+    title: 'Trustolino: Pedagogical Childcare in Mannheim & Heidelberg',
     description:
       'Reliable childcare by qualified educators and pedagogical professionals in Mannheim & Heidelberg.',
     url: 'https://www.trustolino.de/en',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Trustolino | Pedagogical Childcare in Mannheim & Heidelberg',
+    title: 'Trustolino: Pedagogical Childcare in Mannheim & Heidelberg',
     description:
       'Reliable childcare by qualified educators and pedagogical professionals in Mannheim & Heidelberg.',
     images: ['/opengraph-image.png'],

@@ -1785,3 +1785,56 @@ npm run start:vinext
 npm run deploy:vinext
 ```
 
+---
+
+# 39. Aktueller Projektstand & Feature-Status (Pre-Release Phase)
+
+*Stand: September 2026*
+
+Die Pre-Release-Plattform von Trustolino ist vollständig implementiert, optimiert und im Produktivbetrieb.
+
+## 39.1 Produktivumgebung & Hosting
+
+- **Live-Domain**: Öffentlich erreichbar unter [`https://www.trustolino.de`](https://www.trustolino.de) und [`https://trustolino.de`](https://trustolino.de).
+- **Edge-Infrastruktur**: Auslieferung über **Cloudflare Workers** mit Next.js 16.3 und **Vinext** (`workerd` Runtime, `nodejs_compat`).
+- **Prä-Rendering**: 39 statische Seiten werden im Vorfeld kompiliert und ohne Server-Overhead direkt über Cloudflare CDN ausgeliefert.
+- **Zero-FS Content Bundle**: Sämtliche 28 Ratgeber-Artikel und 4 Rechtsdokumente werden beim Build durch `scripts/generate-content.mjs` in typisierten TypeScript-Code (`lib/content-data.ts`) kompiliert, wodurch keine Node-Dateisystem-Aufrufe an der Edge nötig sind.
+
+## 39.2 Backend & E-Mail-Infrastruktur (Convex BaaS)
+
+- **Convex Deployment**: Region `eu-west-1` (Frankfurt/EU), angebunden über mutationssichere HTTP-Edge-Endpunkte (`/api/waitlist`).
+- **Wartelisten-Mutationen**: `waitlist:register` für doppelte Registrierungsvermeidung, Sliding-Window-Rate-Limiting (IP- und E-Mail-basiert) und RFC 5322-E-Mail-Sanitisierung.
+- **Double-Opt-In-Workflow**:
+  - Automatische Generierung kryptografisch sicherer Token mit 30 Minuten Gültigkeit.
+  - Server-seitige Transaktions-E-Mails via **Microsoft 365 Business SMTP** (`smtp.office365.com:587`, STARTTLS) über Convex Actions (`email:sendConfirmationEmail`).
+  - Verifikations-Routen unter `/bestaetigung?token=...` (DE) und `/en/confirm?token=...` (EN) mit Status-Handling für erfolgreiche, abgelaufene oder bereits bestätigte Adressen (`waitlist:confirmEmail`).
+
+## 39.3 Website-Titel & Branding-Konvention
+
+- **Einheitliches Format**: Alle regulären Unterseiten führen den Markennamen mit Doppelpunkt als Prefix im Format `Trustolino: <Seitentitel>` (sowohl auf Deutsch als auch auf Englisch):
+  - Startseite (DE): `Trustolino: Pädagogische Kinderbetreuung in Mannheim & Heidelberg`
+  - Startseite (EN): `Trustolino: Pedagogical Childcare in Mannheim & Heidelberg`
+  - Ratgeber-Portal (DE): `Trustolino: Ratgeber Kinderbetreuung in Mannheim & Heidelberg`
+  - Advisor-Portal (EN): `Trustolino: Childcare Advisor Mannheim & Heidelberg`
+  - Bestätigung (DE / EN): `Trustolino: E-Mail bestätigen` / `Trustolino: Confirm Email`
+  - Rechtliches (DE / EN): `Trustolino: Impressum`, `Trustolino: Datenschutz` / `Trustolino: Legal`, `Trustolino: Privacy Policy`
+- **Ausnahme Ratgeber-Artikel**: Die einzelnen redaktionellen Fachartikel behalten ihren suchmaschinenoptimierten, zielgerichteten Einzeltitel (über `title: { absolute: ... }`), ohne vorangestelltes Markenpräfix, um maximale Relevanz in Suchergebnissen zu gewährleisten.
+
+## 39.4 SEO, GEO & Indexierungs-Architektur
+
+- **Gezielte Indexierungs-Steuerung**:
+  - `index: true, follow: true`: Startseite, Ratgeber-Hauptseite und alle 28 Fachartikel.
+  - `index: false, follow: false`: Bestätigungsseiten (`/bestaetigung`, `/en/confirm`) und rechtliche Dokumente (`/impressum`, `/datenschutz`, `/en/legal`, `/en/privacy`).
+- **GEO-Optimierung**: Metatags für Baden-Württemberg und den Rhein-Neckar-Raum (`geo.region: DE-BW`, `geo.placename: Mannheim, Heidelberg`, Geokoordinaten `49.4875;8.4660`).
+- **Strukturierte Daten**: Validiertes Schema.org JSON-LD mit `CollectionPage`, `BreadcrumbList` und `BlogPosting` für sämtliche Ratgeber-Artikel.
+- **Sitemap & Robots**: Automatisch generierte `/sitemap.xml` und `/robots.txt` zur sauberen Steuerung von Webcrawlern.
+
+## 39.5 Design System & Barrierefreiheit (Impeccable Standards)
+
+- **Farbwelt**: Exakte Einhaltung der Markenfarben (Teal `#458893`, Mint `#a6cfb3`, Accent `#fdc82b`, Hintergrund `#FAF7F2`, Text `#1d1d1b`).
+- **Responsives CSS-Grid Layout**: Flüssige Anpassung des Hero-Bereichs über `grid md:grid-cols-[1.3fr_1fr]` ohne Überläufe oder Beschnitte auf Zwischenauflösungen (z. B. Tablet-Landschaft bei 1024 px).
+- **SVG-Kamm- und Randpuffer**: Maskottchen-Grafik mit optimierter ViewBox (`88 7 104 82`), sodass der Dino an allen Bildschirmkanten vollständig und unbeschnitten gerendert wird.
+- **Tastatur-Navigation**: Sämtliche interaktiven Elemente (Buttons, Links, Bestätigungs-Checkboxen für den Datenschutz) sind über `Tab` erreichbar und mit klaren `:focus-visible`-Ringen ausgestattet.
+- **Strikte i18n-Architektur**: 100% Struktur- und Key-Parität zwischen `de.json` und `en.json` ohne hardcodierte Strings in UI-Komponenten.
+
+

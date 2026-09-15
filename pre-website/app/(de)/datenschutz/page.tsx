@@ -16,6 +16,9 @@ export const metadata: Metadata = {
       'en': '/en/privacy',
     },
   },
+  openGraph: {
+    title: 'Trustolino: Datenschutz',
+  },
 };
 
 export default function DatenschutzPage() {

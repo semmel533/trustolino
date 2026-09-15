@@ -3,11 +3,14 @@ import type { Metadata } from "next";
 import ConfirmationView from "@/components/ui/ConfirmationView";
 
 export const metadata: Metadata = {
-  title: "Confirm Email | Trustolino",
+  title: "Confirm Email",
   description: "Confirm your email address for the Trustolino waitlist.",
   robots: {
     index: false,
     follow: false,
+  },
+  openGraph: {
+    title: "Trustolino: Confirm Email",
   },
 };
 
