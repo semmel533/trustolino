@@ -48,6 +48,7 @@ function generateToken(): string {
 }
 
 export async function POST(request: Request) {
+  let step = "init";
   try {
     const forwardedFor = request.headers.get("x-forwarded-for");
     const ip = forwardedFor ? forwardedFor.split(",")[0].trim() : "127.0.0.1";
@@ -95,13 +96,18 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "privacy_required" }, { status: 400 });
     }
 
+    let step = "getEnv";
     const convexUrl = getConvexUrl();
     const serverSecret = getServerSecret();
 
+    step = `createClient(${convexUrl})`;
     const convex = new ConvexHttpClient(convexUrl);
+
+    step = "generateToken";
     const confirmationToken = generateToken();
     const resolvedLocale = locale === "en" ? "en" : "de";
 
+    step = "convexMutation";
     const result = await convex.mutation(api.waitlist.register, {
       serverSecret,
       name: sanitizedName,
@@ -111,18 +117,24 @@ export async function POST(request: Request) {
       confirmationToken,
     });
 
+    step = "formatResponse";
     if (result.status === "already_confirmed") {
       return NextResponse.json({ error: "duplicate" }, { status: 409 });
     }
 
     // Return status: Convex scheduler takes care of email dispatch asynchronously
     return NextResponse.json({ success: true, status: result.status });
-  } catch (err) {
-    console.error("Waitlist registration failed:", err instanceof Error ? err.message : String(err));
+  } catch (err: unknown) {
+    const errorObj = err as Record<string, unknown> | null;
     return NextResponse.json(
       {
         error: "server_error",
-        detail: err instanceof Error ? err.message : String(err),
+        step,
+        errType: typeof err,
+        errString: String(err),
+        message: err instanceof Error ? err.message : errorObj?.message,
+        stack: err instanceof Error ? err.stack : undefined,
+        data: errorObj?.data,
       },
       { status: 500 }
     );
