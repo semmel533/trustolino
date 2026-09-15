@@ -67,10 +67,7 @@ export const sendConfirmationEmail = internalAction({
       throw new Error("Missing required environment variable: EMAIL_FROM");
     }
 
-    const replyTo = process.env.EMAIL_REPLY_TO;
-    if (!replyTo) {
-      throw new Error("Missing required environment variable: EMAIL_REPLY_TO");
-    }
+    const replyTo = process.env.EMAIL_REPLY_TO || fromAddress;
 
     // Prevent SMTP header injection
     if (/[\r\n]/.test(args.to)) {

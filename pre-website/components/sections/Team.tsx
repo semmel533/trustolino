@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { User } from "@phosphor-icons/react";
 import { useDictionary } from "@/lib/i18n/DictionaryContext";
 import { ExpandableText } from "@/components/ui/ExpandableText";
 
@@ -43,9 +42,6 @@ export default function Team() {
               <div className="relative flex flex-col items-center justify-center w-36 sm:w-40 md:w-44 aspect-[3/4] shrink-0 overflow-hidden rounded-2xl bg-gradient-to-b from-teal-50/90 via-teal-100/30 to-teal-100/70 border border-teal-200/70 shadow-2xs group-hover:border-teal-300 transition-all duration-300">
                 <div className="flex size-16 md:size-20 items-center justify-center rounded-full bg-white/90 border border-teal-200/80 font-heading text-2xl md:text-3xl font-bold text-primary shadow-xs">
                   {member.name.charAt(0)}
-                </div>
-                <div className="absolute bottom-2.5 right-2.5 flex size-7 items-center justify-center rounded-full bg-white/90 border border-teal-200/60 text-primary/70 shadow-2xs">
-                  <User weight="bold" className="size-3.5" />
                 </div>
               </div>
 

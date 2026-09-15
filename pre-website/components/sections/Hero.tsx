@@ -17,7 +17,7 @@ export default function Hero() {
       id="hero"
       className="relative overflow-hidden bg-cream-100 h-[calc(100svh-72px)] min-h-[600px] flex flex-col justify-center pt-4 md:pt-8"
     >
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_1fr] md:items-center md:gap-12 lg:gap-16 lg:px-8">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.2fr_1fr] md:items-center md:gap-10 lg:gap-16 lg:px-8">
         {/* Text content */}
         <div className="flex flex-col items-center text-center md:items-start md:text-left gap-6 w-full">
           <span className="inline-flex max-w-fit items-center rounded-full bg-teal-50 px-4 py-1.5 text-sm font-semibold text-foreground/80 ring-1 ring-inset ring-teal-600/20">
@@ -41,7 +41,7 @@ export default function Hero() {
 
         {/* Mascot illustration */}
         <div className="hidden md:flex items-center justify-end w-full">
-          <div className="relative w-full max-w-[22rem] lg:max-w-[27rem] aspect-[5/4]">
+          <div className="relative w-full max-w-[24rem] lg:max-w-[31rem] xl:max-w-[33rem] aspect-[5/4]">
             <Image
               src="/icon.svg"
               alt="Trustolino Mascot"
