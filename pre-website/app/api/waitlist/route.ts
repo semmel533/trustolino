@@ -30,6 +30,21 @@ function isRateLimited(ip: string): boolean {
   return record.count > MAX_REQUESTS;
 }
 
+async function getEnv(key: string): Promise<string | undefined> {
+  if (process.env[key]) {
+    return process.env[key];
+  }
+  try {
+    const cf = await Function('return import("cloudflare:workers")')();
+    if (cf?.env && typeof cf.env[key] === "string") {
+      return cf.env[key];
+    }
+  } catch {
+    // Non-workerd runtime
+  }
+  return undefined;
+}
+
 export async function POST(request: Request) {
   try {
     const forwardedFor = request.headers.get("x-forwarded-for");
@@ -78,12 +93,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "privacy_required" }, { status: 400 });
     }
 
-    const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
+    const convexUrl = await getEnv("NEXT_PUBLIC_CONVEX_URL");
     if (!convexUrl) {
       throw new Error("Missing required environment variable: NEXT_PUBLIC_CONVEX_URL");
     }
 
-    const serverSecret = process.env.CONVEX_INTERNAL_SECRET;
+    const serverSecret = await getEnv("CONVEX_INTERNAL_SECRET");
     if (!serverSecret) {
       throw new Error("Missing required environment variable: CONVEX_INTERNAL_SECRET");
     }
@@ -107,7 +122,8 @@ export async function POST(request: Request) {
 
     // Return status: Convex scheduler takes care of email dispatch asynchronously
     return NextResponse.json({ success: true, status: result.status });
-  } catch {
+  } catch (err) {
+    console.error("Waitlist registration failed:", err instanceof Error ? err.message : String(err));
     return NextResponse.json(
       { error: "server_error" },
       { status: 500 }

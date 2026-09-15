@@ -124,15 +124,18 @@ export default function WaitlistCTA() {
                 />
               </div>
 
-              <div
-                onClick={() => {
-                  setPrivacyConsent(!privacyConsent);
-                  if (error) setError(null);
-                }}
-                className="mb-4 flex items-start gap-3 text-left cursor-pointer group select-none"
-              >
+              <label className="mb-4 flex items-start gap-3 text-left cursor-pointer group select-none relative">
+                <input
+                  type="checkbox"
+                  checked={privacyConsent}
+                  onChange={(e) => {
+                    setPrivacyConsent(e.target.checked);
+                    if (error) setError(null);
+                  }}
+                  className="sr-only peer"
+                />
                 <div
-                  className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-[8px] border-2 transition-all duration-200 ${
+                  className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-[8px] border-2 transition-all duration-200 peer-focus-visible:ring-2 peer-focus-visible:ring-accent peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-teal-800 ${
                     privacyConsent
                       ? "border-accent bg-accent text-accent-foreground shadow-md scale-105"
                       : "border-white/40 bg-white/15 group-hover:border-white/80 group-hover:bg-white/25 group-hover:scale-105"
@@ -142,19 +145,19 @@ export default function WaitlistCTA() {
                     <Check weight="bold" className="size-4 stroke-[3]" />
                   )}
                 </div>
-                <label className="cursor-pointer text-xs leading-relaxed text-primary-foreground/90">
+                <span className="cursor-pointer text-xs leading-relaxed text-primary-foreground/90">
                   {wForm.privacyCheckbox.split('{privacy}')[0]}
                   <Link
                     href={privacyHref}
                     onClick={(e) => e.stopPropagation()}
-                    className="underline font-semibold hover:text-accent transition-colors"
+                    className="underline font-semibold hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent rounded-sm"
                     target="_blank"
                   >
                     {wForm.privacyLink}
                   </Link>
                   {wForm.privacyCheckbox.split('{privacy}')[1]}
-                </label>
-              </div>
+                </span>
+              </label>
 
               <button
                 type="submit"
