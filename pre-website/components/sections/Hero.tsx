@@ -17,9 +17,9 @@ export default function Hero() {
       id="hero"
       className="relative overflow-hidden bg-cream-100 h-[calc(100svh-72px)] min-h-[600px] flex flex-col justify-center pt-4 md:pt-8"
     >
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 md:flex-row md:items-center md:gap-16 lg:px-8">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-8 px-6 md:grid-cols-[1.3fr_1fr] md:items-center md:gap-12 lg:gap-16 lg:px-8">
         {/* Text content */}
-        <div className="flex flex-col items-center text-center md:items-start md:text-left gap-6 md:w-3/5">
+        <div className="flex flex-col items-center text-center md:items-start md:text-left gap-6 w-full">
           <span className="inline-flex max-w-fit items-center rounded-full bg-teal-50 px-4 py-1.5 text-sm font-semibold text-foreground/80 ring-1 ring-inset ring-teal-600/20">
             {h.badge}
           </span>
@@ -40,8 +40,8 @@ export default function Hero() {
         </div>
 
         {/* Mascot illustration */}
-        <div className="hidden md:flex items-center justify-center md:w-2/5">
-          <div className="relative h-72 w-72 md:h-[22rem] md:w-[22rem] lg:h-[28rem] lg:w-[28rem]">
+        <div className="hidden md:flex items-center justify-end w-full">
+          <div className="relative w-full max-w-[22rem] lg:max-w-[27rem] aspect-[5/4]">
             <Image
               src="/icon.svg"
               alt="Trustolino Mascot"
