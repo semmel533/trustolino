@@ -1,7 +1,6 @@
-import fs from 'fs';
-import path from 'path';
 import ReactMarkdown from 'react-markdown';
 import type { Metadata } from 'next';
+import { legalDocsData } from '@/lib/content-data';
 
 export const metadata: Metadata = {
   title: 'Impressum',
@@ -15,15 +14,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function ImpressumPage() {
-  const filePath = path.join(process.cwd(), 'public/content/de/legal/impressum.md');
-
-  let content = '';
-  try {
-    content = fs.readFileSync(filePath, 'utf8');
-  } catch {
-    content = '# Impressum\n\nPlatzhalter für das Impressum.';
-  }
+export default function ImpressumPage() {
+  const content = legalDocsData.impressum;
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 lg:px-8">

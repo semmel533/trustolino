@@ -1,7 +1,6 @@
-import fs from 'fs';
-import path from 'path';
 import ReactMarkdown from 'react-markdown';
 import type { Metadata } from 'next';
+import { legalDocsData } from '@/lib/content-data';
 
 export const metadata: Metadata = {
   title: 'Legal',
@@ -15,15 +14,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function LegalPage() {
-  const filePath = path.join(process.cwd(), 'public/content/en/legal/legal.md');
-
-  let content = '';
-  try {
-    content = fs.readFileSync(filePath, 'utf8');
-  } catch {
-    content = '# Legal Notice\n\nPlaceholder for legal information.';
-  }
+export default function LegalPage() {
+  const content = legalDocsData.legal;
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 lg:px-8">

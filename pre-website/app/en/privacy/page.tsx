@@ -1,7 +1,6 @@
-import fs from 'fs';
-import path from 'path';
 import ReactMarkdown from 'react-markdown';
 import type { Metadata } from 'next';
+import { legalDocsData } from '@/lib/content-data';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -15,15 +14,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function PrivacyPage() {
-  const filePath = path.join(process.cwd(), 'public/content/en/privacy/privacy.md');
-
-  let content = '';
-  try {
-    content = fs.readFileSync(filePath, 'utf8');
-  } catch {
-    content = '# Privacy Policy\n\nPlaceholder for the privacy policy.';
-  }
+export default function PrivacyPage() {
+  const content = legalDocsData.privacy;
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16 lg:px-8">

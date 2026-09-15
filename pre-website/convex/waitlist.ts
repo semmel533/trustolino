@@ -1,4 +1,5 @@
 import { mutation, internalMutation, internalQuery } from "./_generated/server";
+import { internal } from "./_generated/api";
 import { v } from "convex/values";
 
 export const register = mutation({
@@ -83,6 +84,14 @@ export const register = mutation({
         tokenExpiresAt,
       });
 
+      // Schedule email sending via Convex Node.js action
+      await ctx.scheduler.runAfter(0, internal.email.sendConfirmationEmail, {
+        to: normalizedEmail,
+        name: trimmedName,
+        token: args.confirmationToken,
+        locale: args.locale,
+      });
+
       return { status: "pending_resent" as const, id: existing._id };
     }
 
@@ -94,6 +103,14 @@ export const register = mutation({
       status: "pending",
       confirmationToken: args.confirmationToken,
       tokenExpiresAt,
+    });
+
+    // Schedule email sending via Convex Node.js action
+    await ctx.scheduler.runAfter(0, internal.email.sendConfirmationEmail, {
+      to: normalizedEmail,
+      name: trimmedName,
+      token: args.confirmationToken,
+      locale: args.locale,
     });
 
     return { status: "registered" as const, id };

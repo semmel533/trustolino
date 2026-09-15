@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import crypto from "crypto";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "../../../convex/_generated/api";
-import { sendConfirmationEmail } from "@/lib/email";
 
 // IP-based sliding window rate limiter with auto-eviction
 const ipRateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -106,26 +105,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "duplicate" }, { status: 409 });
     }
 
-    // Anti-spam cooldown: If email was requested less than 2 minutes ago, don't spam Hetzner SMTP
-    if (result.status === "cooldown") {
-      return NextResponse.json({ success: true, status: "pending" });
-    }
-
-    // Send the double opt-in confirmation email
-    const emailResult = await sendConfirmationEmail({
-      to: normalizedEmail,
-      name: sanitizedName,
-      token: confirmationToken,
-      locale: resolvedLocale,
-    });
-
-    if (!emailResult.success) {
-      return NextResponse.json(
-        { error: "email_delivery_failed" },
-        { status: 502 }
-      );
-    }
-
+    // Return status: Convex scheduler takes care of email dispatch asynchronously
     return NextResponse.json({ success: true, status: result.status });
   } catch {
     return NextResponse.json(

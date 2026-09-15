@@ -967,13 +967,13 @@ Als Backend-as-a-Service wird **Convex** eingesetzt.
 Convex übernimmt zentrale Backend-Funktionen des Projekts:
 
 - **Reaktive Datenbank**: Vollständig typisierte TypeScript-Datenbank mit Schema-Validierung und Indizes (`convex/schema.ts`).
-- **Serverless Backend-Funktionen**: Transaktionale Mutations, Queries und Node-Actions (`convex/waitlist.ts`).
+- **Serverless Backend-Funktionen**: Transaktionale Mutations, Queries und Node.js-Actions (`convex/waitlist.ts`, `convex/email.ts`).
 - **Scheduled Tasks & Crons**: Zeitgesteuerte Hintergrundprozesse, z. B. automatisches Löschen unbestätigter Vorregistrierungen nach 30 Minuten (`convex/crons.ts`).
 - **Double Opt-In & Sicherheit**: Kryptografisch sichere Tokens, serverseitige Ratenbegrenzung und transaktionale Token-Entwertung.
-- **E-Mail-Infrastruktur**: Automatische Zusendung von Bestätigungs-E-Mails via SMTP (Nodemailer) im Trustolino-Designsystem.
+- **Vollständig ausgelagerter E-Mail-Versand**: Der Versand von Bestätigungs-E-Mails läuft komplett asynchron über Convex Node-Actions (`convex/email.ts`) angebunden an den **Microsoft 365** SMTP-Server (`smtp.office365.com:587`, STARTTLS) mit automatischer Fehlerbehandlung und Retries über den Convex Scheduler.
 - **Realtime Sync & Storage**: Skalierbare Echtzeitdaten und Dateispeicherung.
 
-Damit ist die gesamte Backend-Infrastruktur modern, typsicher und server-first aufgebaut.
+Damit ist die gesamte Backend-Infrastruktur modern, typsicher und server-first aufgebaut: Next.js dient lediglich als Frontend- und Proxy-Schicht mit IP-Ratenbegrenzung, während die gesamte Datenhaltung und der Mailversand geschützt im Convex-Backend verarbeitet werden.
 
 ---
 
@@ -1743,3 +1743,45 @@ Die Domain `app.trustolino.de` ist dagegen ausschließlich die Produkt- und Web-
 Die allgemeine Website bildet nach ihrem Release außerdem die **zentrale Quelle für die offiziellen Trustolino-Logos**. Andere Anwendungen und externe Verwendungen referenzieren diese Assets ausschließlich über die öffentlich verfügbaren URLs der allgemeinen Website, anstatt eigene Kopien der Logos zu enthalten.
 
 **Trustolino verbindet damit professionelle Pädagog:innen mit Familien und übernimmt gleichzeitig die digitale Infrastruktur, die für eine moderne, vertrauensvolle und möglichst unkomplizierte Kinderbetreuung notwendig ist.**
+
+---
+
+# 38. Pre-Website Technische Architektur & Cloudflare Workers
+
+Die Pre-Release-Website (`pre-website/`) ist für weltweite Edge-Auslieferung auf **Cloudflare Workers** optimiert.
+
+## 38.1 Edge-Architektur mit Vinext
+
+- **Toolchain**: Next.js 16.3 (App Router) ausgeführt über Cloudflares offizielles **Vinext** (`vinext`, Vite 8 & `@vitejs/plugin-rsc`).
+- **Runtime**: Cloudflare Workers `workerd` mit `nodejs_compat`.
+- **Statische & Dynamische Inhalte**: Alle 28 Ratgeber-Artikel und Rechtsseiten werden über einen typisierten Content-Compiler (`scripts/generate-content.mjs` -> `lib/content-data.ts`) in den Bundle-Code integriert. Dadurch besteht zur Laufzeit keinerlei Abhängigkeit von einem physischen Dateisystem (`zero-fs`).
+- **Prä-Rendering**: Statische Seiten werden beim Build vorkompiliert und durch das Cloudflare `ASSETS`-Binding ohne Worker-Overhead ausgeliefert.
+
+## 38.2 Backend & E-Mail-Architektur (Convex)
+
+- Sämtliche Datenbankoperationen und sensitive Aktionen laufen im serverlosen **Convex-Backend** (`pre-website/convex/`).
+- **E-Mail-Versand**: Vollständig in Convex ausgelagert (`pre-website/convex/email.ts` via Microsoft 365 Business SMTP, TLS/STARTTLS auf Port 587).
+- Die Edge-Applikation auf Cloudflare Workers benötigt weder SMTP-Zugangsdaten noch Node-Socket-Libraries; sie kommuniziert ausschließlich über den `ConvexHttpClient` (Standard-`fetch()`).
+
+## 38.3 Deployment-Befehle
+
+```bash
+# Next.js Entwicklungs-Server (Port 3000)
+npm run dev
+
+# Vinext Vite-Entwicklungs-Server (Port 3001)
+npm run dev:vinext
+
+# Standard Next.js Build
+npm run build
+
+# Cloudflare Workers Build & Prerender
+npm run build:vinext
+
+# Lokale Cloudflare Worker Vorschau (Wrangler auf Port 8787)
+npm run start:vinext
+
+# Cloudflare Workers Deployment
+npm run deploy:vinext
+```
+

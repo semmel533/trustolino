@@ -1,3 +1,7 @@
+"use node";
+
+import { internalAction } from "./_generated/server";
+import { v } from "convex/values";
 import nodemailer from "nodemailer";
 
 function escapeHtml(str: string): string {
@@ -7,13 +11,6 @@ function escapeHtml(str: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
-}
-
-interface SendConfirmationEmailParams {
-  to: string;
-  name: string;
-  token: string;
-  locale: "de" | "en";
 }
 
 function getTransporter() {
@@ -41,66 +38,66 @@ function getTransporter() {
     throw new Error("Invalid environment variable: SMTP_PORT must be a valid number");
   }
 
-  // Port 465 is implicit TLS; Port 587 uses STARTTLS
   const secure = port === 465;
 
   return nodemailer.createTransport({
     host,
     port,
     secure,
+    requireTLS: !secure,
     auth: { user, pass },
   });
 }
 
-export async function sendConfirmationEmail({
-  to,
-  name,
-  token,
-  locale,
-}: SendConfirmationEmailParams): Promise<{ success: boolean; error?: string }> {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL;
-  if (!appUrl) {
-    throw new Error("Missing required environment variable: NEXT_PUBLIC_APP_URL");
-  }
+export const sendConfirmationEmail = internalAction({
+  args: {
+    to: v.string(),
+    name: v.string(),
+    token: v.string(),
+    locale: v.union(v.literal("de"), v.literal("en")),
+  },
+  handler: async (_ctx, args) => {
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+    if (!appUrl) {
+      throw new Error("Missing required environment variable: NEXT_PUBLIC_APP_URL");
+    }
 
-  const fromAddress = process.env.EMAIL_FROM;
-  if (!fromAddress) {
-    throw new Error("Missing required environment variable: EMAIL_FROM");
-  }
+    const fromAddress = process.env.EMAIL_FROM;
+    if (!fromAddress) {
+      throw new Error("Missing required environment variable: EMAIL_FROM");
+    }
 
-  const replyTo = process.env.EMAIL_REPLY_TO;
-  if (!replyTo) {
-    throw new Error("Missing required environment variable: EMAIL_REPLY_TO");
-  }
+    const replyTo = process.env.EMAIL_REPLY_TO;
+    if (!replyTo) {
+      throw new Error("Missing required environment variable: EMAIL_REPLY_TO");
+    }
 
-  const isEn = locale === "en";
-  const fromName = isEn ? "Selim at Trustolino" : "Selim von Trustolino";
-  const from = `"${fromName}" <${fromAddress}>`;
+    // Prevent SMTP header injection
+    if (/[\r\n]/.test(args.to)) {
+      throw new Error("Invalid characters in recipient email");
+    }
 
-  // Prevent SMTP header injection
-  if (/[\r\n]/.test(to)) {
-    return { success: false, error: "Invalid characters in recipient email" };
-  }
+    const isEn = args.locale === "en";
+    const fromName = isEn ? "Selim at Trustolino" : "Selim von Trustolino";
+    const from = `"${fromName}" <${fromAddress}>`;
 
-  // Sanitize user inputs against HTML injection
-  const safeName = escapeHtml(name.replace(/[\r\n\t]/g, " ").trim());
+    const safeName = escapeHtml(args.name.replace(/[\r\n\t]/g, " ").trim());
+    const confirmUrl = isEn
+      ? `${appUrl}/en/confirm?token=${encodeURIComponent(args.token)}`
+      : `${appUrl}/bestaetigung?token=${encodeURIComponent(args.token)}`;
 
-  const confirmUrl = isEn
-    ? `${appUrl}/en/confirm?token=${encodeURIComponent(token)}`
-    : `${appUrl}/bestaetigung?token=${encodeURIComponent(token)}`;
+    const privacyUrl = isEn
+      ? `${appUrl}/en/privacy`
+      : `${appUrl}/datenschutz`;
 
-  const privacyUrl = isEn
-    ? `${appUrl}/en/privacy`
-    : `${appUrl}/datenschutz`;
+    const subject = isEn
+      ? "Please confirm your email address for Trustolino"
+      : "Bitte bestätige deine E-Mail-Adresse für Trustolino";
 
-  const subject = isEn
-    ? "Please confirm your email address for Trustolino"
-    : "Bitte bestätige deine E-Mail-Adresse für Trustolino";
+    const logoUrl = `${appUrl}/logo.png`;
 
-  const logoUrl = `${appUrl}/logo.png`;
-
-  const htmlContent = isEn
-    ? `
+    const htmlContent = isEn
+      ? `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -170,7 +167,7 @@ export async function sendConfirmationEmail({
 </body>
 </html>
 `
-    : `
+      : `
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -241,10 +238,10 @@ export async function sendConfirmationEmail({
 </html>
 `;
 
-  const safeTextName = name.replace(/[\r\n\t]/g, " ").trim();
+    const safeTextName = args.name.replace(/[\r\n\t]/g, " ").trim();
 
-  const textContent = isEn
-    ? `Hello ${safeTextName},
+    const textContent = isEn
+      ? `Hello ${safeTextName},
 
 Thank you for your interest in the Trustolino waitlist!
 
@@ -259,7 +256,7 @@ If the button does not work, you can also copy and paste the following link into
 ${confirmUrl}
 
 Please do not reply to this email as it is an automatically generated message.`
-    : `Hallo ${safeTextName},
+      : `Hallo ${safeTextName},
 
 vielen Dank für dein Interesse an der Trustolino Warteliste!
 
@@ -275,20 +272,14 @@ ${confirmUrl}
 
 Bitte antworte nicht auf diese E-Mail, da es sich um eine automatisch generierte Nachricht handelt.`;
 
-  try {
     const transporter = getTransporter();
     await transporter.sendMail({
       from,
       replyTo,
-      to,
+      to: args.to,
       subject,
       text: textContent,
       html: htmlContent,
     });
-    return { success: true };
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Failed to send email";
-    return { success: false, error: message };
-  }
-}
+  },
+});
