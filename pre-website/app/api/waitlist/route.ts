@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { ConvexHttpClient } from "convex/browser";
-import { api } from "../../../convex/_generated/api";
 
 // IP-based sliding window rate limiter with auto-eviction
 const ipRateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -95,8 +93,6 @@ export async function POST(request: Request) {
 
     const convexUrl = getConvexUrl();
     const serverSecret = getServerSecret();
-
-    const convex = new ConvexHttpClient(convexUrl);
     const confirmationToken = generateToken();
     const resolvedLocale = locale === "en" ? "en" : "de";
 
@@ -118,7 +114,34 @@ export async function POST(request: Request) {
       mutationArgs.serverSecret = serverSecret;
     }
 
-    const result = await convex.mutation(api.waitlist.register, mutationArgs);
+    const convexRes = await fetch(`${convexUrl}/api/mutation`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        path: "waitlist:register",
+        format: "json",
+        args: [mutationArgs],
+      }),
+    });
+
+    if (!convexRes.ok) {
+      const errText = await convexRes.text().catch(() => "");
+      throw new Error(`Convex API responded with status ${convexRes.status}: ${errText}`);
+    }
+
+    const convexData = (await convexRes.json()) as {
+      status: "success" | "error";
+      value?: { status: string; id: string };
+      errorMessage?: string;
+    };
+
+    if (convexData.status !== "success" || !convexData.value) {
+      throw new Error(convexData.errorMessage || "Convex mutation failed");
+    }
+
+    const result = convexData.value;
 
     if (result.status === "already_confirmed") {
       return NextResponse.json({ error: "duplicate" }, { status: 409 });
