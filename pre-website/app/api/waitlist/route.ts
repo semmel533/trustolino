@@ -150,9 +150,10 @@ export async function POST(request: Request) {
     // Return status: Convex scheduler takes care of email dispatch asynchronously
     return NextResponse.json({ success: true, status: result.status });
   } catch (err: unknown) {
-    console.error("Waitlist registration failed:", err instanceof Error ? err.message : String(err));
+    const errorMsg = err instanceof Error ? err.message : String(err);
+    console.error("Waitlist registration failed:", errorMsg);
     return NextResponse.json(
-      { error: "server_error" },
+      { error: "server_error", detail: errorMsg },
       { status: 500 }
     );
   }
