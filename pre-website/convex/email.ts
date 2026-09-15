@@ -3,6 +3,7 @@
 import { internalAction } from "./_generated/server";
 import { v } from "convex/values";
 import nodemailer from "nodemailer";
+import { LOGO_PNG_BASE64 } from "./assets/logo";
 
 function escapeHtml(str: string): string {
   return str
@@ -110,7 +111,7 @@ export const sendConfirmationEmail = internalAction({
           <!-- Header with Logo -->
           <tr>
             <td align="center" style="background-color: #f6faf7; padding: 32px 24px; border-bottom: 1px solid #e4ede6;">
-              <img src="${logoUrl}" alt="Trustolino" width="165" style="display: block; max-width: 165px; height: auto;" />
+              <img src="cid:trustolino-logo" alt="Trustolino" width="165" style="display: block; max-width: 165px; height: auto;" />
             </td>
           </tr>
 
@@ -180,7 +181,7 @@ export const sendConfirmationEmail = internalAction({
           <!-- Header with Logo -->
           <tr>
             <td align="center" style="background-color: #f6faf7; padding: 32px 24px; border-bottom: 1px solid #e4ede6;">
-              <img src="${logoUrl}" alt="Trustolino" width="165" style="display: block; max-width: 165px; height: auto;" />
+              <img src="cid:trustolino-logo" alt="Trustolino" width="165" style="display: block; max-width: 165px; height: auto;" />
             </td>
           </tr>
 
@@ -277,6 +278,14 @@ Bitte antworte nicht auf diese E-Mail, da es sich um eine automatisch generierte
       subject,
       text: textContent,
       html: htmlContent,
+      attachments: [
+        {
+          filename: "logo.png",
+          content: LOGO_PNG_BASE64,
+          encoding: "base64",
+          cid: "trustolino-logo",
+        },
+      ],
     });
   },
 });

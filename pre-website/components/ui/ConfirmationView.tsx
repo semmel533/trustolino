@@ -4,8 +4,6 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useDictionary } from "@/lib/i18n/DictionaryContext";
-import { ConvexHttpClient } from "convex/browser";
-import { api } from "@/convex/_generated/api";
 import { CheckCircle, WarningCircle, Clock, CircleNotch } from "@phosphor-icons/react";
 
 type ConfirmationStatus =
@@ -40,20 +38,19 @@ export default function ConfirmationView({ locale }: ConfirmationViewProps) {
     }
     requestedRef.current = true;
 
-    const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
-    if (!convexUrl) {
-      throw new Error("Missing required environment variable: NEXT_PUBLIC_CONVEX_URL");
-    }
-
-    const client = new ConvexHttpClient(convexUrl);
-
-    client
-      .mutation(api.waitlist.confirm, { token: token.trim() })
-      .then((res) => {
+    fetch("/api/waitlist/confirm", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: token.trim() }),
+    })
+      .then((res) => res.json())
+      .then((res: { status: ConfirmationStatus; name?: string }) => {
         if (res.name) {
           setUserName(res.name);
         }
-        setStatus(res.status);
+        setStatus(res.status || "invalid");
       })
       .catch(() => {
         setStatus("invalid");
