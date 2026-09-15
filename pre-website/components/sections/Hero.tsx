@@ -41,7 +41,7 @@ export default function Hero() {
 
         {/* Mascot illustration */}
         <div className="hidden md:flex items-center justify-center md:w-2/5">
-          <div className="relative h-72 w-72 md:h-[24rem] md:w-[24rem] lg:h-[32rem] lg:w-[32rem]">
+          <div className="relative h-64 w-64 md:h-80 md:w-80 lg:h-[25rem] lg:w-[25rem]">
             <Image
               src="/icon.svg"
               alt="Trustolino Mascot"
