@@ -35,7 +35,12 @@ function getConvexUrl(): string {
   if (!url.startsWith("http://") && !url.startsWith("https://")) {
     url = `https://${url}`;
   }
-  return url.replace(/\/+$/, "");
+  url = url.replace(/\/+$/, "");
+  // Ensure the European region is present if omitted in Cloudflare dashboard
+  if (url.includes("charming-shrimp-686.convex.cloud")) {
+    url = url.replace("charming-shrimp-686.convex.cloud", "charming-shrimp-686.eu-west-1.convex.cloud");
+  }
+  return url;
 }
 
 function getServerSecret(): string | undefined {
@@ -133,7 +138,7 @@ export async function POST(request: Request) {
 
     if (!convexRes.ok) {
       const errText = await convexRes.text().catch(() => "");
-      throw new Error(`Convex API (${convexUrl}/api/mutation) responded with status ${convexRes.status}: ${errText}`);
+      throw new Error(`Convex API responded with status ${convexRes.status}: ${errText}`);
     }
 
     const convexData = (await convexRes.json()) as {
@@ -155,10 +160,9 @@ export async function POST(request: Request) {
     // Return status: Convex scheduler takes care of email dispatch asynchronously
     return NextResponse.json({ success: true, status: result.status });
   } catch (err: unknown) {
-    const errorMsg = err instanceof Error ? err.message : String(err);
-    console.error("Waitlist registration failed:", errorMsg);
+    console.error("Waitlist registration failed:", err instanceof Error ? err.message : String(err));
     return NextResponse.json(
-      { error: "server_error", detail: errorMsg },
+      { error: "server_error" },
       { status: 500 }
     );
   }
