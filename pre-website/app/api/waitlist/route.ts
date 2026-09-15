@@ -48,21 +48,17 @@ function generateToken(): string {
 }
 
 export async function POST(request: Request) {
-  let step = "init";
   try {
     const forwardedFor = request.headers.get("x-forwarded-for");
     const ip = forwardedFor ? forwardedFor.split(",")[0].trim() : "127.0.0.1";
 
     if (isRateLimited(ip)) {
-      return NextResponse.json(
-        { error: "rate_limited" },
-        { status: 429 }
-      );
+      return NextResponse.json({ error: "rate_limit" }, { status: 429 });
     }
 
     const body = await request.json().catch(() => null);
     if (!body || typeof body !== "object") {
-      return NextResponse.json({ error: "invalid_request" }, { status: 400 });
+      return NextResponse.json({ error: "invalid_payload" }, { status: 400 });
     }
 
     const { name, email, locale, privacyConsent } = body;
@@ -71,7 +67,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "invalid_name" }, { status: 400 });
     }
 
-    // Strip control characters and clamp length
+    // Sanitize name: remove control characters and trim
     const sanitizedName = name.replace(/[\x00-\x1F\x7F]/g, "").trim();
     if (sanitizedName.length === 0 || sanitizedName.length > 100) {
       return NextResponse.json({ error: "invalid_name" }, { status: 400 });
@@ -81,8 +77,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "invalid_email" }, { status: 400 });
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Validate email format and length
     const normalizedEmail = email.trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (
       normalizedEmail.length === 0 ||
       normalizedEmail.length > 254 ||
@@ -96,28 +93,33 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "privacy_required" }, { status: 400 });
     }
 
-    let step = "getEnv";
     const convexUrl = getConvexUrl();
     const serverSecret = getServerSecret();
 
-    step = `createClient(${convexUrl})`;
     const convex = new ConvexHttpClient(convexUrl);
-
-    step = "generateToken";
     const confirmationToken = generateToken();
     const resolvedLocale = locale === "en" ? "en" : "de";
 
-    step = "convexMutation";
-    const result = await convex.mutation(api.waitlist.register, {
-      serverSecret,
+    const mutationArgs: {
+      name: string;
+      email: string;
+      locale: "de" | "en";
+      privacyConsent: boolean;
+      confirmationToken: string;
+      serverSecret?: string;
+    } = {
       name: sanitizedName,
       email: normalizedEmail,
       locale: resolvedLocale,
       privacyConsent: true,
       confirmationToken,
-    });
+    };
+    if (serverSecret) {
+      mutationArgs.serverSecret = serverSecret;
+    }
 
-    step = "formatResponse";
+    const result = await convex.mutation(api.waitlist.register, mutationArgs);
+
     if (result.status === "already_confirmed") {
       return NextResponse.json({ error: "duplicate" }, { status: 409 });
     }
@@ -125,17 +127,9 @@ export async function POST(request: Request) {
     // Return status: Convex scheduler takes care of email dispatch asynchronously
     return NextResponse.json({ success: true, status: result.status });
   } catch (err: unknown) {
-    const errorObj = err as Record<string, unknown> | null;
+    console.error("Waitlist registration failed:", err instanceof Error ? err.message : String(err));
     return NextResponse.json(
-      {
-        error: "server_error",
-        step,
-        errType: typeof err,
-        errString: String(err),
-        message: err instanceof Error ? err.message : errorObj?.message,
-        stack: err instanceof Error ? err.stack : undefined,
-        data: errorObj?.data,
-      },
+      { error: "server_error" },
       { status: 500 }
     );
   }
