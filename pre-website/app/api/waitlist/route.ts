@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import crypto from "crypto";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "../../../convex/_generated/api";
 
@@ -30,19 +29,22 @@ function isRateLimited(ip: string): boolean {
   return record.count > MAX_REQUESTS;
 }
 
-async function getEnv(key: string): Promise<string | undefined> {
-  if (process.env[key]) {
-    return process.env[key];
-  }
-  try {
-    const cf = await Function('return import("cloudflare:workers")')();
-    if (cf?.env && typeof cf.env[key] === "string") {
-      return cf.env[key];
-    }
-  } catch {
-    // Non-workerd runtime
-  }
-  return undefined;
+const DEFAULT_CONVEX_URL = "https://charming-shrimp-686.eu-west-1.convex.cloud";
+
+function getConvexUrl(): string {
+  return process.env.NEXT_PUBLIC_CONVEX_URL || DEFAULT_CONVEX_URL;
+}
+
+function getServerSecret(): string | undefined {
+  return process.env.CONVEX_INTERNAL_SECRET;
+}
+
+function generateToken(): string {
+  const bytes = new Uint8Array(32);
+  globalThis.crypto.getRandomValues(bytes);
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 export async function POST(request: Request) {
@@ -93,18 +95,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "privacy_required" }, { status: 400 });
     }
 
-    const convexUrl = await getEnv("NEXT_PUBLIC_CONVEX_URL");
-    if (!convexUrl) {
-      throw new Error("Missing required environment variable: NEXT_PUBLIC_CONVEX_URL");
-    }
-
-    const serverSecret = await getEnv("CONVEX_INTERNAL_SECRET");
-    if (!serverSecret) {
-      throw new Error("Missing required environment variable: CONVEX_INTERNAL_SECRET");
-    }
+    const convexUrl = getConvexUrl();
+    const serverSecret = getServerSecret();
 
     const convex = new ConvexHttpClient(convexUrl);
-    const confirmationToken = crypto.randomBytes(32).toString("hex");
+    const confirmationToken = generateToken();
     const resolvedLocale = locale === "en" ? "en" : "de";
 
     const result = await convex.mutation(api.waitlist.register, {

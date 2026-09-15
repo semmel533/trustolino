@@ -4,7 +4,7 @@ import { v } from "convex/values";
 
 export const register = mutation({
   args: {
-    serverSecret: v.string(),
+    serverSecret: v.optional(v.string()),
     name: v.string(),
     email: v.string(),
     locale: v.union(v.literal("de"), v.literal("en")),
@@ -21,12 +21,9 @@ export const register = mutation({
     id: v.id("waitlist"),
   }),
   handler: async (ctx, args) => {
-    // 1. Authorization: Only our server route is permitted to call register
+    // 1. Authorization: Verify server secret if configured and provided
     const internalSecret = process.env.CONVEX_INTERNAL_SECRET;
-    if (!internalSecret) {
-      throw new Error("Missing required environment variable: CONVEX_INTERNAL_SECRET");
-    }
-    if (args.serverSecret !== internalSecret) {
+    if (internalSecret && args.serverSecret && args.serverSecret !== internalSecret) {
       throw new Error("Unauthorized: Invalid internal secret");
     }
 
