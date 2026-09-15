@@ -1802,12 +1802,13 @@ Die Pre-Release-Plattform von Trustolino ist vollständig implementiert, optimie
 
 ## 39.2 Backend & E-Mail-Infrastruktur (Convex BaaS)
 
-- **Convex Deployment**: Region `eu-west-1` (Frankfurt/EU), angebunden über mutationssichere HTTP-Edge-Endpunkte (`/api/waitlist`).
+- **Convex Deployment**: Region `eu-west-1` (Frankfurt/EU), angebunden über mutationssichere HTTP-Edge-Endpunkte (`/api/waitlist` und `/api/waitlist/confirm`).
 - **Wartelisten-Mutationen**: `waitlist:register` für doppelte Registrierungsvermeidung, Sliding-Window-Rate-Limiting (IP- und E-Mail-basiert) und RFC 5322-E-Mail-Sanitisierung.
 - **Double-Opt-In-Workflow**:
   - Automatische Generierung kryptografisch sicherer Token mit 30 Minuten Gültigkeit.
   - Server-seitige Transaktions-E-Mails via **Microsoft 365 Business SMTP** (`smtp.office365.com:587`, STARTTLS) über Convex Actions (`email:sendConfirmationEmail`).
-  - Verifikations-Routen unter `/bestaetigung?token=...` (DE) und `/en/confirm?token=...` (EN) mit Status-Handling für erfolgreiche, abgelaufene oder bereits bestätigte Adressen (`waitlist:confirmEmail`).
+  - **Inline CID-Logo**: Das Trustolino-Logo ist als Content-ID-Attachment (`cid:trustolino-logo`) in die E-Mail eingebettet, sodass es in Microsoft Outlook und Webmailern sofort gerendert wird, ohne durch externe Bildblocker blockiert zu werden.
+  - **Entkoppelte Bestätigungs-Architektur**: Die Bestätigungsseiten `/bestaetigung` (DE) und `/en/confirm` (EN) kommunizieren über einen dedizierten Server-Edge-Endpunkt (`/api/waitlist/confirm`). Dadurch werden direkte Client-zu-BaaS-CORS- und Regions-Probleme vermieden.
 
 ## 39.3 Website-Titel & Branding-Konvention
 
@@ -1832,8 +1833,9 @@ Die Pre-Release-Plattform von Trustolino ist vollständig implementiert, optimie
 ## 39.5 Design System & Barrierefreiheit (Impeccable Standards)
 
 - **Farbwelt**: Exakte Einhaltung der Markenfarben (Teal `#458893`, Mint `#a6cfb3`, Accent `#fdc82b`, Hintergrund `#FAF7F2`, Text `#1d1d1b`).
-- **Responsives CSS-Grid Layout**: Flüssige Anpassung des Hero-Bereichs über `grid md:grid-cols-[1.3fr_1fr]` ohne Überläufe oder Beschnitte auf Zwischenauflösungen (z. B. Tablet-Landschaft bei 1024 px).
+- **Vergrößertes Maskottchen im Hero**: Optimiertes CSS-Grid (`md:grid-cols-[1.2fr_1fr]`, Containergröße bis `33rem`), das den Dino deutlich größer und präsenter wirken lässt, ohne horizontalen Überlauf bei 1024 px.
 - **SVG-Kamm- und Randpuffer**: Maskottchen-Grafik mit optimierter ViewBox (`88 7 104 82`), sodass der Dino an allen Bildschirmkanten vollständig und unbeschnitten gerendert wird.
+- **Bereinigte Team-/Profil-Vorschauen**: Die Profilplatzhalter im Team-Bereich wurden vereinfacht; das störende Account-Icon-Badge unten rechts wurde entfernt.
 - **Tastatur-Navigation**: Sämtliche interaktiven Elemente (Buttons, Links, Bestätigungs-Checkboxen für den Datenschutz) sind über `Tab` erreichbar und mit klaren `:focus-visible`-Ringen ausgestattet.
 - **Strikte i18n-Architektur**: 100% Struktur- und Key-Parität zwischen `de.json` und `en.json` ohne hardcodierte Strings in UI-Komponenten.
 
