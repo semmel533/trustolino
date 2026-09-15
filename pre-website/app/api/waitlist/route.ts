@@ -30,7 +30,12 @@ function isRateLimited(ip: string): boolean {
 const DEFAULT_CONVEX_URL = "https://charming-shrimp-686.eu-west-1.convex.cloud";
 
 function getConvexUrl(): string {
-  return process.env.NEXT_PUBLIC_CONVEX_URL || DEFAULT_CONVEX_URL;
+  let url = process.env.NEXT_PUBLIC_CONVEX_URL || DEFAULT_CONVEX_URL;
+  url = url.trim();
+  if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    url = `https://${url}`;
+  }
+  return url.replace(/\/+$/, "");
 }
 
 function getServerSecret(): string | undefined {
@@ -128,7 +133,7 @@ export async function POST(request: Request) {
 
     if (!convexRes.ok) {
       const errText = await convexRes.text().catch(() => "");
-      throw new Error(`Convex API responded with status ${convexRes.status}: ${errText}`);
+      throw new Error(`Convex API (${convexUrl}/api/mutation) responded with status ${convexRes.status}: ${errText}`);
     }
 
     const convexData = (await convexRes.json()) as {
