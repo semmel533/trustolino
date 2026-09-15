@@ -4,8 +4,9 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Advisor Portal',
-  description: 'Helpful articles, tips, and expert knowledge on pedagogical childcare for parents and educators.',
+  title: 'Childcare Advisor Mannheim & Heidelberg',
+  description:
+    'Expert knowledge, practical tips, and career guidance on pedagogical childcare and part-time educator jobs in Mannheim and Heidelberg.',
   alternates: {
     canonical: '/en/advisor',
     languages: {
@@ -13,14 +14,86 @@ export const metadata: Metadata = {
       'en': '/en/advisor',
     },
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    title: 'Childcare Advisor Mannheim & Heidelberg | Trustolino',
+    description:
+      'Helpful articles, tips, and expert knowledge on pedagogical childcare for parents and educators in Mannheim & Heidelberg.',
+    url: 'https://www.trustolino.de/en/advisor',
+    siteName: 'Trustolino',
+    locale: 'en_US',
+    type: 'website',
+    images: [
+      {
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Trustolino Advisor',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Childcare Advisor Mannheim & Heidelberg | Trustolino',
+    description:
+      'Helpful articles, tips, and expert knowledge on pedagogical childcare for parents and educators in Mannheim & Heidelberg.',
+    images: ['/opengraph-image.png'],
+  },
 };
 
 export default async function AdvisorPageEN() {
   const dict = await getDictionary('en');
   const articles = getArticles('en');
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': 'https://www.trustolino.de/en/advisor#collection',
+        url: 'https://www.trustolino.de/en/advisor',
+        name: 'Childcare Advisor | Trustolino',
+        description:
+          'Practical advice and insights on pedagogical childcare in Mannheim & Heidelberg.',
+        inLanguage: 'en-US',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': 'https://www.trustolino.de/en/advisor#breadcrumb',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://www.trustolino.de/en',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Advisor',
+            item: 'https://www.trustolino.de/en/advisor',
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h1 className="mb-10 font-heading text-3xl font-bold text-foreground md:text-4xl">
         {dict.advisor.allArticles}
       </h1>

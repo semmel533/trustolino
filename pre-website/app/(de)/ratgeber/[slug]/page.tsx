@@ -22,16 +22,56 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = getArticleBySlug(slug, 'de');
   if (!article) return { title: 'Not Found' };
 
+  const title = article.meta.title;
+  const description = article.meta.description || article.meta.title;
+  const url = `https://www.trustolino.de/ratgeber/${slug}`;
+
   return {
-    title: `${article.meta.title}`,
-    description: article.meta.description || article.meta.title,
+    title,
+    description,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     alternates: {
       canonical: `/ratgeber/${slug}`,
       languages: {
         'de': `/ratgeber/${slug}`,
         'en': `/en/advisor/${slug}`,
-      }
-    }
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: 'Trustolino',
+      locale: 'de_DE',
+      type: 'article',
+      publishedTime: article.meta.date,
+      authors: [article.meta.author || 'Trustolino Team'],
+      section: article.meta.category === 'paedagogen' ? 'Pädagogen' : 'Eltern',
+      images: [
+        {
+          url: '/opengraph-image.png',
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: ['/opengraph-image.png'],
+    },
   };
 }
 
@@ -43,6 +83,86 @@ export default async function AdvisorArticleDE({ params }: { params: Promise<{ s
   if (!article) {
     notFound();
   }
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': `https://www.trustolino.de/ratgeber/${slug}#article`,
+        isPartOf: {
+          '@type': 'WebPage',
+          '@id': `https://www.trustolino.de/ratgeber/${slug}`,
+          url: `https://www.trustolino.de/ratgeber/${slug}`,
+          name: article.meta.title,
+          description: article.meta.description,
+          inLanguage: 'de-DE',
+        },
+        headline: article.meta.title,
+        description: article.meta.description,
+        datePublished: article.meta.date,
+        dateModified: article.meta.date,
+        mainEntityOfPage: `https://www.trustolino.de/ratgeber/${slug}`,
+        author: {
+          '@type': 'Organization',
+          name: article.meta.author || 'Trustolino Team',
+          url: 'https://www.trustolino.de',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Trustolino',
+          url: 'https://www.trustolino.de',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://www.trustolino.de/icon.svg',
+          },
+        },
+        articleSection:
+          article.meta.category === 'paedagogen'
+            ? 'Pädagogik & Karriere'
+            : 'Elternratgeber',
+        inLanguage: 'de-DE',
+        spatialCoverage: {
+          '@type': 'Place',
+          name: 'Mannheim und Heidelberg, Baden-Württemberg',
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: 49.4875,
+            longitude: 8.4660,
+          },
+        },
+        about: [
+          { '@type': 'Thing', name: 'Kinderbetreuung' },
+          { '@type': 'Place', name: 'Mannheim' },
+          { '@type': 'Place', name: 'Heidelberg' },
+        ],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `https://www.trustolino.de/ratgeber/${slug}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://www.trustolino.de',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Ratgeber',
+            item: 'https://www.trustolino.de/ratgeber',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: article.meta.title,
+            item: `https://www.trustolino.de/ratgeber/${slug}`,
+          },
+        ],
+      },
+    ],
+  };
 
   const components = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,6 +178,10 @@ export default async function AdvisorArticleDE({ params }: { params: Promise<{ s
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mb-8">
         <Link href="/ratgeber" className="flex items-center gap-2 font-medium text-foreground/70 hover:text-foreground">
           &larr; {dict.advisor.backToOverview}

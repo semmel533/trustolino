@@ -5,6 +5,10 @@ import ConfirmationView from "@/components/ui/ConfirmationView";
 export const metadata: Metadata = {
   title: "E-Mail bestätigen | Trustolino",
   description: "Bestätige deine E-Mail-Adresse für die Trustolino-Warteliste.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function BestaetigungPage() {

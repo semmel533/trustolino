@@ -4,8 +4,9 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Ratgeber Portal',
-  description: 'Hilfreiche Artikel, Tipps und Expertenwissen rund um pädagogische Betreuung für Eltern und Pädagogen.',
+  title: 'Ratgeber Kinderbetreuung in Mannheim & Heidelberg',
+  description:
+    'Praxisnahe Tipps, Expertenwissen und Orientierung zu pädagogischer Kinderbetreuung, Babysitter-Stundenlöhnen und Nebenjobs in Mannheim und Heidelberg.',
   alternates: {
     canonical: '/ratgeber',
     languages: {
@@ -13,14 +14,86 @@ export const metadata: Metadata = {
       'en': '/en/advisor',
     },
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    title: 'Ratgeber Kinderbetreuung in Mannheim & Heidelberg | Trustolino',
+    description:
+      'Hilfreiche Artikel, Tipps und Expertenwissen rund um pädagogische Betreuung für Eltern und Pädagogen.',
+    url: 'https://www.trustolino.de/ratgeber',
+    siteName: 'Trustolino',
+    locale: 'de_DE',
+    type: 'website',
+    images: [
+      {
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Trustolino Ratgeber',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ratgeber Kinderbetreuung in Mannheim & Heidelberg | Trustolino',
+    description:
+      'Hilfreiche Artikel, Tipps und Expertenwissen rund um pädagogische Betreuung für Eltern und Pädagogen.',
+    images: ['/opengraph-image.png'],
+  },
 };
 
 export default async function AdvisorPageDE() {
   const dict = await getDictionary('de');
   const articles = getArticles('de');
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': 'https://www.trustolino.de/ratgeber#collection',
+        url: 'https://www.trustolino.de/ratgeber',
+        name: 'Ratgeber Kinderbetreuung | Trustolino',
+        description:
+          'Praxisnahe Tipps und Expertenwissen zu pädagogischer Kinderbetreuung in Mannheim & Heidelberg.',
+        inLanguage: 'de-DE',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': 'https://www.trustolino.de/ratgeber#breadcrumb',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://www.trustolino.de',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Ratgeber',
+            item: 'https://www.trustolino.de/ratgeber',
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h1 className="mb-10 font-heading text-3xl font-bold text-foreground md:text-4xl">
         {dict.advisor.allArticles}
       </h1>

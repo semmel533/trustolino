@@ -5,6 +5,10 @@ import ConfirmationView from "@/components/ui/ConfirmationView";
 export const metadata: Metadata = {
   title: "Confirm Email | Trustolino",
   description: "Confirm your email address for the Trustolino waitlist.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function ConfirmPage() {

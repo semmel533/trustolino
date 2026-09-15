@@ -5,6 +5,10 @@ import { legalDocsData } from '@/lib/content-data';
 export const metadata: Metadata = {
   title: 'Datenschutz',
   description: 'Informationen zum Datenschutz auf der Trustolino Plattform. Wir erklären, wie deine Daten sicher verarbeitet werden.',
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: '/datenschutz',
     languages: {

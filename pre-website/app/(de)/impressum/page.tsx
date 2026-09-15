@@ -5,6 +5,10 @@ import { legalDocsData } from '@/lib/content-data';
 export const metadata: Metadata = {
   title: 'Impressum',
   description: 'Impressum und rechtliche Angaben zur Trustolino GmbH.',
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: '/impressum',
     languages: {

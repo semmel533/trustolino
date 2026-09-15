@@ -5,6 +5,10 @@ import { legalDocsData } from '@/lib/content-data';
 export const metadata: Metadata = {
   title: 'Legal',
   description: 'Legal notice and company information for Trustolino GmbH.',
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: '/en/legal',
     languages: {
