@@ -120,7 +120,10 @@ export async function POST(request: Request) {
   } catch (err) {
     console.error("Waitlist registration failed:", err instanceof Error ? err.message : String(err));
     return NextResponse.json(
-      { error: "server_error" },
+      {
+        error: "server_error",
+        detail: err instanceof Error ? err.message : String(err),
+      },
       { status: 500 }
     );
   }
