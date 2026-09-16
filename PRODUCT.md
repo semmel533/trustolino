@@ -24,8 +24,10 @@ Unlike traditional babysitting/caregiving platforms, Trustolino requires verifie
 
 ## Operating Context
 
-- Pre-Release: Waitlist landing page at trustolino.de collecting educator emails via Convex & Double Opt-in SMTP
-- Three separate Next.js apps: pre-website (port 3000), website, webapp
+- Pre-Release: Waitlist landing page at trustolino.de deployed to Cloudflare Workers via Vinext (Next.js 16.3 + React 19), collecting educator emails via Convex & Double Opt-in SMTP
+- Transactional Emails: Sent via Microsoft 365 Business SMTP (`smtp.office365.com:587`, STARTTLS) with inlined CID logo (`cid:trustolino-logo`), `noreply@trustolino.de` reply-to header, and 30-minute cryptographic token expiration
+- Confirmation Routes: Dedicated bilingual confirmation routes (`/bestaetigung` and `/en/confirm`) routed through `/api/waitlist/confirm`
+- Three separate Next.js apps: pre-website (port 3000 / Vinext port 3001), website, webapp
 - trustolino.de = public, SEO/GEO indexed; app.trustolino.de = product, noindex
 - Bilingual: German (default, no prefix) and English (/en/ prefix)
 - Convex for BaaS (reactive database, server functions, scheduled crons, real-time sync, auth)
@@ -33,23 +35,25 @@ Unlike traditional babysitting/caregiving platforms, Trustolino requires verifie
 
 ## Capabilities and Constraints
 
-- i18n key-only architecture (no hardcoded text, no ternary language checks)
-- Markdown content for legal pages and advisor articles (separate from i18n)
+- i18n key-only architecture (no hardcoded text, no ternary language checks) with 100% dictionary parity
+- Markdown content for legal pages and advisor articles (separate from i18n, compiled into zero-fs in-memory data)
 - Tailwind CSS + shadcn/ui + Phosphor Icons
 - React Markdown + Tailwind Typography for content rendering
 - Zustand for client state management
+- Page title branding: `Trustolino: <Title>` across all regular pages in DE/EN; standalone titles for ratgeber articles
 - SEO: sitemap, structured data, Open Graph, hreflang, canonical URLs
-- Advisor portal as public SEO/GEO content strategy
+- Advisor portal as public SEO/GEO content strategy (14 DE and 14 EN articles)
 - 12% booking fee model (9% parents, 3% educators)
-- DSGVO-compliant data handling
+- DSGVO-compliant data handling with explicit checkbox consent
+- Legal representation: Felix Schüßler (Managing Director & DSA single point of contact, `felix.schüssler@trustolino.de`, `+49 1512 9040542`)
 
 ## Brand Commitments
 
 - **Name:** Trustolino
 - **Tagline:** "Vertrauensvolle Betreuung, kinderleicht organisiert."
 - **Logo Assets:** SVG and PNG variants — logo (icon+label), icon (standalone), label (text only)
-- **Mascot:** Dinosaur character (green/teal) — visible in branding, hero sections
-- **Founders:** Felix (Sozialfachwirt/Einrichtungsleitung), Jonas (25+ years pedagogy), Philipp (father, UK background), Jan (university lecturer, founder coach, father), Selim (CS student, TH Mannheim)
+- **Mascot:** Dinosaur character (green/teal) — enlarged and prominent in hero section, unclipped bounds
+- **Team & Founders:** Felix (Sozialfachwirt/Einrichtungsleitung, Managing Director), Jonas (25+ years pedagogy), Philipp (father, UK background, integrated portrait), Jan (university lecturer, founder coach, father), Selim (CS student, TH Mannheim)
 - **Voice:** Professional but warm, peer-to-peer among educators, empowering, never corporate
 - **Position:** "Von Pädagog:innen für Pädagog:innen" — built by people who know the industry
 - **Design reference:** Existing pre-website design system (screenshot provided as binding visual authority)

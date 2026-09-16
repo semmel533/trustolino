@@ -923,6 +923,8 @@ Damit ergibt sich:
 | Website     | `trustolino.de`     | `website/`     | `3000` | Ja          |
 | Web-App     | `app.trustolino.de` | `webapp/`      | `3001` | **Nein**    |
 
+*Hinweis zur lokalen Entwicklung:* Im Standalone-Betrieb von `pre-website/` läuft der Next.js Entwicklungs-Server standardmäßig auf Port `3000` (`npm run dev`) und der Vite/Vinext Server auf Port `3001` (`npm run dev:vinext`). Port `2999` dient als koordinierter Port im gemeinsamen Verbundbetrieb aller drei Teilprojekte.
+
 Die Domain selbst wird separat verwaltet.
 
 ---
@@ -1536,6 +1538,9 @@ Markdown
 /datenschutz
 └── Datenschutzerklärung
 
+/bestaetigung
+└── E-Mail-Bestätigung (Double-Opt-In)
+
 /ratgeber
 └── Ratgeberübersicht
 
@@ -1554,6 +1559,9 @@ Markdown
 
 /en/privacy
 └── Privacy Policy
+
+/en/confirm
+└── Email Confirmation (Double-Opt-In)
 
 /en/advisor
 └── Ratgeberübersicht
@@ -1574,16 +1582,20 @@ Alle entsprechenden deutschen und englischen Seiten sollen technisch miteinander
 
 Die Indexierungsstrategie ist ein fester Bestandteil der Architektur.
 
-| Domain / Bereich            | Indexierung              | Zweck                                  |
-| --------------------------- | ------------------------ | -------------------------------------- |
-| `trustolino.de`             | **Ja**                   | SEO, GEO, Marketing                    |
-| `trustolino.de/ratgeber`    | **Ja**                   | Content / organischer Traffic          |
-| `trustolino.de/ratgeber/*`  | **Ja**                   | Content / SEO / GEO                    |
-| `trustolino.de/impressum`   | grundsätzlich öffentlich | Rechtliche Information                 |
-| `trustolino.de/datenschutz` | grundsätzlich öffentlich | Rechtliche Information                 |
-| `trustolino.de/en/*`        | **Ja**                   | Englische SEO-/GEO-Inhalte             |
-| `app.trustolino.de`         | **Nein**                 | Web-App                                |
-| `app.trustolino.de/*`       | **Nein**                 | Authentifizierte / produktive Bereiche |
+| Domain / Bereich             | Indexierung              | Zweck                                  |
+| ---------------------------- | ------------------------ | -------------------------------------- |
+| `trustolino.de`              | **Ja**                   | SEO, GEO, Marketing                    |
+| `trustolino.de/ratgeber`     | **Ja**                   | Content / organischer Traffic          |
+| `trustolino.de/ratgeber/*`   | **Ja**                   | Content / SEO / GEO                    |
+| `trustolino.de/impressum`    | **Nein** (`noindex`)     | Rechtliche Information                 |
+| `trustolino.de/datenschutz`  | **Nein** (`noindex`)     | Rechtliche Information                 |
+| `trustolino.de/bestaetigung` | **Nein** (`noindex`)     | Double-Opt-In Bestätigungsstatus       |
+| `trustolino.de/en/*`         | **Ja**                   | Englische SEO-/GEO-Inhalte             |
+| `trustolino.de/en/legal`     | **Nein** (`noindex`)     | Legal Information                      |
+| `trustolino.de/en/privacy`   | **Nein** (`noindex`)     | Privacy Policy                         |
+| `trustolino.de/en/confirm`   | **Nein** (`noindex`)     | Double-Opt-In Confirmation Status      |
+| `app.trustolino.de`          | **Nein**                 | Web-App                                |
+| `app.trustolino.de/*`        | **Nein**                 | Authentifizierte / produktive Bereiche |
 
 Die öffentliche Website darf niemals versehentlich durch Änderungen an der Web-App-Architektur aus der Indexierung ausgeschlossen werden.
 

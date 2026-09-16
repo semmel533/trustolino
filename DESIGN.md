@@ -44,12 +44,31 @@
 - **Links:** Must include navigation links and the Advisor Portal (Ratgeber).
 
 #### Forms (Waitlist)
-- **Validation:** Custom client-side validation (no native browser popups).
-- **Feedback:** Clear inline error messages for invalid formats and duplicate submissions.
-- **Consent:** Mandatory text clarifying that clicking the CTA agrees to the privacy policy.
+- **Validation:** Custom client-side validation (no native browser popups) with accessible error messaging.
+- **Consent:** Mandatory interactive checkbox for data privacy consent (`id="privacy"`, `aria-required="true"`) linking directly to the privacy policy.
+- **Submission State:** Smooth transition to an inline "Fast geschafft!" confirmation banner highlighting the 30-minute confirmation email.
+- **Confirmation Page:** Dedicated status page (`/bestaetigung`, `/en/confirm`) wrapped in `<Suspense>` displaying live token verification, loading spinner, success state, or clear fallback actions.
+
+#### Hero Mascot Illustration (Dino)
+- **Sizing:** Prominent presence on both mobile and desktop (`max-w-[33rem]`, `w-full`, `aspect-[12/10]`), embedded within a balanced `md:grid-cols-[1.2fr_1fr]` grid.
+- **Safe ViewBox:** Precise viewBox (`88 7 104 82`) with calibrated stroke padding (`strokeWidth="1.6"` etc.) to ensure back crests, tail, and feet are completely visible without edge clipping on any screen size.
+
+#### Team & Profile Cards
+- **Card Ratio:** Standardized 3:4 portrait aspect ratio (`aspect-[3/4]`, `rounded-2xl`, `border border-border/40`).
+- **Portrait Photography:** High-resolution portrait images rendered with `object-cover object-top` and subtle hover zoom (`group-hover:scale-105 transition-transform duration-300`).
+- **Fallback Avatar:** Clean initials circle (`bg-mint/40 text-foreground font-bold text-xl`) for team profiles without an uploaded photo.
+- **Clean Aesthetic:** No extraneous account badge icons or floating clutter over portrait images.
+
+#### Comparative Cards ("Wer wir sind")
+- **Layout:** Modern comparative card grid replacing legacy HTML tables for optimal mobile responsiveness.
+- **Icon Badges:** Standardized `size-12 rounded-xl bg-teal-50` icon containers with `size-6 text-foreground/70` duotone Phosphor icons, visually identical to the Expertise section.
+
+## Title & Branding Conventions
+- **Standard Pages:** Uniform format `Trustolino: <Title>` for all subpages in both German and English (e.g. `Trustolino: Pädagogische Kinderbetreuung in Mannheim & Heidelberg`, `Trustolino: Impressum`, `Trustolino: Legal`, `Trustolino: E-Mail bestätigen`).
+- **Advisor Articles:** Editorial and SEO-targeted single articles retain standalone, keyword-focused titles without the brand prefix.
 
 ## Interaction & Motion
 - Smooth scroll between sections.
-- Subtle hover states on cards.
+- Subtle hover states on cards and buttons.
 - CTA button hover: slight color shift.
-- Custom inline error messages fade in smoothly.
+- Custom inline error and confirmation messages fade in smoothly.

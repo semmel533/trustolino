@@ -14,10 +14,11 @@ Die `pre-website` ist für maximale Performance, Sicherheit und weltweite Edge-A
 - **Framework**: Next.js 16.3.0 (App Router, React 19.2.8)
 - **Edge Deployment**: Cloudflare Workers via **Vinext** (`vinext`, Vite 8, `wrangler.jsonc`) mit `nodejs_compat`
 - **Backend as a Service (BaaS)**: [Convex](https://convex.dev) (`eu-west-1`, Frankfurt)
-- **E-Mail Dispatching**: Vollständig ausgelagert in das Convex-Backend (`convex/email.ts` via Microsoft 365 Business SMTP, TLS/STARTTLS auf Port 587)
-- **Content Engine**: 28 Ratgeber-Artikel (DE & EN) und rechtliche Dokumente (Impressum, Datenschutz, Legal, Privacy) als typisierte In-Memory-Module (`lib/content-data.ts`, kompiliert via `scripts/generate-content.mjs`), 100% Dateisystem-unabhängig (`zero-fs`) im Cloudflare Worker Runtime.
+- **E-Mail Dispatching & Double-Opt-In**: Vollständig in das Convex-Backend ausgelagert (`convex/email.ts` via Microsoft 365 Business SMTP, TLS/STARTTLS auf Port 587) mit kryptografischen 30-Minuten-Tokens, integriertem CID-Logo (`cid:trustolino-logo`) und transparentem `Reply-To: noreply@trustolino.de`.
+- **Entkoppelte Token-Bestätigung**: Zweisprachige Bestätigungsseiten (`/bestaetigung` und `/en/confirm`) mit dediziertem Server-Edge-Endpunkt (`/api/waitlist/confirm`) zur Vermeidung von Client-BaaS-Netzwerk- und CORS-Problemen.
+- **Content Engine**: 28 Ratgeber-Artikel (DE & EN) und rechtliche Dokumente (Impressum, Datenschutz, Legal, Privacy mit offiziellen Kontaktdaten von Felix Schüßler) als typisierte In-Memory-Module (`lib/content-data.ts`, vorkompiliert via `scripts/generate-content.mjs`), 100% Dateisystem-unabhängig (`zero-fs`) im Cloudflare Worker Runtime.
 - **Internationalisierung (i18n)**: Strikte Key-Only-Architektur (`lib/i18n/dictionaries/de.json` & `en.json`) mit 100% Schlüssel-Parität.
-- **Sicherheit**: OWASP-konforme Security Header (HSTS, CSP, X-Frame-Options: DENY, Referrer-Policy), IP-basiertes Sliding-Window Rate Limiting, RFC-konforme E-Mail-Validierung und kryptografische SHA-256 Tokens.
+- **Sicherheit**: OWASP-konforme Security Header (HSTS, CSP, X-Frame-Options: DENY, Referrer-Policy), IP- und E-Mail-basiertes Sliding-Window Rate Limiting, explizite Checkbox-Datenschutzeinwilligung, RFC-konforme E-Mail-Validierung und kryptografische SHA-256 Tokens.
 
 ---
 
@@ -26,9 +27,9 @@ Die `pre-website` ist für maximale Performance, Sicherheit und weltweite Edge-A
 | Befehl | Zweck |
 | :--- | :--- |
 | `npm run dev` | Startet den regulären Next.js Turbopack Dev-Server auf Port `3000` |
-| `npm run build` | Führt den regulären Next.js Production-Build durch (generiert alle 47 statischen Routen) |
+| `npm run build` | Führt den regulären Next.js Production-Build durch (generiert alle 48 Routen) |
 | `npm run dev:vinext` | Startet den Vite/Vinext Entwicklungs-Server auf Port `3001` |
-| `npm run build:vinext` | Baut das Cloudflare Worker Bundle inkl. Pre-Rendering und Asset-Generierung |
+| `npm run build:vinext` | Baut das Cloudflare Worker Bundle inkl. Pre-Rendering (39 statische Seiten) und Asset-Generierung |
 | `npm run start:vinext` | Startet die lokale Cloudflare Worker Preview via `wrangler dev` (Standard: Port `8787`) |
 | `npm run deploy:vinext` | Deployt die Anwendung direkt auf Cloudflare Workers (`vinext-cloudflare deploy`) |
 | `npm run generate:content` | Kompiliert alle Markdown-Dateien aus `public/content/` in `lib/content-data.ts` |
