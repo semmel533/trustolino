@@ -1836,6 +1836,7 @@ Die Pre-Release-Plattform von Trustolino ist vollständig implementiert, optimie
 - **Vergrößertes Maskottchen im Hero**: Optimiertes CSS-Grid (`md:grid-cols-[1.2fr_1fr]`, Containergröße bis `33rem`), das den Dino deutlich größer und präsenter wirken lässt, ohne horizontalen Überlauf bei 1024 px.
 - **SVG-Kamm- und Randpuffer**: Maskottchen-Grafik mit optimierter ViewBox (`88 7 104 82`), sodass der Dino an allen Bildschirmkanten vollständig und unbeschnitten gerendert wird.
 - **Bereinigte Team-/Profil-Vorschauen & Porträt-Integration**: Die Teamkarten wurden im modernen 3:4-Hochkantformat standardisiert und das alte Account-Badge-Icon entfernt. Philipps originales Porträtfoto wurde als erstes Teammitglied nahtlos integriert (`object-cover object-top` mit sanftem Hover-Zoom und abgerundeten Ecken); für Profile ohne eigenes Foto greift ein passender Platzhalter mit Initialkreis.
+- **Harmonisierte Card-Icons**: Die Icons oben rechts in den Vergleichskarten der Sektion „Wer wir sind“ (`WhoWeAre.tsx`) wurden stilistisch exakt an die Icons der Expertise-Sektion (`Experience.tsx`) angeglichen (`size-12`, `rounded-xl`, `bg-teal-50`, Duotone-Icons in `size-6` mit `text-foreground/70`).
 - **Tastatur-Navigation**: Sämtliche interaktiven Elemente (Buttons, Links, Bestätigungs-Checkboxen für den Datenschutz) sind über `Tab` erreichbar und mit klaren `:focus-visible`-Ringen ausgestattet.
 - **Strikte i18n-Architektur**: 100% Struktur- und Key-Parität zwischen `de.json` und `en.json` ohne hardcodierte Strings in UI-Komponenten.
 

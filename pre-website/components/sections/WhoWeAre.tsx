@@ -17,7 +17,7 @@ export default function WhoWeAre() {
   const w = dict.whoWeAre;
 
   return (
-    <section className="bg-cream-100 py-20 md:py-28">
+    <section id="who-we-are" className="bg-cream-100 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mb-14 max-w-3xl">
           <h2 className="font-heading text-3xl font-bold leading-tight text-foreground md:text-4xl">
@@ -43,8 +43,8 @@ export default function WhoWeAre() {
                   <span className="font-heading text-lg md:text-xl font-bold text-foreground">
                     {row[0]}
                   </span>
-                  <div className="flex size-10 items-center justify-center rounded-xl border border-teal-100/80 bg-teal-50 text-primary">
-                    <Icon weight="duotone" className="size-5" />
+                  <div className="flex size-12 items-center justify-center rounded-xl bg-teal-50">
+                    <Icon weight="duotone" className="size-6 text-foreground/70" />
                   </div>
                 </div>
 
