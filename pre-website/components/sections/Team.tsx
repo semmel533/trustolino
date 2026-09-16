@@ -31,18 +31,28 @@ export default function Team() {
         </div>
 
         <div className="grid gap-8 lg:gap-10 lg:grid-cols-2">
-          {t.members.map((member: { name: string, text: string }, i: number) => (
+          {t.members.map((member: { name: string; text: string; image?: string }, i: number) => (
             <div
               key={i}
               className={`group flex flex-col sm:flex-row items-center sm:items-start gap-6 rounded-2xl border border-teal-100 bg-white p-6 md:p-8 shadow-sm transition-all duration-300 hover:shadow-md hover:border-teal-200 ${
                 i === 4 ? "lg:col-span-2 lg:max-w-[calc(50%-1.25rem)] lg:mx-auto w-full" : ""
               }`}
             >
-              {/* Vertical image placeholder */}
+              {/* Vertical image container */}
               <div className="relative flex flex-col items-center justify-center w-36 sm:w-40 md:w-44 aspect-[3/4] shrink-0 overflow-hidden rounded-2xl bg-gradient-to-b from-teal-50/90 via-teal-100/30 to-teal-100/70 border border-teal-200/70 shadow-2xs group-hover:border-teal-300 transition-all duration-300">
-                <div className="flex size-16 md:size-20 items-center justify-center rounded-full bg-white/90 border border-teal-200/80 font-heading text-2xl md:text-3xl font-bold text-primary shadow-xs">
-                  {member.name.charAt(0)}
-                </div>
+                {member.image ? (
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    sizes="(max-width: 640px) 144px, (max-width: 768px) 160px, 176px"
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="flex size-16 md:size-20 items-center justify-center rounded-full bg-white/90 border border-teal-200/80 font-heading text-2xl md:text-3xl font-bold text-primary shadow-xs">
+                    {member.name.charAt(0)}
+                  </div>
+                )}
               </div>
 
               {/* Text content: Name on top, text underneath */}

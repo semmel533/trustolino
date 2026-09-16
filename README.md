@@ -1835,7 +1835,7 @@ Die Pre-Release-Plattform von Trustolino ist vollständig implementiert, optimie
 - **Farbwelt**: Exakte Einhaltung der Markenfarben (Teal `#458893`, Mint `#a6cfb3`, Accent `#fdc82b`, Hintergrund `#FAF7F2`, Text `#1d1d1b`).
 - **Vergrößertes Maskottchen im Hero**: Optimiertes CSS-Grid (`md:grid-cols-[1.2fr_1fr]`, Containergröße bis `33rem`), das den Dino deutlich größer und präsenter wirken lässt, ohne horizontalen Überlauf bei 1024 px.
 - **SVG-Kamm- und Randpuffer**: Maskottchen-Grafik mit optimierter ViewBox (`88 7 104 82`), sodass der Dino an allen Bildschirmkanten vollständig und unbeschnitten gerendert wird.
-- **Bereinigte Team-/Profil-Vorschauen**: Die Profilplatzhalter im Team-Bereich wurden vereinfacht; das störende Account-Icon-Badge unten rechts wurde entfernt.
+- **Bereinigte Team-/Profil-Vorschauen & Porträt-Integration**: Die Teamkarten wurden im modernen 3:4-Hochkantformat standardisiert und das alte Account-Badge-Icon entfernt. Philipps originales Porträtfoto wurde als erstes Teammitglied nahtlos integriert (`object-cover object-top` mit sanftem Hover-Zoom und abgerundeten Ecken); für Profile ohne eigenes Foto greift ein passender Platzhalter mit Initialkreis.
 - **Tastatur-Navigation**: Sämtliche interaktiven Elemente (Buttons, Links, Bestätigungs-Checkboxen für den Datenschutz) sind über `Tab` erreichbar und mit klaren `:focus-visible`-Ringen ausgestattet.
 - **Strikte i18n-Architektur**: 100% Struktur- und Key-Parität zwischen `de.json` und `en.json` ohne hardcodierte Strings in UI-Komponenten.
 
