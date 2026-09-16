@@ -41,13 +41,15 @@ function getTransporter() {
 
   const secure = port === 465;
 
-  return nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     host,
     port,
     secure,
     requireTLS: !secure,
     auth: { user, pass },
   });
+
+  return { transporter, user };
 }
 
 export const sendConfirmationEmail = internalAction({
@@ -57,6 +59,7 @@ export const sendConfirmationEmail = internalAction({
     token: v.string(),
     locale: v.union(v.literal("de"), v.literal("en")),
   },
+  returns: v.null(),
   handler: async (_ctx, args) => {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL;
     if (!appUrl) {
@@ -68,7 +71,7 @@ export const sendConfirmationEmail = internalAction({
       throw new Error("Missing required environment variable: EMAIL_FROM");
     }
 
-    const replyTo = process.env.EMAIL_REPLY_TO || fromAddress;
+    const replyTo = process.env.EMAIL_REPLY_TO || "noreply@trustolino.de";
 
     // Prevent SMTP header injection
     if (/[\r\n]/.test(args.to)) {
@@ -270,10 +273,14 @@ ${confirmUrl}
 
 Bitte antworte nicht auf diese E-Mail, da es sich um eine automatisch generierte Nachricht handelt.`;
 
-    const transporter = getTransporter();
+    const { transporter, user } = getTransporter();
     await transporter.sendMail({
       from,
       replyTo,
+      envelope: {
+        from: user,
+        to: args.to,
+      },
       to: args.to,
       subject,
       text: textContent,

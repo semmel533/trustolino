@@ -1808,6 +1808,7 @@ Die Pre-Release-Plattform von Trustolino ist vollständig implementiert, optimie
   - Automatische Generierung kryptografisch sicherer Token mit 30 Minuten Gültigkeit.
   - Server-seitige Transaktions-E-Mails via **Microsoft 365 Business SMTP** (`smtp.office365.com:587`, STARTTLS) über Convex Actions (`email:sendConfirmationEmail`).
   - **Inline CID-Logo**: Das Trustolino-Logo ist als Content-ID-Attachment (`cid:trustolino-logo`) in die E-Mail eingebettet, sodass es in Microsoft Outlook und Webmailern sofort gerendert wird, ohne durch externe Bildblocker blockiert zu werden.
+  - **Reply-To & SMTP-Envelope (`noreply@trustolino.de`)**: Der Nodemailer-Transport setzt nun wie in Zakkig den SMTP-Envelope `MAIL FROM` explizit auf den authentifizierten Microsoft 365 Mailbox-Account (`selim.eser@trustolino.de`), während der `Reply-To`-Header transparent auf `noreply@trustolino.de` konfiguriert ist.
   - **Entkoppelte Bestätigungs-Architektur**: Die Bestätigungsseiten `/bestaetigung` (DE) und `/en/confirm` (EN) kommunizieren über einen dedizierten Server-Edge-Endpunkt (`/api/waitlist/confirm`). Dadurch werden direkte Client-zu-BaaS-CORS- und Regions-Probleme vermieden.
 
 ## 39.3 Website-Titel & Branding-Konvention
