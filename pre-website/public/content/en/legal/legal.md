@@ -17,8 +17,8 @@ Germany
 
 ## Contact
 
-**Phone:**  
-**Email:**  
+**Phone:** +49 1512 9040542  
+**Email:** felix.schüssler@trustolino.de  
 
 ---
 
@@ -33,7 +33,7 @@ Commercial Register Entry
 ## Single Point of Contact pursuant to Art. 11 and 12 DSA
 
 As an intermediary service provider, we designate the following central contact point for users and authorities:  
-**Email:**  
+**Email:** felix.schüssler@trustolino.de  
 **Communication Languages:** German, English  
 
 ---

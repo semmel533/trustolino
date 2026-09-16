@@ -11,7 +11,7 @@ Deutschland
 
 **Vertreten durch:**  
 Geschäftsführer Felix Schüßler  
-E-Mail: [E-Mail-Adresse ergänzen]
+E-Mail: felix.schüssler@trustolino.de
 
 ---
 

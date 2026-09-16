@@ -17,8 +17,8 @@ Deutschland
 
 ## Kontakt
 
-**Telefon:**  
-**E-Mail:**  
+**Telefon:** +49 1512 9040542  
+**E-Mail:** felix.schüssler@trustolino.de  
 
 ---
 
@@ -33,7 +33,7 @@ Eintragung im Handelsregister
 ## Kontaktstelle nach Art. 11 und 12 DSA
 
 Als Anbieter eines Vermittlungsdienstes benennen wir folgende zentrale Kontaktstelle für Nutzerinnen und Nutzer sowie für Behörden:  
-**E-Mail:**  
+**E-Mail:** felix.schüssler@trustolino.de  
 **Kommunikationssprachen:** Deutsch, Englisch  
 
 ---

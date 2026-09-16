@@ -1841,4 +1841,8 @@ Die Pre-Release-Plattform von Trustolino ist vollständig implementiert, optimie
 - **Tastatur-Navigation**: Sämtliche interaktiven Elemente (Buttons, Links, Bestätigungs-Checkboxen für den Datenschutz) sind über `Tab` erreichbar und mit klaren `:focus-visible`-Ringen ausgestattet.
 - **Strikte i18n-Architektur**: 100% Struktur- und Key-Parität zwischen `de.json` und `en.json` ohne hardcodierte Strings in UI-Komponenten.
 
+## 39.6 Rechtliche Dokumentation & Kontaktdaten
+
+- **Offizielle Kontaktdaten**: Impressum (`/impressum`, `/en/legal`) und Datenschutzerklärung (`/datenschutz`, `/en/privacy`) wurden mit den offiziellen Kontaktdaten von Felix Schüssler (`felix.schüssler@trustolino.de`, Telefon `+49 1512 9040542`) sowie der Benennung als zentraler Ansprechpartner nach Art. 11 & 12 DSA in vollständiger deutscher und englischer Parität gepflegt.
+
 

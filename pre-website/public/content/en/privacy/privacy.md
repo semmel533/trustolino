@@ -11,7 +11,7 @@ Germany
 
 **Represented by:**  
 Managing Director Felix Schüßler  
-Email: [Add email address]
+Email: felix.schüssler@trustolino.de
 
 ---
 
