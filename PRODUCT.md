@@ -53,7 +53,7 @@ Unlike traditional babysitting/caregiving platforms, Trustolino requires verifie
 - **Tagline:** "Vertrauensvolle Betreuung, kinderleicht organisiert."
 - **Logo Assets:** SVG and PNG variants — logo (icon+label), icon (standalone), label (text only)
 - **Mascot:** Dinosaur character (green/teal) — enlarged and prominent in hero section, unclipped bounds
-- **Team & Founders:** Felix (Sozialfachwirt/Einrichtungsleitung, Managing Director), Jonas (25+ years pedagogy), Philipp (father, UK background, integrated portrait), Jan (university lecturer, founder coach, father), Selim (CS student, TH Mannheim)
+- **Team & Founders:** Felix (Sozialfachwirt/Einrichtungsleitung, Managing Director, integrated portrait), Jonas (25+ years pedagogy, integrated portrait), Philipp (father, UK background, integrated portrait), Jan (university lecturer, founder coach, father, integrated portrait), Selim (CS student, TH Mannheim, initial avatar)
 - **Voice:** Professional but warm, peer-to-peer among educators, empowering, never corporate
 - **Position:** "Von Pädagog:innen für Pädagog:innen" — built by people who know the industry
 - **Design reference:** Existing pre-website design system (screenshot provided as binding visual authority)
